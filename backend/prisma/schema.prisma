@@ -21,9 +21,11 @@ model Program {
 
 model User {
   id              Int          @id @default(autoincrement())
-  name            String       @unique
+  name            String
   email           String       @unique
   password        String
+  verified        Boolean       @default(false)
+  otp             String        @default("")
   admin           Boolean       @default(false)
   program         Program  @relation("ProgramUsers", fields: [programId], references: [id])
   programId       Int
