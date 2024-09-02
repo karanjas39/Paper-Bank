@@ -1,6 +1,7 @@
 import { Hono } from "hono";
+import { createProgram } from "../controllers/program";
 
-const user = new Hono<{
+const admin = new Hono<{
   Bindings: {
     DATABASE_URL: string;
   };
@@ -11,4 +12,6 @@ const user = new Hono<{
   };
 }>();
 
-export default user;
+admin.post("/create/program", createProgram);
+
+export default admin;

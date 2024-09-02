@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { signup } from "../controllers/auth";
+import { signin, signup } from "../controllers/auth";
 
 const auth = new Hono<{
   Bindings: {
@@ -10,5 +10,6 @@ const auth = new Hono<{
 }>();
 
 auth.post("/signup", signup);
+auth.post("/signin", signin);
 
 export default auth;
