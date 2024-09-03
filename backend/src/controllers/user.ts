@@ -19,9 +19,6 @@ export async function uploadQP(c: Context) {
     const courseCode = formData.get("courseCode")?.toString();
     const year = formData.get("year")?.toString();
     const examType = formData.get("examType")?.toString();
-
-    console.table([{ pdf, courseCode, courseName, year, examType }]);
-
     const { success, data: parsedData } = z_createQuestionPaper.safeParse({
       courseName,
       courseCode,
@@ -81,14 +78,12 @@ export async function getQP(c: Context) {
 
     const kv = c.env["my-app"];
     const base64Data = await kv.get(key);
-    if (!base64Data) throw new Error("PDF not found.");
+    if (!base64Data) throw new Error("Question Paper not found.");
 
-    // Decode Base64 and convert to binary data
-    const binaryData = Uint8Array.from(atob(base64Data), (c) =>
-      c.charCodeAt(0)
-    );
+    const bytes = new Uint8Array(base64Data.split(",").map(Number));
+    const arrayBuffer = bytes.buffer;
 
-    return new Response(binaryData, {
+    return new Response(arrayBuffer, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
@@ -100,7 +95,7 @@ export async function getQP(c: Context) {
     return c.json({
       success: false,
       status: 404,
-      message: err.message || "Failed to retrieve the PDF.",
+      message: err.message || "Failed to retrieve the Question Paper.",
     });
   }
 }
