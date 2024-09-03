@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import auth from "./routes/auth";
 import admin from "./routes/admin";
+import email from "./routes/email";
 
 const app = new Hono<{
   Bindings: {
@@ -12,6 +13,7 @@ const app = new Hono<{
 app.use("*", cors());
 
 app.route("/api/v1/auth", auth);
+app.route("/api/v1/email", email);
 app.route("/api/v1/admin", admin);
 
 app.all(async (c) => {

@@ -11,7 +11,8 @@
     "@singhjaskaran/paperbank-common": "^1.0.4",
     "bcrypt-ts": "^5.0.2",
     "hono": "^4.5.10",
-    "prisma": "^5.19.0"
+    "prisma": "^5.19.0",
+    "resend": "^4.0.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",

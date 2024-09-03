@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { z_signin, z_signup } from "@singhjaskaran/paperbank-common";
 import { compareSync, hashSync } from "bcrypt-ts";
+import { sign } from "hono/jwt";
 
 export async function signup(c: Context) {
   try {
@@ -74,15 +75,20 @@ export async function signin(c: Context) {
 
     if (!isPasswordCorrect) throw new Error("Password or email is incorrect.");
 
+    const token = await sign(
+      {
+        userId: isUserExist.id,
+        admin: isUserExist.admin,
+        verified: isUserExist.verified,
+      },
+      c.env.JWT_SECRET
+    );
+
     return c.json({
       success: true,
       status: 200,
       message: "You have been logged in successfully.",
-      user: {
-        verified: isUserExist.verified,
-        admin: isUserExist.admin,
-        id: isUserExist.id,
-      },
+      token,
     });
   } catch (error) {
     const err = error as Error;
