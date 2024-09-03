@@ -11,7 +11,6 @@ datasource db {
 model Program {
   id              Int            @id @default(autoincrement())
   name            String         @unique
-  academicLevel   String
   users           User[]         @relation("ProgramUsers")
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
@@ -30,7 +29,6 @@ model User {
   program         Program  @relation("ProgramUsers", fields: [programId], references: [id])
   programId       Int
   uploadCount     Int      @default(0)    
-  maxUploads      Int      @default(10)
   questionPapers  QuestionPaper[] @relation("UserQuestionPapers")
   reviewedPapers  QuestionPaper[] @relation("ReviewedQuestionPapers")
   createdAt       DateTime     @default(now())
@@ -44,12 +42,13 @@ model QuestionPaper {
   id              Int          @id @default(autoincrement())
   courseName      String
   courseCode      String
-  fileKeys        String[]     @unique
-  year            String
+  fileKey         String     @unique
+  year            Int
   examType        String       // 'MSE' or 'ESE'
   status          String       @default("pending") // 'pending', 'approved', 'rejected'
   submittedAt     DateTime     @default(now())
   reviewedAt      DateTime?
+  reviewMessage   String?
   user            User         @relation("UserQuestionPapers", fields: [userId], references: [id])
   userId          Int
   reviewer        User        @relation("ReviewedQuestionPapers", fields: [reviewerId], references: [id])
