@@ -1,14 +1,14 @@
 {
   "name": "@singhjaskaran/paperbank-common",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This is the common file to share reusable zod types and variables between frontend and backend of Paper bank app",
   "repository": {
-    "url": "https://github.com/karanjas39/Paper-Bank.git",
+    "url": "git+https://github.com/karanjas39/Paper-Bank.git",
     "directory": "common"
   },
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -b"
+    "deploy": "tsc -b && npm publish --access=public"
   },
   "author": "Jaskaran Singh",
   "license": "ISC",

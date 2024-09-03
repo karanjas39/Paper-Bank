@@ -27,13 +27,10 @@ export declare const z_signin: z.ZodObject<{
 }>;
 export declare const z_createProgram: z.ZodObject<{
     name: z.ZodString;
-    academicLevel: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     name: string;
-    academicLevel: string;
 }, {
     name: string;
-    academicLevel: string;
 }>;
 export type z_signup_type = z.infer<typeof z_signup>;
 export type z_signin_type = z.infer<typeof z_signin>;

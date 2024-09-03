@@ -2,11 +2,13 @@
   "name": "paper_bank_backend",
   "scripts": {
     "dev": "wrangler dev src/index.ts",
-    "deploy": "wrangler deploy --minify src/index.ts"
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "migrate": "npx prisma migrate dev --name init",
+    "generate": "npx prisma generate --no-engine"
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^1.1.0",
-    "@singhjaskaran/paperbank-common": "^1.0.3",
+    "@singhjaskaran/paperbank-common": "^1.0.4",
     "bcrypt-ts": "^5.0.2",
     "hono": "^4.5.10",
     "prisma": "^5.19.0"

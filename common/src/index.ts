@@ -15,7 +15,6 @@ export const z_signin = z.object({
 
 export const z_createProgram = z.object({
   name: z.string().min(1),
-  academicLevel: z.string().min(1),
 });
 
 // TYPES

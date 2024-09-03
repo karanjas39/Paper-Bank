@@ -15,5 +15,4 @@ exports.z_signin = zod_1.z.object({
 });
 exports.z_createProgram = zod_1.z.object({
     name: zod_1.z.string().min(1),
-    academicLevel: zod_1.z.string().min(1),
 });

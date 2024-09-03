@@ -17,7 +17,6 @@ export async function createProgram(c: Context) {
 
     const new_program = await prisma.program.create({
       data: {
-        academicLevel: data.academicLevel,
         name: data.name,
       },
     });

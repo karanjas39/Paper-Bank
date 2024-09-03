@@ -2,7 +2,6 @@
 CREATE TABLE "Program" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "academicLevel" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -20,7 +19,6 @@ CREATE TABLE "User" (
     "admin" BOOLEAN NOT NULL DEFAULT false,
     "programId" INTEGER NOT NULL,
     "uploadCount" INTEGER NOT NULL DEFAULT 0,
-    "maxUploads" INTEGER NOT NULL DEFAULT 10,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -32,12 +30,13 @@ CREATE TABLE "QuestionPaper" (
     "id" SERIAL NOT NULL,
     "courseName" TEXT NOT NULL,
     "courseCode" TEXT NOT NULL,
-    "fileKeys" TEXT[],
-    "year" TEXT NOT NULL,
+    "fileKey" TEXT NOT NULL,
+    "year" INTEGER NOT NULL,
     "examType" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'pending',
     "submittedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "reviewedAt" TIMESTAMP(3),
+    "reviewMessage" TEXT,
     "userId" INTEGER NOT NULL,
     "reviewerId" INTEGER NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -61,7 +60,7 @@ CREATE INDEX "User_email_idx" ON "User"("email");
 CREATE INDEX "User_programId_idx" ON "User"("programId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "QuestionPaper_fileKeys_key" ON "QuestionPaper"("fileKeys");
+CREATE UNIQUE INDEX "QuestionPaper_fileKey_key" ON "QuestionPaper"("fileKey");
 
 -- CreateIndex
 CREATE INDEX "QuestionPaper_status_idx" ON "QuestionPaper"("status");
