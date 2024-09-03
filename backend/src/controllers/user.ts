@@ -8,6 +8,21 @@ export async function uploadQP(c: Context) {
   try {
     const userId = c.get("id");
 
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const isUser = await prisma.user.findUnique({
+      where: {
+        id: Number(userId),
+      },
+    });
+
+    if (!isUser) throw new Error("No such user is regsitered with us.");
+
+    if (isUser.uploadCount !== 0 && !isUser.admin)
+      throw new Error("You have exhausted your upload quota.");
+
     const file = await c.req.formData();
     if (!file) throw new Error("No file is uploaded.");
 
@@ -39,10 +54,6 @@ export async function uploadQP(c: Context) {
     const kv = c.env["my-app"];
     await kv.put(key, data);
 
-    const prisma = new PrismaClient({
-      datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate());
-
     const newUpload = await prisma.questionPaper.create({
       data: {
         courseCode: parsedData.courseCode,
@@ -50,11 +61,20 @@ export async function uploadQP(c: Context) {
         examType: parsedData.examType,
         fileKey: key,
         year: parsedData.year,
-        userId: Number(userId),
+        userId: isUser.id,
       },
     });
 
     if (!newUpload) throw new Error("Failed to create question paper.");
+
+    await prisma.user.update({
+      where: {
+        id: isUser.id,
+      },
+      data: {
+        uploadCount: isUser.uploadCount + 1,
+      },
+    });
 
     return c.json({
       success: true,
