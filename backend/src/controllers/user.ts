@@ -2,10 +2,7 @@ import { Context } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import uploadData from "../utils/uploadData";
-import {
-  z_createQuestionPaper,
-  z_signin,
-} from "@singhjaskaran/paperbank-common";
+import { z_createQuestionPaper } from "@singhjaskaran/paperbank-common";
 
 export async function uploadQP(c: Context) {
   try {
@@ -23,6 +20,8 @@ export async function uploadQP(c: Context) {
     const year = formData.get("year")?.toString();
     const examType = formData.get("examType")?.toString();
 
+    console.table([{ pdf, courseCode, courseName, year, examType }]);
+
     const { success, data: parsedData } = z_createQuestionPaper.safeParse({
       courseName,
       courseCode,
@@ -37,7 +36,8 @@ export async function uploadQP(c: Context) {
 
     const { data, error, key } = await uploadData(pdf, Number(userId));
 
-    if (error || !key) throw new Error("");
+    if (error) throw new Error(error);
+    if (!key) throw new Error("Failed to create kv key.");
 
     const kv = c.env["my-app"];
     await kv.put(key, data);
@@ -54,16 +54,15 @@ export async function uploadQP(c: Context) {
         fileKey: key,
         year: parsedData.year,
         userId: Number(userId),
-        reviewerId: 1,
       },
     });
+
+    if (!newUpload) throw new Error("Failed to create question paper.");
 
     return c.json({
       success: true,
       status: 200,
       message: "Ouestion paper is uploaded successfully.",
-      key,
-      parsedData,
     });
   } catch (error) {
     const err = error as Error;
@@ -71,6 +70,37 @@ export async function uploadQP(c: Context) {
       success: false,
       status: 400,
       message: err.message || "Failed to upload Question paper.",
+    });
+  }
+}
+
+export async function getQP(c: Context) {
+  try {
+    const key = c.req.param("key");
+    if (!key) throw new Error("No key provided.");
+
+    const kv = c.env["my-app"];
+    const base64Data = await kv.get(key);
+    if (!base64Data) throw new Error("PDF not found.");
+
+    // Decode Base64 and convert to binary data
+    const binaryData = Uint8Array.from(atob(base64Data), (c) =>
+      c.charCodeAt(0)
+    );
+
+    return new Response(binaryData, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `inline; filename="${key}.pdf"`,
+      },
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 404,
+      message: err.message || "Failed to retrieve the PDF.",
     });
   }
 }

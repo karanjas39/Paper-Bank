@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { uploadQP } from "../controllers/user";
+import { getQP, uploadQP } from "../controllers/user";
 import { isauthorized, isVerified } from "../middlewares/auth";
 
 const user = new Hono<{
@@ -13,8 +13,7 @@ const user = new Hono<{
   };
 }>();
 
-user.use("*", isauthorized);
-
-user.post("/upload-qp", isVerified, uploadQP);
+user.post("/upload-qp", isauthorized, isVerified, uploadQP);
+user.get("/qp/:key", getQP);
 
 export default user;
