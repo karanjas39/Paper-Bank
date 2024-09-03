@@ -51,8 +51,8 @@ model QuestionPaper {
   reviewMessage   String?
   user            User         @relation("UserQuestionPapers", fields: [userId], references: [id])
   userId          Int
-  reviewer        User        @relation("ReviewedQuestionPapers", fields: [reviewerId], references: [id])
-  reviewerId      Int
+  reviewer        User?        @relation("ReviewedQuestionPapers", fields: [reviewerId], references: [id])
+  reviewerId      Int?
   updatedAt       DateTime     @updatedAt
 
   @@index([status]) 

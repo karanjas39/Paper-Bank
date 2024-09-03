@@ -8,9 +8,9 @@ JWT_SECRET="paperbank@singhjaskaran2024"
 RESEND_KEY="re_gNBYotaV_6SshWywn1WduibV7AHvMTgoz"
 
 
-# [[kv_namespaces]]
-# binding = "MY_KV_NAMESPACE"
-# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+[[kv_namespaces]]
+binding = "my-app"
+id = "5ca97dad4d7546389ef1f4263ef4fdb1"
 
 # [[r2_buckets]]
 # binding = "MY_BUCKET"

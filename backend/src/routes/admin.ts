@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { createProgram } from "../controllers/program";
+import { isAdmin, isauthorized, isVerified } from "../middlewares/auth";
 
 const admin = new Hono<{
   Bindings: {
@@ -12,6 +13,8 @@ const admin = new Hono<{
   };
 }>();
 
-admin.post("/create/program", createProgram);
+admin.use("*", isauthorized, isAdmin);
+
+admin.post("/create/program", isVerified, createProgram);
 
 export default admin;

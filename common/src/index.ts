@@ -21,8 +21,21 @@ export const z_verifyOTP = z.object({
   otp: z.string().length(6),
 });
 
+export const z_createQuestionPaper = z.object({
+  courseName: z.string().min(1),
+  courseCode: z.string().min(1),
+  year: z.coerce.number(),
+  examType: z.enum(["MSE", "ESE"]),
+  pdf: z
+    .any()
+    .refine((file) => file instanceof File && file.type === "application/pdf", {
+      message: "Invalid file type. Expected a PDF.",
+    }),
+});
+
 // TYPES
 export type z_signup_type = z.infer<typeof z_signup>;
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_createProgram_type = z.infer<typeof z_createProgram>;
 export type z_verifyOTP_type = z.infer<typeof z_verifyOTP>;
+export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;
