@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { sendOTP } from "../controllers/email";
+import { sendOTP, verifyOTP } from "../controllers/email";
 import { isauthorized } from "../middlewares/auth";
 
 const email = new Hono<{
@@ -17,5 +17,6 @@ const email = new Hono<{
 email.use("*", isauthorized);
 
 email.get("/otp", sendOTP);
+email.post("/verify-otp", verifyOTP);
 
 export default email;
