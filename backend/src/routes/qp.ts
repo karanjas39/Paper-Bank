@@ -1,6 +1,11 @@
 import { Hono } from "hono";
-import { getQP, uploadQP } from "../controllers/questionPaper";
-import { isauthorized, isVerified } from "../middlewares/auth";
+import {
+  getAllQP,
+  getQP,
+  reviewQP,
+  uploadQP,
+} from "../controllers/questionPaper";
+import { isAdmin, isauthorized, isVerified } from "../middlewares/auth";
 
 const qp = new Hono<{
   Bindings: {
@@ -14,7 +19,8 @@ const qp = new Hono<{
 }>();
 
 qp.post("/upload", isauthorized, isVerified, uploadQP);
-qp.get("/:key", getQP);
-qp.delete("/:key", getQP);
+qp.get("/pdf/:key", getQP);
+qp.post("/review", isauthorized, isVerified, isAdmin, reviewQP);
+qp.get("/all", getAllQP);
 
 export default qp;
