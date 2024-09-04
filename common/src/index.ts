@@ -33,9 +33,21 @@ export const z_createQuestionPaper = z.object({
     }),
 });
 
+export const z_reviewQP = z.object({
+  id: z.number(),
+  status: z.enum(["rejected", "approved"]),
+});
+
+export const z_createNotification = z.object({
+  userId: z.number(),
+  message: z.string().min(1),
+});
+
 // TYPES
 export type z_signup_type = z.infer<typeof z_signup>;
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_createProgram_type = z.infer<typeof z_createProgram>;
 export type z_verifyOTP_type = z.infer<typeof z_verifyOTP>;
 export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;
+export type z_reviewQP_type = z.infer<typeof z_reviewQP>;
+export type z_createNotification_type = z.infer<typeof z_createNotification>;

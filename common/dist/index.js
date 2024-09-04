@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.z_createQuestionPaper = exports.z_verifyOTP = exports.z_createProgram = exports.z_signin = exports.z_signup = void 0;
+exports.z_createNotification = exports.z_reviewQP = exports.z_createQuestionPaper = exports.z_verifyOTP = exports.z_createProgram = exports.z_signin = exports.z_signup = void 0;
 const zod_1 = require("zod");
 // SCHEMAS
 exports.z_signup = zod_1.z.object({
@@ -29,4 +29,12 @@ exports.z_createQuestionPaper = zod_1.z.object({
         .refine((file) => file instanceof File && file.type === "application/pdf", {
         message: "Invalid file type. Expected a PDF.",
     }),
+});
+exports.z_reviewQP = zod_1.z.object({
+    id: zod_1.z.number(),
+    status: zod_1.z.enum(["rejected", "approved"]),
+});
+exports.z_createNotification = zod_1.z.object({
+    userId: zod_1.z.number(),
+    message: zod_1.z.string().min(1),
 });

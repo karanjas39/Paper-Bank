@@ -1,8 +1,8 @@
 import { Hono } from "hono";
-import { getQP, uploadQP } from "../controllers/user";
+import { getQP, uploadQP } from "../controllers/questionPaper";
 import { isauthorized, isVerified } from "../middlewares/auth";
 
-const user = new Hono<{
+const qp = new Hono<{
   Bindings: {
     DATABASE_URL: string;
   };
@@ -13,7 +13,8 @@ const user = new Hono<{
   };
 }>();
 
-user.post("/upload-qp", isauthorized, isVerified, uploadQP);
-user.get("/qp/:key", getQP);
+qp.post("/upload", isauthorized, isVerified, uploadQP);
+qp.get("/:key", getQP);
+qp.delete("/:key", getQP);
 
-export default user;
+export default qp;

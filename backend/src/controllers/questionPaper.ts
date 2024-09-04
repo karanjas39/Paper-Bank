@@ -119,3 +119,32 @@ export async function getQP(c: Context) {
     });
   }
 }
+
+export async function deleteQP(c: Context) {
+  try {
+    const key = c.req.param("key");
+    if (!key) throw new Error("No key provided.");
+
+    const kv = c.env["my-app"];
+    const base64Data = await kv.get(key);
+    if (!base64Data) throw new Error("Question Paper not found.");
+
+    const bytes = new Uint8Array(base64Data.split(",").map(Number));
+    const arrayBuffer = bytes.buffer;
+
+    return new Response(arrayBuffer, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `inline; filename="${key}.pdf"`,
+      },
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 404,
+      message: err.message || "Failed to retrieve the Question Paper.",
+    });
+  }
+}

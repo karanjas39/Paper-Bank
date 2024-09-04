@@ -58,8 +58,30 @@ export declare const z_createQuestionPaper: z.ZodObject<{
     examType: "MSE" | "ESE";
     pdf?: any;
 }>;
+export declare const z_reviewQP: z.ZodObject<{
+    id: z.ZodNumber;
+    status: z.ZodEnum<["rejected", "approved"]>;
+}, "strip", z.ZodTypeAny, {
+    status: "rejected" | "approved";
+    id: number;
+}, {
+    status: "rejected" | "approved";
+    id: number;
+}>;
+export declare const z_createNotification: z.ZodObject<{
+    userId: z.ZodNumber;
+    message: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    message: string;
+    userId: number;
+}, {
+    message: string;
+    userId: number;
+}>;
 export type z_signup_type = z.infer<typeof z_signup>;
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_createProgram_type = z.infer<typeof z_createProgram>;
 export type z_verifyOTP_type = z.infer<typeof z_verifyOTP>;
 export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;
+export type z_reviewQP_type = z.infer<typeof z_reviewQP>;
+export type z_createNotification_type = z.infer<typeof z_createNotification>;

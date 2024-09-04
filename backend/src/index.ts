@@ -3,7 +3,7 @@ import { cors } from "hono/cors";
 import auth from "./routes/auth";
 import admin from "./routes/admin";
 import email from "./routes/email";
-import user from "./routes/user";
+import qp from "./routes/qp";
 
 const app = new Hono<{
   Bindings: {
@@ -16,7 +16,7 @@ app.use("*", cors());
 
 app.route("/api/v1/auth", auth);
 app.route("/api/v1/email", email);
-app.route("/api/v1/user", user);
+app.route("/api/v1/qp", qp);
 app.route("/api/v1/admin", admin);
 
 app.all(async (c) => {
