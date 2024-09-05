@@ -205,7 +205,7 @@ export async function reviewQP(c: Context) {
   }
 }
 
-export async function getAllQP(c: Context) {
+export async function getAllApprovedQP(c: Context) {
   try {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -228,6 +228,50 @@ export async function getAllQP(c: Context) {
             name: true,
           },
         },
+      },
+    });
+
+    return c.json({
+      success: true,
+      status: 200,
+      qps,
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 404,
+      message: err.message || "Failed to get all Question Paper.",
+    });
+  }
+}
+
+export async function getAllPendingQP(c: Context) {
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const qps = await prisma.questionPaper.findMany({
+      where: {
+        status: "pending",
+      },
+      select: {
+        courseCode: true,
+        courseName: true,
+        examType: true,
+        year: true,
+        id: true,
+        fileKey: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        submittedAt: "desc",
       },
     });
 

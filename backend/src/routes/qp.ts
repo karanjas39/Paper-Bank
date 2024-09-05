@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import {
-  getAllQP,
+  getAllApprovedQP,
+  getAllPendingQP,
   getQP,
   reviewQP,
   uploadQP,
@@ -21,6 +22,7 @@ const qp = new Hono<{
 qp.post("/upload", isauthorized, isVerified, uploadQP);
 qp.get("/pdf/:key", getQP);
 qp.post("/review", isauthorized, isVerified, isAdmin, reviewQP);
-qp.get("/all", getAllQP);
+qp.get("/approved", getAllApprovedQP);
+qp.get("/pending", isauthorized, isVerified, isAdmin, getAllPendingQP);
 
 export default qp;
