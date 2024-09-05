@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/Theme/ThemeProvider";
 import { Nunito_Sans } from "next/font/google";
+import Navbar from "@/components/Navbar/Navbar";
+import { RootProvider } from "@/components/Providers/RootProvider";
 
 const fontStyle = Nunito_Sans({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -19,14 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={fontStyle.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );
