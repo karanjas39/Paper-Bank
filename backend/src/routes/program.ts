@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { createProgram } from "../controllers/program";
 import { isAdmin, isauthorized, isVerified } from "../middlewares/auth";
 
-const admin = new Hono<{
+const program = new Hono<{
   Bindings: {
     DATABASE_URL: string;
   };
@@ -13,8 +13,8 @@ const admin = new Hono<{
   };
 }>();
 
-admin.use("*", isauthorized, isAdmin);
+program.use("*", isauthorized);
 
-admin.post("/create/program", isVerified, createProgram);
+program.post("/create", isVerified, isAdmin, createProgram);
 
-export default admin;
+export default program;
