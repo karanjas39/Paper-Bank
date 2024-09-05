@@ -5,6 +5,7 @@ import program from "./routes/program";
 import email from "./routes/email";
 import qp from "./routes/qp";
 import notification from "./routes/notification";
+import user from "./routes/user";
 
 const app = new Hono<{
   Bindings: {
@@ -20,6 +21,7 @@ app.route("/api/v1/email", email);
 app.route("/api/v1/qp", qp);
 app.route("/api/v1/program", program);
 app.route("/api/v1/notification", notification);
+app.route("/api/v1/user", user);
 
 app.all(async (c) => {
   return c.json({
