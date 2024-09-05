@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/Theme/ThemeProvider";
+import { Nunito_Sans } from "next/font/google";
+
+const fontStyle = Nunito_Sans({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Paper Bank",
@@ -15,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={fontStyle.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
