@@ -37,3 +37,31 @@ export async function createProgram(c: Context) {
     });
   }
 }
+
+export async function getAllProgram(c: Context) {
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const programs = await prisma.program.findMany({
+      select: {
+        name: true,
+        id: true,
+      },
+    });
+
+    return c.json({
+      success: true,
+      status: 200,
+      programs,
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 400,
+      message: err.message || "Failed to get programs.",
+    });
+  }
+}

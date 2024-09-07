@@ -11,7 +11,7 @@ function Navbar() {
   const { token } = useSelector((state: RootState) => state.auth);
 
   return (
-    <div className="pt-2 px-2 w-full flex items-center justify-between">
+    <div className="px-6 py-4 w-full flex items-center justify-between bg-transparent">
       <Logo />
       <div className="flex items-center gap-3">
         {token ? (

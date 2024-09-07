@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { createProgram } from "../controllers/program";
+import { createProgram, getAllProgram } from "../controllers/program";
 import { isAdmin, isauthorized, isVerified } from "../middlewares/auth";
 
 const program = new Hono<{
@@ -13,8 +13,7 @@ const program = new Hono<{
   };
 }>();
 
-program.use("*", isauthorized);
-
-program.post("/create", isVerified, isAdmin, createProgram);
+program.post("/create", isauthorized, isVerified, isAdmin, createProgram);
+program.get("/all", getAllProgram);
 
 export default program;

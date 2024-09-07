@@ -103,7 +103,7 @@ export default function SignIn() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="mt-1">
+          <Button type="submit" disabled={isLoading} className="mt-1">
             {isLoading ? (
               <>
                 <span>Submitting...</span>

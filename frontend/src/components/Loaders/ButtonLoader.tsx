@@ -1,8 +1,8 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import BlackLoader from "../../../public/loader_black.svg";
-import WhiteLoader from "../../../public/loader_white.svg";
+import BlackLoader from "/public/loader_black.svg";
+import WhiteLoader from "/public/loader_white.svg";
 import Image from "next/image";
 
 function ButtonLoader() {
