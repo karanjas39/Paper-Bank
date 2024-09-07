@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/Theme/ThemeProvider";
-import { Nunito_Sans } from "next/font/google";
-import Navbar from "@/components/Navbar/Navbar";
+import { Poppins } from "next/font/google";
 import { RootProvider } from "@/components/Providers/RootProvider";
 
-const fontStyle = Nunito_Sans({ subsets: ["latin"], weight: ["400", "700"] });
+const fontStyle = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Paper Bank",

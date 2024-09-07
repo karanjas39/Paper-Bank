@@ -37,3 +37,32 @@ export async function allUsers(c: Context) {
     });
   }
 }
+
+export async function userDetails(c: Context) {
+  try {
+    const userId = c.get("id");
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: Number(userId),
+      },
+    });
+
+    return c.json({
+      success: true,
+      status: 200,
+      user,
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 400,
+      message: err.message || "Failed to get users.",
+    });
+  }
+}
