@@ -11,7 +11,7 @@ function Navbar() {
   const { token } = useSelector((state: RootState) => state.auth);
 
   return (
-    <div className="px-6 py-4 w-full flex items-center justify-between bg-transparent">
+    <div className="px-6 py-4 flex items-center justify-between bg-white dark:bg-black">
       <Logo />
       <div className="flex items-center gap-3">
         {token ? (
@@ -24,7 +24,7 @@ function Navbar() {
           </Link>
         ) : (
           <Link href="signin">
-            <Button>Sign In</Button>
+            <Button variant="col">Sign In</Button>
           </Link>
         )}
         <ThemeToggler />

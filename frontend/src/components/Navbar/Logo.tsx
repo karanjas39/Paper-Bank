@@ -1,20 +1,20 @@
 "use client";
 
-import { Playpen_Sans } from "next/font/google";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-const fontStyle = Playpen_Sans({ subsets: ["latin"], weight: ["700"] });
+import LogoImage from "/public/logo.png";
 
 function Logo() {
   const router = useRouter();
 
   return (
-    <p
-      className={`${fontStyle.className} font-bold text-lg sm:text-2xl cursor-pointer`}
+    <div
       onClick={() => router.push("/")}
+      className="cursor-pointer flex items-center gap-2"
     >
-      Paper Bank
-    </p>
+      <Image src={LogoImage} alt="Logo image" width={40} />
+      <p className="font-bold text-lg sm:text-2xl">Paper Bank</p>
+    </div>
   );
 }
 
