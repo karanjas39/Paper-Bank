@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.z_createNotification = exports.z_reviewQP = exports.z_createQuestionPaper = exports.z_verifyOTP = exports.z_createProgram = exports.z_signin = exports.z_signup = void 0;
+exports.z_createMessage = exports.z_createNotification = exports.z_reviewQP = exports.z_createQuestionPaper = exports.z_verifyOTP = exports.z_createProgram = exports.z_signin = exports.z_signup = void 0;
 const zod_1 = require("zod");
 // SCHEMAS
 exports.z_signup = zod_1.z.object({
@@ -37,4 +37,7 @@ exports.z_reviewQP = zod_1.z.object({
 exports.z_createNotification = zod_1.z.object({
     userId: zod_1.z.number(),
     message: zod_1.z.string().min(1),
+});
+exports.z_createMessage = zod_1.z.object({
+    message: zod_1.z.string().min(1).max(100),
 });

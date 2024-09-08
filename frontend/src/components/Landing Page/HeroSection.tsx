@@ -2,6 +2,7 @@ import { FlipWords } from "@/components/ui/flip-words";
 
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import { StarFilledIcon } from "@radix-ui/react-icons";
+import { Button } from "../ui/button";
 
 const people = [
   {
@@ -65,10 +66,15 @@ function HeroSection() {
             with <span className="text-col1 font-bold">Paper Bank</span>
           </p>
         </div>
-        <p className="mt-4 text-lg font-medium text-neutral-500 dark:text-neutral-300">
-          Your go-to platform for exam preparation, question papers, and study
-          materials.
-        </p>
+        <div className="mt-4 text-lg font-medium text-neutral-500 dark:text-neutral-300 flex flex-col gap-3">
+          <p>
+            Your go-to platform for exam preparation, question papers, and study
+            materials.
+          </p>
+          <Button variant="primary" className="max-w-min">
+            Explore Papers now
+          </Button>
+        </div>
         <div className="flex items-start sm:items-center sm:flex-row flex-col sm:gap-7 gap-3 mt-6">
           <div className="flex flex-row items-center justify-center">
             <AnimatedTooltip items={people} />

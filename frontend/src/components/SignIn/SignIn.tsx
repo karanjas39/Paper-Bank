@@ -41,7 +41,7 @@ export default function SignIn() {
       const response = await SignIn(values).unwrap();
       if (response.success) {
         toast({ description: response.message });
-        router.push("/");
+        router.push("/dashboard");
         dispatch(setToken(response.token));
       } else throw new Error(response.message);
     } catch (error) {

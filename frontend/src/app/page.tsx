@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer";
 import ContactSection from "@/components/Landing Page/Contact Us/ContactSection";
 import { FeatureSection } from "@/components/Landing Page/FeatureSection";
 import HeroSection from "@/components/Landing Page/HeroSection";
@@ -8,6 +9,7 @@ export default async function Home() {
       <HeroSection />
       <FeatureSection />
       <ContactSection />
+      <Footer />
     </div>
   );
 }

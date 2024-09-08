@@ -78,6 +78,13 @@ export declare const z_createNotification: z.ZodObject<{
     message: string;
     userId: number;
 }>;
+export declare const z_createMessage: z.ZodObject<{
+    message: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    message: string;
+}, {
+    message: string;
+}>;
 export type z_signup_type = z.infer<typeof z_signup>;
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_createProgram_type = z.infer<typeof z_createProgram>;
@@ -85,3 +92,4 @@ export type z_verifyOTP_type = z.infer<typeof z_verifyOTP>;
 export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;
 export type z_reviewQP_type = z.infer<typeof z_reviewQP>;
 export type z_createNotification_type = z.infer<typeof z_createNotification>;
+export type z_createMessage_type = z.infer<typeof z_createMessage>;

@@ -1,34 +1,21 @@
 import React from "react";
 import { BackgroundBeams } from "../../ui/background-beams";
 import ContactUsForm from "./ContactUsForm";
-import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 
 function ContactSection() {
-  const words = [
-    {
-      text: "Ask",
-    },
-    {
-      text: "Paper",
-      className: "text-col1 dark:text-col1",
-    },
-    {
-      text: "Bank",
-      className: "text-col1 dark:text-col1",
-    },
-    {
-      text: "Anything.",
-    },
-  ];
-
   return (
-    <div className="min-h-[30rem] w-full bg-neutral-900 relative flex flex-col items-center justify-center antialiased">
-      <div className="sm:w-[60%] w-[95%] mx-auto p-4 flex items-center justify-center sm:gap-6 gap-2 flex-col">
-        <h1 className="text-white  relative z-10 text-4xl sm:text-7xl text-center font-sans font-bold">
-          <TypewriterEffectSmooth words={words} />
+    <div className="h-[40rem] w-full bg-neutral-900 relative flex flex-col items-center justify-center antialiased">
+      <div className="max-w-2xl mx-auto p-4">
+        <h1 className="relative z-10 text-4xl md:text-7xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600  text-center font-sans font-bold">
+          Contact Us
         </h1>
+        <p></p>
+        <p className="text-neutral-500 max-w-lg mx-auto my-2 text-xs md:text-sm text-center relative z-10">
+          Have a question or need help? Reach out to us and we'll get back to
+          you as soon as possible.
+        </p>
+        <ContactUsForm />
       </div>
-      <ContactUsForm />
       <BackgroundBeams />
     </div>
   );
