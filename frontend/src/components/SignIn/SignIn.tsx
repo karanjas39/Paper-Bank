@@ -51,7 +51,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="sm:w-[35%] w-[80%] mx-auto sm:rounded-2xl rounded-lg p-8 shadow-input mt-10">
+    <div className="sm:w-[35%] w-[90%] mx-auto sm:rounded-2xl rounded-lg p-8 shadow-input mt-10">
       <div className="my-7 flex flex-col gap-2">
         <TextGenerateEffect
           words={"Welcome to Paper Bank"}
@@ -103,7 +103,12 @@ export default function SignIn() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isLoading} className="mt-1">
+          <Button
+            type="submit"
+            disabled={isLoading}
+            variant="primary"
+            className="mt-1"
+          >
             {isLoading ? (
               <>
                 <span>Submitting...</span>

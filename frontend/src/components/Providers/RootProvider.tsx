@@ -16,10 +16,8 @@ export const RootProvider = ({ children }: { children: React.ReactNode }) => {
         enableSystem
         disableTransitionOnChange
       >
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          {children}
-        </div>
+        <Navbar />
+        {children}
         <Toaster />
       </ThemeProvider>
     </Provider>

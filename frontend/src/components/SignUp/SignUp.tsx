@@ -69,7 +69,7 @@ function SignUp() {
   if (isFetching) return <Loader />;
 
   return (
-    <div className="sm:w-[35%] w-[80%] mx-auto sm:rounded-2xl rounded-lg p-8 shadow-input my-5">
+    <div className="sm:w-[35%] w-[90%] mx-auto sm:rounded-2xl rounded-lg p-8 shadow-input my-5">
       <div className="my-7 flex flex-col gap-2">
         <TextGenerateEffect
           words={"Join Paper Bank Today!"}
@@ -193,7 +193,12 @@ function SignUp() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="mt-1">
+          <Button
+            type="submit"
+            disabled={isLoading}
+            variant="primary"
+            className="mt-1"
+          >
             {isLoading ? (
               <>
                 <span>Submitting...</span>
