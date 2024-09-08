@@ -6,8 +6,11 @@ import Navbar from "@/components/Navbar/Navbar";
 import { store } from "@/store/index";
 import { Provider } from "react-redux";
 import { Toaster } from "@/components/ui/toaster";
+import { usePathname } from "next/navigation";
 
 export const RootProvider = ({ children }: { children: React.ReactNode }) => {
+  const path = usePathname();
+
   return (
     <Provider store={store}>
       <ThemeProvider
@@ -16,7 +19,7 @@ export const RootProvider = ({ children }: { children: React.ReactNode }) => {
         enableSystem
         disableTransitionOnChange
       >
-        <Navbar />
+        {path !== "/dashboard" ? <Navbar /> : null}
         {children}
         <Toaster />
       </ThemeProvider>

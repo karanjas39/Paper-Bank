@@ -111,7 +111,7 @@ export default function SignIn() {
           >
             {isLoading ? (
               <>
-                <span>Submitting...</span>
+                <span className="mr-1">Submitting</span>
                 <ButtonLoader />
               </>
             ) : (
