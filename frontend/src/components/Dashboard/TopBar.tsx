@@ -33,10 +33,10 @@ function NavMenuBar() {
       </SheetTrigger>
       <SheetContent className="flex flex-col min-h-screen">
         <SheetHeader>
-          <SheetTitle>Are you absolutely sure?</SheetTitle>
+          <SheetTitle>Paper Bank</SheetTitle>
           <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Manage your uploads, view approved question papers, and update your
+            account settings.
           </SheetDescription>
         </SheetHeader>
         <SideItems />

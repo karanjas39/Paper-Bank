@@ -56,7 +56,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="sm:w-[35%] w-[90%] mx-auto sm:rounded-2xl rounded-lg p-8 shadow-input mt-10">
+    <div className="sm:w-[35%] w-[90%] mx-auto sm:rounded-2xl rounded-lg p-8 shadow-input mt-10 mb-2">
       <div className="my-7 flex flex-col gap-2">
         <TextGenerateEffect
           words={"Welcome to Paper Bank"}

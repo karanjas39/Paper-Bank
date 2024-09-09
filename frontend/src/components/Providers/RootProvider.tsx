@@ -19,7 +19,7 @@ export const RootProvider = ({ children }: { children: React.ReactNode }) => {
         enableSystem
         disableTransitionOnChange
       >
-        {path !== "/dashboard" ? <Navbar /> : null}
+        {!path.includes("dashboard") ? <Navbar /> : null}
         {children}
         <Toaster />
       </ThemeProvider>

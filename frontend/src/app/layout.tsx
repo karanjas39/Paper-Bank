@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("mb-3", fontStyle.className)}>
+      <body className={cn(fontStyle.className)}>
         <RootProvider>{children}</RootProvider>
       </body>
     </html>
