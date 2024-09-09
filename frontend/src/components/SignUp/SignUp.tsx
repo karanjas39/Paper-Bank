@@ -62,6 +62,8 @@ function SignUp() {
       } else throw new Error(response.message);
     } catch (error) {
       const err = error as Error;
+      if (err.message.split(" ")[0] === "\nInvalid")
+        err.message = "Unable to signup right now.";
       toast({ description: err.message, variant: "destructive" });
     }
   }
@@ -162,25 +164,29 @@ function SignUp() {
                       <CommandList>
                         <CommandEmpty>No program found.</CommandEmpty>
                         <CommandGroup>
-                          {data?.programs.map((program) => (
-                            <CommandItem
-                              value={program.name}
-                              key={program.id}
-                              onSelect={() => {
-                                form.setValue("programId", Number(program.id));
-                              }}
-                            >
-                              {program.name}
-                              <CheckIcon
-                                className={cn(
-                                  "ml-auto h-4 w-4",
-                                  program.id === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
+                          {data &&
+                            data?.programs?.map((program) => (
+                              <CommandItem
+                                value={program.name}
+                                key={program.id}
+                                onSelect={() => {
+                                  form.setValue(
+                                    "programId",
+                                    Number(program.id)
+                                  );
+                                }}
+                              >
+                                {program.name}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    program.id === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
                         </CommandGroup>
                       </CommandList>
                     </Command>

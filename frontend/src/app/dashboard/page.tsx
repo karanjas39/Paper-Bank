@@ -1,3 +1,3 @@
 export default function DashboardPage() {
-  return <div>page</div>;
+  return <div className="flex flex-1">page</div>;
 }

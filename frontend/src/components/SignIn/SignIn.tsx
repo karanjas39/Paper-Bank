@@ -46,7 +46,12 @@ export default function SignIn() {
       } else throw new Error(response.message);
     } catch (error) {
       const err = error as Error;
-      toast({ description: err.message, variant: "destructive" });
+      if (err.message.split(" ")[0] === "\nInvalid")
+        err.message = "Unable to signin right now.";
+      toast({
+        description: err.message,
+        variant: "destructive",
+      });
     }
   }
 
