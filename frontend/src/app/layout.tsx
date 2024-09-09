@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import { RootProvider } from "@/components/Providers/RootProvider";
+import { cn } from "@/lib/utils";
 
 const fontStyle = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={fontStyle.className}>
+      <body className={cn("mb-3", fontStyle.className)}>
         <RootProvider>{children}</RootProvider>
       </body>
     </html>

@@ -4,6 +4,18 @@ export interface responseType {
   message?: string;
 }
 
+export interface userType {
+  name: string;
+  email: string;
+  verified: boolean;
+  admin: boolean;
+  createdAt: string;
+  updatedAt: string;
+  program: {
+    name: string;
+  };
+}
+
 export interface signinType extends responseType {
   token: string;
 }
@@ -13,4 +25,8 @@ export interface allProgramstype extends responseType {
     name: string;
     id: number;
   }[];
+}
+
+export interface userDetailType extends responseType {
+  user: userType;
 }

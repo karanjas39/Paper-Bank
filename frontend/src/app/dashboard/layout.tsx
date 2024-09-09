@@ -1,4 +1,5 @@
-import SideBar from "@/components/Dashboard/SideBar";
+import SideBar from "@/components/Dashboard/SideBar/SideBar";
+import TopBar from "@/components/Dashboard/TopBar";
 
 export default function DashboardLayout({
   children,
@@ -8,7 +9,10 @@ export default function DashboardLayout({
   return (
     <div className="w-full flex min-h-screen">
       <SideBar />
-      {children}
+      <div className="flex flex-col w-full">
+        <TopBar />
+        {children}
+      </div>
     </div>
   );
 }

@@ -6,8 +6,20 @@ import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
 
-export function ThemeToggler() {
+export function ThemeToggler({ button = true }: { button?: boolean }) {
   const { setTheme, resolvedTheme } = useTheme();
+
+  if (!button) {
+    return (
+      <>
+        {resolvedTheme === "light" ? (
+          <SunIcon onClick={() => setTheme("dark")} />
+        ) : (
+          <MoonIcon onClick={() => setTheme("light")} />
+        )}
+      </>
+    );
+  }
 
   return (
     <>

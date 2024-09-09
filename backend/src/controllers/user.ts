@@ -50,6 +50,19 @@ export async function userDetails(c: Context) {
       where: {
         id: Number(userId),
       },
+      select: {
+        name: true,
+        email: true,
+        verified: true,
+        admin: true,
+        createdAt: true,
+        updatedAt: true,
+        program: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return c.json({
