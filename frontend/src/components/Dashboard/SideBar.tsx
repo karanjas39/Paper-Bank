@@ -1,25 +1,44 @@
 "use client";
 
 import React from "react";
-import Logo from "../../Navbar/Logo";
-import SideBarBottom from "./UserAvatar";
+import Logo from "../Navbar/Logo";
 import Link from "next/link";
 import { links } from "@/lib/constants";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useDispatch } from "react-redux";
+import { userApi } from "@/store/api/userApi";
+import { clearToken } from "@/store/slices/authSlice";
+import { useToast } from "@/hooks/use-toast";
+import { AppDispatch } from "@/store";
+import { authApi } from "@/store/api/authApi";
 
 function SideBar() {
   return (
     <div className="w-[20%] h-screen md:block hidden dark:bg-neutral-900 bg-neutral-200">
-      <SideItems />
+      <SideNavLinks />
     </div>
   );
 }
 
 export default SideBar;
 
-export function SideItems() {
+export function SideNavLinks() {
   const path: string = usePathname();
+  const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  function handleLogout() {
+    dispatch((dispatch) => {
+      dispatch(authApi.util.resetApiState());
+      dispatch(userApi.util.resetApiState());
+      dispatch(clearToken());
+    });
+    router.replace("/");
+    toast({ description: "You have been successfuly logout." });
+  }
 
   return (
     <div className="flex flex-col justify-between md:min-h-screen flex-1 md:p-4">
@@ -47,7 +66,9 @@ export function SideItems() {
           })}
         </div>
       </div>
-      <SideBarBottom />
+      <Button className="w-full" onClick={handleLogout}>
+        Logout
+      </Button>
     </div>
   );
 }

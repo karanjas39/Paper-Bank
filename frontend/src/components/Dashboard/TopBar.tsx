@@ -6,7 +6,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { SideItems } from "./SideBar/SideBar";
+import { SideNavLinks } from "./SideBar";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Logo from "../Navbar/Logo";
 
@@ -39,7 +39,7 @@ function NavMenuBar() {
             account settings.
           </SheetDescription>
         </SheetHeader>
-        <SideItems />
+        <SideNavLinks />
       </SheetContent>
     </Sheet>
   );
