@@ -6,7 +6,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { SideNavLinks } from "./SideBar";
+import SideNavLinks from "./SideBar/SideNavLinks";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Logo from "../Navbar/Logo";
 

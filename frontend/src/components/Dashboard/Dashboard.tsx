@@ -5,12 +5,12 @@ import { userApi } from "@/store/api/userApi";
 import Loader from "../Loaders/Loader";
 
 function Dashboard() {
-  const { data, isLoading } = userApi.useGetUserDetailsQuery();
+  const { data, isLoading } = userApi.useGetUserDetailQuery();
 
   if (isLoading) return <Loader />;
 
   return (
-    <Tabs defaultValue="detail" className="w-[400px]">
+    <Tabs defaultValue="detail" className="w-full">
       <TabsList>
         <TabsTrigger value="detail">Account Details</TabsTrigger>
         <TabsTrigger value="edit-detail">Edit Details</TabsTrigger>

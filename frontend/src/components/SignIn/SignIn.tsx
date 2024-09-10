@@ -22,6 +22,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setToken } from "@/store/slices/authSlice";
 import Link from "next/link";
+import { USER_TAG } from "@/lib/ApiTags";
+import { userApi } from "@/store/api/userApi";
 
 export default function SignIn() {
   const form = useForm<z_signin_type>({
@@ -41,8 +43,8 @@ export default function SignIn() {
       const response = await SignIn(values).unwrap();
       if (response.success) {
         toast({ description: response.message });
-        router.push("/dashboard");
         dispatch(setToken(response.token));
+        router.push("/dashboard");
       } else throw new Error(response.message);
     } catch (error) {
       const err = error as Error;

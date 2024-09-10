@@ -1,43 +1,30 @@
 "use client";
 
-import React from "react";
-import Logo from "../Navbar/Logo";
+import Logo from "../../Navbar/Logo";
 import Link from "next/link";
 import { links } from "@/lib/constants";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
-import { userApi } from "@/store/api/userApi";
-import { clearToken } from "@/store/slices/authSlice";
 import { useToast } from "@/hooks/use-toast";
-import { AppDispatch } from "@/store";
-import { authApi } from "@/store/api/authApi";
+import { AppDispatch, logoutAction } from "@/store/index";
 
-function SideBar() {
-  return (
-    <div className="w-[20%] h-screen md:block hidden dark:bg-neutral-900 bg-neutral-200">
-      <SideNavLinks />
-    </div>
-  );
-}
-
-export default SideBar;
-
-export function SideNavLinks() {
+export default function SideNavLinks() {
   const path: string = usePathname();
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   const router = useRouter();
   const { toast } = useToast();
 
   function handleLogout() {
-    dispatch((dispatch) => {
-      dispatch(authApi.util.resetApiState());
-      dispatch(userApi.util.resetApiState());
-      dispatch(clearToken());
-    });
-    router.replace("/");
-    toast({ description: "You have been successfuly logout." });
+    try {
+      dispatch(logoutAction());
+      router.replace("/");
+
+      toast({ description: "You have been successfully logged out." });
+    } catch (error) {
+      toast({ description: "Failed to logout.", variant: "destructive" });
+    }
   }
 
   return (
@@ -66,7 +53,7 @@ export function SideNavLinks() {
           })}
         </div>
       </div>
-      <Button className="w-full" onClick={handleLogout}>
+      <Button className="w-full" variant="secondary" onClick={handleLogout}>
         Logout
       </Button>
     </div>

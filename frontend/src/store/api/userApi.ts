@@ -1,8 +1,8 @@
-import { BACKEND_URL } from "@/lib/constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState } from "@/store/index";
+import { BACKEND_URL } from "@/lib/constants";
 import { tagTypes } from "@/lib/ApiTags";
 import { userDetailType } from "@/lib/ApiTypes";
-import { RootState } from "@/store/index";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -18,7 +18,7 @@ export const userApi = createApi({
   }),
   tagTypes,
   endpoints: (builder) => ({
-    getUserDetails: builder.query<userDetailType, void>({
+    getUserDetail: builder.query<userDetailType, void>({
       query: () => "/me",
     }),
   }),
