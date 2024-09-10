@@ -20,6 +20,7 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: any, action: any) => {
   if (action.type === logoutAction.type) {
+    sessionStorage.removeItem("token");
     state = undefined;
   }
   return appReducer(state, action);

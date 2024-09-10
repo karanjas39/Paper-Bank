@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "../../Navbar/Logo";
+import Logo from "../Navbar/Logo";
 import Link from "next/link";
 import { links } from "@/lib/constants";
 import { usePathname, useRouter } from "next/navigation";

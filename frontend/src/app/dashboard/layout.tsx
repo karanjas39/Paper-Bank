@@ -1,5 +1,5 @@
-import SideBar from "@/components/Dashboard/SideBar/SideBar";
-import TopBar from "@/components/Dashboard/TopBar";
+import SideBar from "@/components/DashSideBar/SideBar";
+import TopBar from "@/components/DashTopBar/TopBar";
 
 export default function RootLayout({
   children,
@@ -11,7 +11,7 @@ export default function RootLayout({
       <SideBar />
       <div className="flex flex-col w-full">
         <TopBar />
-        <div className="flex flex-1 p-6">{children}</div>
+        <div className="flex flex-1 p-6 w-full">{children}</div>
       </div>
     </div>
   );

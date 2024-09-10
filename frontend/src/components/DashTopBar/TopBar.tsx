@@ -6,9 +6,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import SideNavLinks from "./SideBar/SideNavLinks";
+import SideNavLinks from "@/components/DashSideBar/SideNavLinks";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import Logo from "../Navbar/Logo";
+import Logo from "@/components/Navbar/Logo";
 
 function TopBar() {
   return (
