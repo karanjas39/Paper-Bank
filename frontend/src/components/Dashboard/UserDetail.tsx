@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { userApi } from "@/store/api/userApi";
 import Loader from "@/components/Loaders/Loader";
 import { formatDate } from "@/lib/helpers";
-import VerifyEmail from "./VerifyEmail";
 
 function UserDetail() {
   const { data, isLoading } = userApi.useGetUserDetailQuery();
@@ -33,7 +32,6 @@ function UserDetail() {
             title="Joined Us On"
             data={formatDate(data.user.createdAt)}
           />
-          {!data.user.verified ? <VerifyEmail /> : null}
         </CardContent>
       ) : (
         <p className="text-center text-sm text-muted-foreground">

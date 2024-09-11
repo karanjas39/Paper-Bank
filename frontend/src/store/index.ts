@@ -8,7 +8,6 @@ import authReducer from "@/store/slices/authSlice";
 import { authApi } from "@/store/api/authApi";
 import { programApi } from "./api/programApi";
 import { userApi } from "./api/userApi";
-import { emailApi } from "./api/emailApi";
 
 export const logoutAction = createAction("auth/logout");
 
@@ -16,7 +15,6 @@ const appReducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [programApi.reducerPath]: programApi.reducer,
-  [emailApi.reducerPath]: emailApi.reducer,
   auth: authReducer,
 });
 
@@ -34,8 +32,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat(
       authApi.middleware,
       programApi.middleware,
-      userApi.middleware,
-      emailApi.middleware
+      userApi.middleware
     ),
 });
 
