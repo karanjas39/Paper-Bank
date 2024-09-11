@@ -22,8 +22,6 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setToken } from "@/store/slices/authSlice";
 import Link from "next/link";
-import { USER_TAG } from "@/lib/ApiTags";
-import { userApi } from "@/store/api/userApi";
 
 export default function SignIn() {
   const form = useForm<z_signin_type>({
@@ -93,15 +91,7 @@ export default function SignIn() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <div className="flex items-center justify-between">
-                  <FormLabel>Password</FormLabel>
-                  <Link
-                    href="/password-forget"
-                    className="text-muted-foreground text-sm"
-                  >
-                    Forget Password?
-                  </Link>
-                </div>
+                <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input placeholder="password" type="password" {...field} />
                 </FormControl>

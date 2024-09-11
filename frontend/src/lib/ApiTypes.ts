@@ -30,3 +30,11 @@ export interface allProgramstype extends responseType {
 export interface userDetailType extends responseType {
   user: userType;
 }
+
+export interface notificationType extends responseType {
+  notifications: {
+    message: string;
+    createdAt: string;
+    id: number;
+  }[];
+}

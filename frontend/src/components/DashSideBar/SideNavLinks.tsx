@@ -19,7 +19,7 @@ export default function SideNavLinks() {
   function handleLogout() {
     try {
       dispatch(logoutAction());
-      router.replace("/");
+      router.push("/");
 
       toast({ description: "You have been successfully logged out." });
     } catch (error) {
