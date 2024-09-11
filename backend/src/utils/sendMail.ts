@@ -12,7 +12,7 @@ export default async function sendMail(
 
     const data = await resend.emails.send({
       from: `${WebsiteName} <onboarding@resend.dev>`,
-      to: [to],
+      to: to,
       subject: subject,
       text: text,
     });

@@ -53,7 +53,7 @@ export default function SideNavLinks() {
           })}
         </div>
       </div>
-      <Button className="w-full" variant="secondary" onClick={handleLogout}>
+      <Button className="w-full" variant="primary" onClick={handleLogout}>
         Logout
       </Button>
     </div>
