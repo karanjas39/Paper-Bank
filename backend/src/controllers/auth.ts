@@ -25,6 +25,7 @@ export async function signup(c: Context) {
         email: data.email,
         password: hashedPassword,
         programId: data.programId,
+        verified: true,
       },
     });
 

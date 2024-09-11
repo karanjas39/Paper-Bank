@@ -32,26 +32,22 @@ export declare const z_createProgram: z.ZodObject<{
 }, {
     name: string;
 }>;
-export declare const z_verifyOTP: z.ZodObject<{
-    otp: z.ZodString;
-}, "strip", z.ZodTypeAny, {
-    otp: string;
-}, {
-    otp: string;
-}>;
 export declare const z_createQuestionPaper: z.ZodObject<{
     courseName: z.ZodString;
     courseCode: z.ZodString;
     year: z.ZodNumber;
     examType: z.ZodEnum<["MSE", "ESE"]>;
+    programId: z.ZodNumber;
     pdf: z.ZodEffects<z.ZodAny, any, any>;
 }, "strip", z.ZodTypeAny, {
+    programId: number;
     courseName: string;
     courseCode: string;
     year: number;
     examType: "MSE" | "ESE";
     pdf?: any;
 }, {
+    programId: number;
     courseName: string;
     courseCode: string;
     year: number;
@@ -88,7 +84,6 @@ export declare const z_createMessage: z.ZodObject<{
 export type z_signup_type = z.infer<typeof z_signup>;
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_createProgram_type = z.infer<typeof z_createProgram>;
-export type z_verifyOTP_type = z.infer<typeof z_verifyOTP>;
 export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;
 export type z_reviewQP_type = z.infer<typeof z_reviewQP>;
 export type z_createNotification_type = z.infer<typeof z_createNotification>;

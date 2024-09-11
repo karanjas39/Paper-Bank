@@ -65,6 +65,7 @@ export async function uploadQP(c: Context) {
         fileKey: key,
         year: parsedData.year,
         userId: isUser.id,
+        programId: parsedData.programId,
       },
     });
 

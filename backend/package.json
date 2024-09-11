@@ -3,19 +3,18 @@
   "scripts": {
     "dev": "wrangler dev src/index.ts",
     "deploy": "wrangler deploy --minify src/index.ts",
-    "migrate": "npx prisma migrate dev --name v0",
+    "migrate": "npx prisma migrate dev --name v1",
     "generate": "npx prisma generate --no-engine"
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^1.1.0",
-    "@singhjaskaran/paperbank-common": "^1.0.8",
+    "@singhjaskaran/paperbank-common": "^1.1.0",
     "bcrypt-ts": "^5.0.2",
     "hono": "^4.5.10",
-    "prisma": "^5.19.0",
-    "resend": "^4.0.0"
+    "prisma": "^5.19.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
-    "wrangler": "^3.57.2"
+    "wrangler": "^3.76.0"
   }
 }

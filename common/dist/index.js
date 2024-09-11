@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.z_createMessage = exports.z_createNotification = exports.z_reviewQP = exports.z_createQuestionPaper = exports.z_verifyOTP = exports.z_createProgram = exports.z_signin = exports.z_signup = void 0;
+exports.z_createMessage = exports.z_createNotification = exports.z_reviewQP = exports.z_createQuestionPaper = exports.z_createProgram = exports.z_signin = exports.z_signup = void 0;
 const zod_1 = require("zod");
 // SCHEMAS
 exports.z_signup = zod_1.z.object({
@@ -16,14 +16,12 @@ exports.z_signin = zod_1.z.object({
 exports.z_createProgram = zod_1.z.object({
     name: zod_1.z.string().min(1),
 });
-exports.z_verifyOTP = zod_1.z.object({
-    otp: zod_1.z.string().length(6),
-});
 exports.z_createQuestionPaper = zod_1.z.object({
     courseName: zod_1.z.string().min(1),
     courseCode: zod_1.z.string().min(1),
     year: zod_1.z.coerce.number(),
     examType: zod_1.z.enum(["MSE", "ESE"]),
+    programId: zod_1.z.number(),
     pdf: zod_1.z
         .any()
         .refine((file) => file instanceof File && file.type === "application/pdf", {

@@ -9,11 +9,12 @@ datasource db {
 }
 
 model Program {
-  id              Int            @id @default(autoincrement())
-  name            String         @unique
-  users           User[]         @relation("ProgramUsers")
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  users           User[]            @relation("ProgramUsers")
+  questionPapers  QuestionPaper[]   @relation("ProgramQP")
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
 
   @@index([name]) 
 }
@@ -24,7 +25,6 @@ model User {
   email           String       @unique
   password        String
   verified        Boolean       @default(false)
-  otp             String        @default("")
   admin           Boolean       @default(false)
   program         Program  @relation("ProgramUsers", fields: [programId], references: [id])
   programId       Int
@@ -49,6 +49,8 @@ model QuestionPaper {
   status          String       @default("pending") // 'pending', 'approved', 'rejected'
   user            User         @relation("UserQuestionPapers", fields: [userId], references: [id])
   userId          Int
+  program         Program  @relation("ProgramQP", fields: [programId], references: [id])
+  programId       Int
   reviewer        User?        @relation("ReviewedQuestionPapers", fields: [reviewerId], references: [id])
   reviewerId      Int?
   updatedAt       DateTime     @updatedAt
