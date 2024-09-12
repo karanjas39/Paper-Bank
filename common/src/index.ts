@@ -21,7 +21,7 @@ export const z_createQuestionPaper = z.object({
   courseName: z.string().min(1),
   courseCode: z.string().min(1),
   year: z.coerce.number(),
-  examType: z.enum(["MSE", "ESE"]),
+  examType: z.string().min(1),
   programId: z.number(),
   pdf: z
     .any()

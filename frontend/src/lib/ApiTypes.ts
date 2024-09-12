@@ -11,6 +11,7 @@ export interface userType {
   admin: boolean;
   createdAt: string;
   updatedAt: string;
+  uploadCount: number;
   program: {
     name: string;
   };

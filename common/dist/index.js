@@ -20,7 +20,7 @@ exports.z_createQuestionPaper = zod_1.z.object({
     courseName: zod_1.z.string().min(1),
     courseCode: zod_1.z.string().min(1),
     year: zod_1.z.coerce.number(),
-    examType: zod_1.z.enum(["MSE", "ESE"]),
+    examType: zod_1.z.string().min(1),
     programId: zod_1.z.number(),
     pdf: zod_1.z
         .any()

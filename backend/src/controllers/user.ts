@@ -57,6 +57,7 @@ export async function userDetails(c: Context) {
         admin: true,
         createdAt: true,
         updatedAt: true,
+        uploadCount: true,
         program: {
           select: {
             name: true,

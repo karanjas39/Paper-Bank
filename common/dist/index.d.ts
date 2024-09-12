@@ -36,7 +36,7 @@ export declare const z_createQuestionPaper: z.ZodObject<{
     courseName: z.ZodString;
     courseCode: z.ZodString;
     year: z.ZodNumber;
-    examType: z.ZodEnum<["MSE", "ESE"]>;
+    examType: z.ZodString;
     programId: z.ZodNumber;
     pdf: z.ZodEffects<z.ZodAny, any, any>;
 }, "strip", z.ZodTypeAny, {
@@ -44,14 +44,14 @@ export declare const z_createQuestionPaper: z.ZodObject<{
     courseName: string;
     courseCode: string;
     year: number;
-    examType: "MSE" | "ESE";
+    examType: string;
     pdf?: any;
 }, {
     programId: number;
     courseName: string;
     courseCode: string;
     year: number;
-    examType: "MSE" | "ESE";
+    examType: string;
     pdf?: any;
 }>;
 export declare const z_reviewQP: z.ZodObject<{

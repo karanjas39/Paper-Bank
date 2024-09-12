@@ -8,13 +8,16 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
-import { AppDispatch, logoutAction } from "@/store/index";
+import { logoutAction } from "@/store/index";
+import { userApi } from "@/store/api/userApi";
+import Loader from "../Loaders/Loader";
 
 export default function SideNavLinks() {
   const path: string = usePathname();
   const dispatch = useDispatch();
   const router = useRouter();
   const { toast } = useToast();
+  const { data, isLoading } = userApi.useGetUserDetailQuery();
 
   function handleLogout() {
     try {
@@ -33,25 +36,34 @@ export default function SideNavLinks() {
         <div className="hidden md:block">
           <Logo />
         </div>
-        <div className="mt-10 flex flex-col gap-4 justify-center">
-          {links.map(({ link, name, icon: Icon }, i) => {
-            return (
-              <Link
-                href={link}
-                className={cn(
-                  "flex items-center gap-2 ml-2",
-                  path === link
-                    ? "text-foreground font-bold text-xl"
-                    : "text-muted-foreground"
-                )}
-                key={i}
-              >
-                {Icon && <Icon className="w-5 h-5" />}
-                <span>{name}</span>
-              </Link>
-            );
-          })}
-        </div>
+        {!isLoading && data ? (
+          <div className="mt-10 flex flex-col gap-4 justify-center">
+            {links.map(({ link, name, icon: Icon }, i) => {
+              return (
+                <>
+                  {name === "Contribute" &&
+                  data.user.uploadCount === 1 ? null : (
+                    <Link
+                      href={link}
+                      className={cn(
+                        "flex items-center gap-2 ml-2",
+                        path === link
+                          ? "text-foreground font-bold text-xl"
+                          : "text-muted-foreground"
+                      )}
+                      key={i}
+                    >
+                      {Icon && <Icon className="w-5 h-5" />}
+                      <span>{name}</span>
+                    </Link>
+                  )}
+                </>
+              );
+            })}
+          </div>
+        ) : (
+          <Loader />
+        )}
       </div>
       <Button className="w-full" variant="primary" onClick={handleLogout}>
         Logout
