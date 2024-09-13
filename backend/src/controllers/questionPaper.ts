@@ -26,9 +26,6 @@ export async function uploadQP(c: Context) {
     if (isUser.uploadCount !== 0 && !isUser.admin)
       throw new Error("You have exhausted your upload quota.");
 
-    const file = await c.req.formData();
-    if (!file) throw new Error("No file is uploaded.");
-
     const formData = await c.req.formData();
     if (!formData) throw new Error("No form data received.");
 
@@ -37,12 +34,15 @@ export async function uploadQP(c: Context) {
     const courseCode = formData.get("courseCode")?.toString();
     const year = formData.get("year")?.toString();
     const examType = formData.get("examType")?.toString();
+    const programId = Number(formData.get("programId"));
+
     const { success, data: parsedData } = z_createQuestionPaper.safeParse({
       courseName,
       courseCode,
       year,
       examType,
       pdf,
+      programId,
     });
 
     if (!success) throw new Error("Invalid inputs are passed.");

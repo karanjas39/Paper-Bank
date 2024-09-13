@@ -43,7 +43,7 @@ export default function SideNavLinks() {
               return (
                 <>
                   {name === "Contribute" &&
-                  data.user.uploadCount === 1 ? null : (
+                  data.user.uploadCount !== 0 ? null : (
                     <Link
                       href={link}
                       className={cn(

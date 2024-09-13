@@ -36,7 +36,6 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
 import {
   z_createQuestionPaper,
   z_createQuestionPaper_type,
@@ -48,6 +47,8 @@ import { cn } from "@/lib/utils";
 import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { FileUpload } from "../ui/file-upload";
+import { qpApi } from "@/store/api/qpApi";
+import ButtonLoader from "../Loaders/ButtonLoader";
 
 function ContributeForm() {
   const form = useForm<z_createQuestionPaper_type>({
@@ -63,23 +64,43 @@ function ContributeForm() {
   });
   const { toast } = useToast();
   const router = useRouter();
-  const dispatch = useDispatch();
   const { data, isFetching: isFetchingPrograms } =
     programApi.useGetProgramsQuery();
+  const [uploadQP, { isLoading }] = qpApi.useUploadQPMutation();
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileUpload = (uploadedFile: File | null) => {
     setFile(uploadedFile);
     if (uploadedFile) {
       form.setValue("pdf", uploadedFile);
-      console.log(uploadedFile);
     } else {
       form.setValue("pdf", null);
     }
   };
 
   async function onSubmit(values: z_createQuestionPaper_type) {
-    console.log(values);
+    try {
+      const formData = new FormData();
+
+      Object.entries(values).forEach(([key, value]) => {
+        if (key === "pdf" && value instanceof File) {
+          formData.append("file", value);
+        } else {
+          formData.append(key, String(value));
+        }
+      });
+
+      const response = await uploadQP(formData).unwrap();
+      if (response.success) {
+        toast({ description: response.message });
+        router.push("/dashboard/my-uploads");
+      } else throw new Error(response.message);
+    } catch (error) {
+      const err = error as Error;
+      if (err.message.split(" ")[0] === "\nInvalid")
+        err.message = "Unable to upload question paper right now.";
+      toast({ description: err.message, variant: "destructive" });
+    }
   }
 
   if (isFetchingPrograms) return <Loader />;
@@ -239,8 +260,20 @@ function ContributeForm() {
             )}
           />
           <FileUpload onChange={handleFileUpload} />
-          <Button type="submit" variant="primary" className="mt-1">
-            Submit
+          <Button
+            type="submit"
+            disabled={isLoading}
+            variant="primary"
+            className="mt-1"
+          >
+            {isLoading ? (
+              <>
+                <span className="mr-1">Submitting</span>
+                <ButtonLoader />
+              </>
+            ) : (
+              "Submit"
+            )}
           </Button>
         </form>
       </Form>
