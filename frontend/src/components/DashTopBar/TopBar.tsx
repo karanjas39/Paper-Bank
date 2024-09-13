@@ -9,6 +9,7 @@ import {
 import SideNavLinks from "@/components/DashSideBar/SideNavLinks";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Logo from "@/components/Navbar/Logo";
+import { ThemeToggler } from "../Theme/ThemeToggler";
 
 function TopBar() {
   return (
@@ -18,7 +19,10 @@ function TopBar() {
           <Logo />
         </div>
       </div>
-      <NavMenuBar />
+      <div className="flex items-center gap-2">
+        <NavMenuBar />
+        <ThemeToggler />
+      </div>
     </div>
   );
 }

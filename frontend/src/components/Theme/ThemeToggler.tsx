@@ -13,9 +13,9 @@ export function ThemeToggler({ button = true }: { button?: boolean }) {
     return (
       <>
         {resolvedTheme === "light" ? (
-          <SunIcon onClick={() => setTheme("dark")} />
+          <SunIcon onClick={() => setTheme("dark")} className="w-5 h-5" />
         ) : (
-          <MoonIcon onClick={() => setTheme("light")} />
+          <MoonIcon onClick={() => setTheme("light")} className="w-5 h-5" />
         )}
       </>
     );

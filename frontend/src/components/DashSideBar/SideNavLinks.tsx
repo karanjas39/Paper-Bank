@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { logoutAction } from "@/store/index";
 import { userApi } from "@/store/api/userApi";
 import Loader from "../Loaders/Loader";
+import { ThemeToggler } from "../Theme/ThemeToggler";
 
 export default function SideNavLinks() {
   const path: string = usePathname();
@@ -60,6 +61,10 @@ export default function SideNavLinks() {
                 </>
               );
             })}
+            <div className="flex items-center gap-2 ml-2 text-muted-foreground hover:text-foreground cursor-pointer">
+              <ThemeToggler button={false} />
+              <p>Theme</p>
+            </div>
           </div>
         ) : (
           <Loader />
