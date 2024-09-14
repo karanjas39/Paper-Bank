@@ -20,6 +20,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUserDetail: builder.query<userDetailType, void>({
       query: () => "/me",
+      providesTags: [USER_TAG],
     }),
   }),
 });
