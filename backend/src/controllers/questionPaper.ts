@@ -255,7 +255,7 @@ export async function getAllUserQP(c: Context) {
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
-    const qps = await prisma.questionPaper.findMany({
+    const Allqps = await prisma.questionPaper.findMany({
       where: {
         userId: Number(userId),
       },
@@ -273,6 +273,11 @@ export async function getAllUserQP(c: Context) {
         status: true,
         fileKey: true,
       },
+    });
+
+    const qps = Allqps.map((qp) => {
+      if (qp.status === "approved") return qp;
+      else return { ...qp, fileKey: undefined };
     });
 
     return c.json({

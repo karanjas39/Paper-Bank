@@ -70,7 +70,7 @@ export function MyUploadTable<TData extends qpType, TValue>({
         placeholder="Filter by course name, course code and exam type"
         value={globalFilter || ""}
         onChange={(event) => setGlobalFilter(event.target.value || undefined)}
-        className="max-w-sm"
+        className="md:w-[40%] w-[100%] self-end"
       />
       <div className="rounded-md border">
         <Table>

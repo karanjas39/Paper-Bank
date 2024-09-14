@@ -199,11 +199,18 @@ export const columns: ColumnDef<qpType>[] = [
       const { toast } = useToast();
 
       const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (status !== "approved")
+        if (status === "pending")
           return toast({
             description: "This question paper is not yet approved.",
             variant: "destructive",
           });
+
+        if (status === "rejected")
+          return toast({
+            description: "This question paper is rejected.",
+            variant: "destructive",
+          });
+
         e.preventDefault();
         try {
           const response = await fetch(downloadUrl);
