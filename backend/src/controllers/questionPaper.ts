@@ -277,7 +277,7 @@ export async function getAllUserQP(c: Context) {
 
     const qps = Allqps.map((qp) => {
       if (qp.status === "approved") return qp;
-      else return { ...qp, fileKey: undefined };
+      else return { ...qp, fileKey: null };
     });
 
     return c.json({

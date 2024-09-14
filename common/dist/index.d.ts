@@ -15,6 +15,32 @@ export declare const z_signup: z.ZodObject<{
     password: string;
     programId: number;
 }>;
+export declare const z_updateUser: z.ZodObject<{
+    name: z.ZodString;
+    email: z.ZodString;
+    programId: z.ZodNumber;
+}, "strip", z.ZodTypeAny, {
+    name: string;
+    email: string;
+    programId: number;
+}, {
+    name: string;
+    email: string;
+    programId: number;
+}>;
+export declare const z_updatePassword: z.ZodObject<{
+    previousPassword: z.ZodString;
+    newPassword: z.ZodString;
+    confirmNewPassword: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    previousPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+}, {
+    previousPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+}>;
 export declare const z_signin: z.ZodObject<{
     email: z.ZodString;
     password: z.ZodString;
@@ -82,6 +108,8 @@ export declare const z_createMessage: z.ZodObject<{
     message: string;
 }>;
 export type z_signup_type = z.infer<typeof z_signup>;
+export type z_updateUser_type = z.infer<typeof z_updateUser>;
+export type z_updatePassword_type = z.infer<typeof z_updatePassword>;
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_createProgram_type = z.infer<typeof z_createProgram>;
 export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;

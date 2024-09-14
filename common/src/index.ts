@@ -8,6 +8,18 @@ export const z_signup = z.object({
   programId: z.number(),
 });
 
+export const z_updateUser = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  programId: z.number(),
+});
+
+export const z_updatePassword = z.object({
+  previousPassword: z.string().min(6),
+  newPassword: z.string().min(6),
+  confirmNewPassword: z.string().min(6),
+});
+
 export const z_signin = z.object({
   email: z.string().email(),
   password: z.string().min(6),
@@ -46,6 +58,8 @@ export const z_createMessage = z.object({
 
 // TYPES
 export type z_signup_type = z.infer<typeof z_signup>;
+export type z_updateUser_type = z.infer<typeof z_updateUser>;
+export type z_updatePassword_type = z.infer<typeof z_updatePassword>;
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_createProgram_type = z.infer<typeof z_createProgram>;
 export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;
