@@ -260,6 +260,7 @@ export async function getAllUserQP(c: Context) {
         userId: Number(userId),
       },
       select: {
+        id: true,
         courseCode: true,
         courseName: true,
         year: true,

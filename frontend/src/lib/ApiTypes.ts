@@ -17,6 +17,19 @@ export interface userType {
   };
 }
 
+export interface qpType {
+  id: Number;
+  courseCode: string;
+  courseName: string;
+  year: number;
+  examType: string;
+  program: {
+    name: string;
+  };
+  status: string;
+  fileKey: string;
+}
+
 export interface signinType extends responseType {
   token: string;
 }
@@ -30,6 +43,10 @@ export interface allProgramstype extends responseType {
 
 export interface userDetailType extends responseType {
   user: userType;
+}
+
+export interface QpResponseType extends responseType {
+  qps: qpType[];
 }
 
 export interface notificationType extends responseType {

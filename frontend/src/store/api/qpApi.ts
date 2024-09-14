@@ -1,7 +1,7 @@
 import { BACKEND_URL } from "@/lib/constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { tagTypes } from "@/lib/ApiTags";
-import { responseType } from "@/lib/ApiTypes";
+import { QpResponseType, responseType } from "@/lib/ApiTypes";
 import { RootState } from "../index";
 
 export const qpApi = createApi({
@@ -18,7 +18,7 @@ export const qpApi = createApi({
   }),
   tagTypes,
   endpoints: (builder) => ({
-    myUploads: builder.query<void, any>({
+    myUploads: builder.query<QpResponseType, void>({
       query: (body) => "/user",
     }),
     uploadQP: builder.mutation<responseType, any>({

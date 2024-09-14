@@ -1,64 +1,25 @@
 "use client";
-
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { qpApi } from "@/store/api/qpApi";
+import Loader from "../Loaders/Loader";
+import { MyUploadTable } from "./data-table";
+import { columns } from "./columns";
 
 function MyUpload() {
+  const { data, isLoading } = qpApi.useMyUploadsQuery();
+
+  if (isLoading) return <Loader />;
+
+  if (isLoading) return <Loader />;
+
   return (
-    <div className="flex flex-col gap-3 w-full">
-      <Table>
-        <TableCaption>A list of your question paper uploads.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="text-left">Course</TableHead>
-            <TableHead className="text-center">Course Code</TableHead>
-            <TableHead className="text-center">Year</TableHead>
-            <TableHead className="text-center">Exam Type</TableHead>
-            <TableHead className="text-center">Program</TableHead>
-            <TableHead className="text-center">Status</TableHead>
-            <TableHead className="text-right">Download</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell className="font-medium text-left">
-              Fundamentals of Computer
-            </TableCell>
-            <TableCell className="text-center">CSE401</TableCell>
-            <TableCell className="text-center">2023</TableCell>
-            <TableCell className="text-center">MSE</TableCell>
-            <TableCell className="text-center">BTech CSE</TableCell>
-            <TableCell className="text-center">
-              <Badge>Approved</Badge>
-            </TableCell>
-            <TableCell className="text-right">
-              <Button size="sm">Download</Button>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium text-left">
-              Data Structures
-            </TableCell>
-            <TableCell className="text-center">CSE401</TableCell>
-            <TableCell className="text-center">2023</TableCell>
-            <TableCell className="text-center">MSE</TableCell>
-            <TableCell className="text-center">BTech CSE</TableCell>
-            <TableCell className="text-center">
-              <Badge variant="destructive">Rejected</Badge>
-            </TableCell>
-            <TableCell className="text-right"></TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+    <div className="w-full">
+      {data?.success && data?.qps.length ? (
+        <MyUploadTable columns={columns} data={data.qps} />
+      ) : (
+        <p className="text-sm text-center text-muted-foreground">
+          You have not uploaded any Question Paper.
+        </p>
+      )}
     </div>
   );
 }
