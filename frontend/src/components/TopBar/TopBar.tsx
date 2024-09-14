@@ -6,7 +6,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import SideNavLinks from "@/components/DashSideBar/SideNavLinks";
+import SideNavLinks from "@/components/SideBar/SideNavLinks";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Logo from "@/components/Navbar/Logo";
 import { ThemeToggler } from "../Theme/ThemeToggler";

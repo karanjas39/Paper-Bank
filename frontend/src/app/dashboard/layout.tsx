@@ -1,5 +1,5 @@
-import SideBar from "@/components/DashSideBar/SideBar";
-import TopBar from "@/components/DashTopBar/TopBar";
+import SideBar from "@/components/SideBar/SideBar";
+import TopBar from "@/components/TopBar/TopBar";
 
 export default function RootLayout({
   children,
