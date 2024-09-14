@@ -65,6 +65,7 @@ export async function userDetails(c: Context) {
         uploadCount: true,
         program: {
           select: {
+            id: true,
             name: true,
           },
         },

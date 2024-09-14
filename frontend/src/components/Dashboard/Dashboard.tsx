@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserDetail from "./UserDetail";
+import EditDetails from "./EditDetails";
 
 function Dashboard() {
   return (
@@ -12,7 +13,9 @@ function Dashboard() {
       <TabsContent value="detail">
         <UserDetail />
       </TabsContent>
-      <TabsContent value="edit-detail">Edit</TabsContent>
+      <TabsContent value="edit-detail">
+        <EditDetails />
+      </TabsContent>
     </Tabs>
   );
 }

@@ -14,6 +14,7 @@ export interface userType {
   uploadCount: number;
   program: {
     name: string;
+    id: number;
   };
 }
 
