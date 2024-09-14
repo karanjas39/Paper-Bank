@@ -23,6 +23,7 @@ qp.post("/upload", isauthorized, isVerified, uploadQP);
 qp.get("/pdf/:key", getQP);
 qp.post("/review", isauthorized, isVerified, isAdmin, reviewQP);
 qp.get("/approved", getAllApprovedQP);
+qp.get("/user", isauthorized, isVerified, getAllApprovedQP);
 qp.get("/pending", isauthorized, isVerified, isAdmin, getAllPendingQP);
 
 export default qp;

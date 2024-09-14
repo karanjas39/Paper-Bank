@@ -247,6 +247,48 @@ export async function getAllApprovedQP(c: Context) {
   }
 }
 
+export async function getAllUserQP(c: Context) {
+  try {
+    const userId = c.get("id");
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const qps = await prisma.questionPaper.findMany({
+      where: {
+        userId: Number(userId),
+      },
+      select: {
+        courseCode: true,
+        courseName: true,
+        year: true,
+        examType: true,
+        program: {
+          select: {
+            name: true,
+          },
+        },
+        status: true,
+        fileKey: true,
+      },
+    });
+
+    return c.json({
+      success: true,
+      status: 200,
+      qps,
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 404,
+      message: err.message || "Failed to get all Question Paper.",
+    });
+  }
+}
+
 export async function getAllPendingQP(c: Context) {
   try {
     const prisma = new PrismaClient({
