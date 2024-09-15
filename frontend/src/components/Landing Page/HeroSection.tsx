@@ -8,15 +8,15 @@ import Link from "next/link";
 const people = [
   {
     id: 1,
-    name: "Aman Gupta",
+    name: "Rohan Verma",
     designation: "B.Tech CSE",
     image:
       "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
   },
   {
     id: 2,
-    name: "Rajesh Kumar",
-    designation: "M.Sc. Physics",
+    name: "Varandeep Singh",
+    designation: "B.Tech CSE",
     image:
       "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
   },
@@ -36,8 +36,8 @@ const people = [
   },
   {
     id: 5,
-    name: "Akash Verma",
-    designation: "BCA",
+    name: "Ayush Katoch",
+    designation: "B.Tech CSE",
     image:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
   },
@@ -72,7 +72,7 @@ function HeroSection() {
             Your go-to platform for exam preparation, question papers, and study
             materials.
           </p>
-          <Link href="/qp">
+          <Link href="/question-papers">
             <Button variant="primary" className="max-w-min">
               Explore Papers now
             </Button>
