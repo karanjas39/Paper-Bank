@@ -98,7 +98,7 @@ function ContributeForm() {
       if (response.success) {
         toast({ description: response.message });
         dispatch(userApi.util.invalidateTags([USER_TAG]));
-        router.push("/dashboard/my-uploads");
+        router.replace("/dashboard/my-uploads");
       } else throw new Error(response.message);
     } catch (error) {
       const err = error as Error;

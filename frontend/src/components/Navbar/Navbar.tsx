@@ -16,7 +16,7 @@ function Navbar() {
   useEffect(() => {
     if (token) setIsLogin(true);
     else setIsLogin(false);
-  }, [token]);
+  }, [token, path]);
 
   return (
     <div className="px-6 py-4 flex items-center justify-between bg-transparent">
