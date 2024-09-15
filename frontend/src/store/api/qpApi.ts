@@ -19,7 +19,7 @@ export const qpApi = createApi({
   tagTypes,
   endpoints: (builder) => ({
     myUploads: builder.query<QpResponseType, void>({
-      query: (body) => "/user",
+      query: () => "/user",
       providesTags: [QP_TAG],
     }),
     uploadQP: builder.mutation<responseType, any>({

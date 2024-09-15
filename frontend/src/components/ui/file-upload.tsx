@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { IconUpload } from "@tabler/icons-react";
-import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
+import { FileRejection, useDropzone } from "react-dropzone";
 
 const MAX_FILE_SIZE = 1048576; // 1 MB in bytes
 
@@ -55,13 +55,13 @@ export const FileUpload = ({
     fileInputRef.current?.click();
   };
 
-  const { getRootProps, isDragActive, fileRejections } = useDropzone({
+  const { getRootProps, isDragActive } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
     multiple: false,
     maxSize: MAX_FILE_SIZE,
     noClick: true,
     onDrop: handleFileChange,
-    onDropRejected: (fileRejections: FileRejection[], event: DropEvent) => {
+    onDropRejected: (fileRejections: FileRejection[]) => {
       if (fileRejections.length > 0) {
         const rejection = fileRejections[0];
         if (rejection.errors[0].code === "file-too-large") {

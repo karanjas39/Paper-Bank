@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { qpType } from "@/lib/ApiTypes";
+import { DownloadCellProps, qpType } from "@/lib/ApiTypes";
 import { BACKEND_URL } from "@/lib/constants";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
@@ -18,6 +18,71 @@ const multiFieldFilter = (row: any, columnId: string, filterValue: string) => {
     courseName.toLowerCase().includes(lowerFilterValue) ||
     courseCode.toLowerCase().includes(lowerFilterValue) ||
     exampType.toLowerCase().includes(lowerFilterValue)
+  );
+};
+
+const DownloadCell: React.FC<DownloadCellProps> = ({
+  fileKey,
+  status,
+  courseName,
+  courseCode,
+  examType,
+  year,
+}) => {
+  const { toast } = useToast();
+  const downloadUrl = `${BACKEND_URL}/qp/pdf/${fileKey}`;
+
+  const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (status === "pending") {
+      toast({
+        description: "This question paper is not yet approved.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (status === "rejected") {
+      toast({
+        description: "This question paper is rejected.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    e.preventDefault();
+    try {
+      const response = await fetch(downloadUrl);
+      if (!response.ok) {
+        toast({
+          description: "Failed to download Question Paper",
+          variant: "destructive",
+        });
+        return;
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = `${courseName}(${courseCode})-${examType}-${year}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed:", error);
+      toast({
+        description: "An error occurred while downloading",
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <div className="text-center capitalize">
+      <Button variant="outline" onClick={handleDownload}>
+        Download
+      </Button>
+    </div>
   );
 };
 
@@ -189,57 +254,71 @@ export const columns: ColumnDef<qpType>[] = [
         );
     },
   },
+  // {
+  //   accessorKey: "fileKey",
+  //   header: () => <div className="font-bold text-center">Download</div>,
+  //   cell: ({ row }) => {
+  //     const fileKey = row.original.fileKey;
+  //     const downloadUrl = `${BACKEND_URL}/qp/pdf/${fileKey}`;
+  //     const status = row.original.status;
+  //     const { toast } = useToast();
+
+  //     const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  //       if (status === "pending")
+  //         return toast({
+  //           description: "This question paper is not yet approved.",
+  //           variant: "destructive",
+  //         });
+
+  //       if (status === "rejected")
+  //         return toast({
+  //           description: "This question paper is rejected.",
+  //           variant: "destructive",
+  //         });
+
+  //       e.preventDefault();
+  //       try {
+  //         const response = await fetch(downloadUrl);
+  //         if (!response.ok)
+  //           toast({
+  //             description: "Failed to download Question Paper",
+  //             variant: "destructive",
+  //           });
+  //         const blob = await response.blob();
+  //         const url = window.URL.createObjectURL(blob);
+  //         const a = document.createElement("a");
+  //         a.style.display = "none";
+  //         a.href = url;
+  //         a.download = `${row.original.courseName}(${row.original.courseCode})-${row.original.examType}-${row.original.year}.pdf`;
+  //         document.body.appendChild(a);
+  //         a.click();
+  //         window.URL.revokeObjectURL(url);
+  //       } catch (error) {
+  //         console.error("Download failed:", error);
+  //       }
+  //     };
+
+  //     return (
+  //       <div className="text-center capitalize">
+  //         <Button variant="outline" onClick={handleDownload}>
+  //           Download
+  //         </Button>
+  //       </div>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "fileKey",
     header: () => <div className="font-bold text-center">Download</div>,
-    cell: ({ row }) => {
-      const fileKey = row.original.fileKey;
-      const downloadUrl = `${BACKEND_URL}/qp/pdf/${fileKey}`;
-      const status = row.original.status;
-      const { toast } = useToast();
-
-      const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (status === "pending")
-          return toast({
-            description: "This question paper is not yet approved.",
-            variant: "destructive",
-          });
-
-        if (status === "rejected")
-          return toast({
-            description: "This question paper is rejected.",
-            variant: "destructive",
-          });
-
-        e.preventDefault();
-        try {
-          const response = await fetch(downloadUrl);
-          if (!response.ok)
-            toast({
-              description: "Failed to download Question Paper",
-              variant: "destructive",
-            });
-          const blob = await response.blob();
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.download = `${row.original.courseName}(${row.original.courseCode})-${row.original.examType}-${row.original.year}.pdf`;
-          document.body.appendChild(a);
-          a.click();
-          window.URL.revokeObjectURL(url);
-        } catch (error) {
-          console.error("Download failed:", error);
-        }
-      };
-
-      return (
-        <div className="text-center capitalize">
-          <Button variant="outline" onClick={handleDownload}>
-            Download
-          </Button>
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <DownloadCell
+        fileKey={row.original.fileKey}
+        status={row.original.status}
+        courseName={row.original.courseName}
+        courseCode={row.original.courseCode}
+        examType={row.original.examType}
+        year={row.original.year.toString()}
+      />
+    ),
   },
 ];

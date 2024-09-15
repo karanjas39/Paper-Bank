@@ -70,7 +70,7 @@ function ContributeForm() {
   const { data, isFetching: isFetchingPrograms } =
     programApi.useGetProgramsQuery();
   const [uploadQP, { isLoading }] = qpApi.useUploadQPMutation();
-  const [file, setFile] = useState<File | null>(null);
+  const [, setFile] = useState<File | null>(null);
   const dispatch = useDispatch();
 
   const handleFileUpload = (uploadedFile: File | null) => {

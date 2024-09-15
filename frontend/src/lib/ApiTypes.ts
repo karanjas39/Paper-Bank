@@ -18,8 +18,17 @@ export interface userType {
   };
 }
 
+export interface DownloadCellProps {
+  fileKey: string;
+  status: string;
+  courseName: string;
+  courseCode: string;
+  examType: string;
+  year: string;
+}
+
 export interface qpType {
-  id: Number;
+  id: number;
   courseCode: string;
   courseName: string;
   year: number;

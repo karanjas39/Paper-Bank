@@ -1,11 +1,8 @@
 "use client";
 
-import { useToast } from "@/hooks/use-toast";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
 
 function ContactUsForm() {
-  const { toast } = useToast();
-
   const placeholders = [
     "How many uploads can I make this month?",
     "Can you upload the 2023 MSE ADA question paper?",

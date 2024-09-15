@@ -11,8 +11,8 @@ function ContactSection() {
         </h1>
         <p></p>
         <p className="text-neutral-500 max-w-lg mx-auto my-2 text-xs md:text-sm text-center relative z-10">
-          Have a question or need help? Reach out to us and we'll get back to
-          you as soon as possible.
+          Have a question or need help? Reach out to us and we&lsquo;ll get back
+          to you as soon as possible.
         </p>
         <ContactUsForm />
       </div>

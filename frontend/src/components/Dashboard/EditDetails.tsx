@@ -33,10 +33,8 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Input } from "../ui/input";
-import Link from "next/link";
 import ButtonLoader from "../Loaders/ButtonLoader";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { programApi } from "@/store/api/programApi";
 import Loader from "../Loaders/Loader";
 import { cn } from "@/lib/utils";
@@ -53,8 +51,6 @@ function EditDetails() {
   const { data: userData, isFetching: isFetchingUser } =
     userApi.useGetUserDetailQuery();
 
-  if (isFetchingPrograms && isFetchingUser) return <Loader />;
-
   const form = useForm<z_updateUser_type>({
     resolver: zodResolver(z_updateUser),
     defaultValues: {
@@ -66,7 +62,8 @@ function EditDetails() {
   const [UpdateUser, { isLoading }] = userApi.useUpdateUserMutation();
 
   const { toast } = useToast();
-  const router = useRouter();
+
+  if (isFetchingPrograms && isFetchingUser) return <Loader />;
 
   async function onSubmit(values: z_updateUser_type) {
     try {
