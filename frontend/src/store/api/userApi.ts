@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "@/store/index";
 import { BACKEND_URL } from "@/lib/constants";
 import { tagTypes, USER_TAG } from "@/lib/ApiTags";
-import { userDetailType } from "@/lib/ApiTypes";
+import { responseType, userDetailType } from "@/lib/ApiTypes";
+import { z_updateUser_type } from "@singhjaskaran/paperbank-common";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -21,6 +22,14 @@ export const userApi = createApi({
     getUserDetail: builder.query<userDetailType, void>({
       query: () => "/me",
       providesTags: [USER_TAG],
+    }),
+    updateUser: builder.mutation<responseType, z_updateUser_type>({
+      query: (body) => ({
+        url: "/detail",
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: [USER_TAG],
     }),
   }),
 });

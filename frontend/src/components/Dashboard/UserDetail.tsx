@@ -20,7 +20,7 @@ function UserDetail() {
     <Card className="mt-4">
       <CardHeader>
         <CardTitle>User Details</CardTitle>
-        <CardDescription>View and manage user information</CardDescription>
+        <CardDescription>View user information</CardDescription>
       </CardHeader>
       {data && data.success ? (
         <CardContent className="flex flex-col gap-2">
