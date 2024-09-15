@@ -226,6 +226,12 @@ export async function getAllApprovedQP(c: Context) {
         user: {
           select: {
             name: true,
+            email: true,
+            program: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
         program: {

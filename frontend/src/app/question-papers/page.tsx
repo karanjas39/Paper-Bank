@@ -1,5 +1,7 @@
+import QPTable from "@/components/QuestionPapers/QPTable";
+
 function QPPage() {
-  return <div>QPPage</div>;
+  return <QPTable />;
 }
 
 export default QPPage;

@@ -22,6 +22,9 @@ export const qpApi = createApi({
       query: () => "/user",
       providesTags: [QP_TAG],
     }),
+    allQPs: builder.query<QpResponseType, void>({
+      query: () => "/approved",
+    }),
     uploadQP: builder.mutation<responseType, any>({
       query: (body) => ({
         url: "/upload",
