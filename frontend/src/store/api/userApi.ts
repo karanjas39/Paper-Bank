@@ -3,7 +3,10 @@ import { RootState } from "@/store/index";
 import { BACKEND_URL } from "@/lib/constants";
 import { tagTypes, USER_TAG } from "@/lib/ApiTags";
 import { responseType, userDetailType } from "@/lib/ApiTypes";
-import { z_updateUser_type } from "@singhjaskaran/paperbank-common";
+import {
+  z_updatePassword_type,
+  z_updateUser_type,
+} from "@singhjaskaran/paperbank-common";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -30,6 +33,13 @@ export const userApi = createApi({
         body,
       }),
       invalidatesTags: [USER_TAG],
+    }),
+    updatePassword: builder.mutation<responseType, z_updatePassword_type>({
+      query: (body) => ({
+        url: "/password",
+        method: "PATCH",
+        body,
+      }),
     }),
   }),
 });

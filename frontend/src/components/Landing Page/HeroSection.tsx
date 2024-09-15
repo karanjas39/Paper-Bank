@@ -3,6 +3,7 @@ import { FlipWords } from "@/components/ui/flip-words";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import { StarFilledIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const people = [
   {
@@ -71,9 +72,11 @@ function HeroSection() {
             Your go-to platform for exam preparation, question papers, and study
             materials.
           </p>
-          <Button variant="primary" className="max-w-min">
-            Explore Papers now
-          </Button>
+          <Link href="/qp">
+            <Button variant="primary" className="max-w-min">
+              Explore Papers now
+            </Button>
+          </Link>
         </div>
         <div className="flex items-start sm:items-center sm:flex-row flex-col sm:gap-7 gap-3 mt-6">
           <div className="flex flex-row items-center justify-center">

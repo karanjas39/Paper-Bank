@@ -77,7 +77,7 @@ function EditDetails() {
     } catch (error) {
       const err = error as Error;
       if (err.message.split(" ")[0] === "\nInvalid")
-        err.message = "Unable to signup right now.";
+        err.message = "Unable to edit details right now.";
       toast({ description: err.message, variant: "destructive" });
     }
   }
