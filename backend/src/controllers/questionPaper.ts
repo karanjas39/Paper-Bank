@@ -283,6 +283,9 @@ export async function getAllUserQP(c: Context) {
         status: true,
         fileKey: true,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
 
     const qps = Allqps.map((qp) => {

@@ -243,7 +243,7 @@ export const columns: ColumnDef<qpType>[] = [
       else if (myStatus === "approved")
         return (
           <div className="text-center capitalize">
-            <Badge>{row.original.status}</Badge>
+            <Badge variant="primary">{row.original.status}</Badge>
           </div>
         );
       else
