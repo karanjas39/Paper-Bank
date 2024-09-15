@@ -225,7 +225,11 @@ export async function getAllApprovedQP(c: Context) {
         fileKey: true,
         user: {
           select: {
-            id: true,
+            name: true,
+          },
+        },
+        program: {
+          select: {
             name: true,
           },
         },

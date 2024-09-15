@@ -36,6 +36,9 @@ export interface qpType {
   program: {
     name: string;
   };
+  user?: {
+    name: true;
+  };
   status: string;
   fileKey: string;
 }
