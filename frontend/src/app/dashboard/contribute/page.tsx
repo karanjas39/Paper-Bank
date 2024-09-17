@@ -11,7 +11,7 @@ function ContributeQPPage() {
   const { data: userData, isLoading } = userApi.useGetUserDetailQuery();
 
   useEffect(() => {
-    if (userData && userData.user.uploadCount !== 0) {
+    if (userData && !userData.user.admin && userData.user.uploadCount !== 0) {
       router.push("/dashboard");
     }
   }, [userData, router]);
@@ -20,7 +20,7 @@ function ContributeQPPage() {
     return <Loader />;
   }
 
-  if (userData && userData.user.uploadCount > 0) {
+  if (userData && !userData.user.admin && userData.user.uploadCount !== 0) {
     return null;
   }
 

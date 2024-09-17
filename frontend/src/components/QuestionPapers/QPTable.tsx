@@ -4,6 +4,7 @@ import { qpApi } from "@/store/api/qpApi";
 import Loader from "../Loaders/Loader";
 import { AllQPTable } from "./data-table";
 import { columns } from "./columns";
+import Link from "next/link";
 
 function QPTable() {
   const { data, isLoading } = qpApi.useAllQPsQuery();
@@ -16,7 +17,8 @@ function QPTable() {
         <AllQPTable columns={columns} data={data.qps} />
       ) : (
         <p className="text-sm text-center text-muted-foreground">
-          You have not uploaded any Question Paper.
+          No Question paper has been uploaded yet. Let's start contributing{" "}
+          <Link href="/signup">Click here</Link>
         </p>
       )}
     </div>

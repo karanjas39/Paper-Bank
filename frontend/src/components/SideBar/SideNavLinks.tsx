@@ -41,7 +41,11 @@ export default function SideNavLinks() {
         {!isLoading && data ? (
           <div className="mt-10 flex flex-col gap-4 justify-center">
             {links.map(({ link, name, icon: Icon }, i) => {
-              if (name === "Contribute" && data?.user?.uploadCount > 0) {
+              if (
+                name === "Contribute" &&
+                !data.user.admin &&
+                data?.user?.uploadCount > 0
+              ) {
                 return null;
               }
               return (
