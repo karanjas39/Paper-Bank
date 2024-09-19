@@ -1,16 +1,31 @@
 "use client";
 
+import { useEffect } from "react";
 import Logo from "./Logo";
 import { Button } from "../ui/button";
 import { ThemeToggler } from "../Theme/ThemeToggler";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store";
+import { initializeAuth } from "@/store/slices/authSlice";
 
 function Navbar() {
   const path = usePathname();
-  const token = useSelector((state: RootState) => state.auth.token);
+  const dispatch = useDispatch<AppDispatch>();
+  const { token, isInitialized } = useSelector(
+    (state: RootState) => state.auth
+  );
+
+  useEffect(() => {
+    if (!isInitialized) {
+      dispatch(initializeAuth());
+    }
+  }, [dispatch, isInitialized]);
+
+  if (!isInitialized) {
+    return null;
+  }
 
   return (
     <div className="px-6 py-4 flex items-center justify-between bg-transparent">

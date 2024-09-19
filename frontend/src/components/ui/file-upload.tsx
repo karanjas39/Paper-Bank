@@ -29,8 +29,10 @@ const secondaryVariant = {
 
 export const FileUpload = ({
   onChange,
+  isLoading,
 }: {
   onChange?: (file: File | null) => void;
+  isLoading: boolean;
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -85,6 +87,7 @@ export const FileUpload = ({
           id="file-upload-handle"
           type="file"
           accept=".pdf"
+          disabled={isLoading}
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />

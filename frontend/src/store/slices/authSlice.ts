@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   token: string | null;
+  isInitialized: boolean;
 }
 
 const initialState: AuthState = {
-  token: typeof window !== "undefined" ? sessionStorage.getItem("token") : null,
+  token: null,
+  isInitialized: false,
 };
 
 const authSlice = createSlice({
@@ -22,8 +24,13 @@ const authSlice = createSlice({
       state.token = null;
       sessionStorage.removeItem("token");
     },
+    initializeAuth: (state) => {
+      state.token =
+        typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
+      state.isInitialized = true;
+    },
   },
 });
 
-export const { setToken, clearToken } = authSlice.actions;
+export const { setToken, clearToken, initializeAuth } = authSlice.actions;
 export default authSlice.reducer;

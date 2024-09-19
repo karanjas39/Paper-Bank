@@ -18,7 +18,7 @@ const DashboardProvider: React.FC<AdminDashboardProps> = ({ children }) => {
 
   useEffect(() => {
     if (!token) {
-      router.push("/signin");
+      router.push("/");
     }
   }, [token, router]);
 

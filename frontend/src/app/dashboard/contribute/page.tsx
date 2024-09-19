@@ -24,7 +24,11 @@ function ContributeQPPage() {
     return null;
   }
 
-  return <ContributeForm />;
+  return (
+    <div className="w-full">
+      <ContributeForm />
+    </div>
+  );
 }
 
 export default ContributeQPPage;

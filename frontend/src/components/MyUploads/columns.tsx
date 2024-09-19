@@ -33,7 +33,7 @@ const DownloadCell: React.FC<DownloadCellProps> = ({
   const downloadUrl = `${BACKEND_URL}/qp/pdf/${fileKey}`;
 
   const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (status === "pending") {
+    if (status === "pending" && !fileKey) {
       toast({
         description: "This question paper is not yet approved.",
         variant: "destructive",
@@ -41,7 +41,7 @@ const DownloadCell: React.FC<DownloadCellProps> = ({
       return;
     }
 
-    if (status === "rejected") {
+    if (status === "rejected" && !fileKey) {
       toast({
         description: "This question paper is rejected.",
         variant: "destructive",

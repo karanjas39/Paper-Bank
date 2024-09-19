@@ -260,6 +260,7 @@ export async function getAllApprovedQP(c: Context) {
 export async function getAllUserQP(c: Context) {
   try {
     const userId = c.get("id");
+    const isAdmin = c.get("admin");
 
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -296,7 +297,7 @@ export async function getAllUserQP(c: Context) {
     return c.json({
       success: true,
       status: 200,
-      qps,
+      qps: isAdmin ? Allqps : qps,
     });
   } catch (error) {
     const err = error as Error;
