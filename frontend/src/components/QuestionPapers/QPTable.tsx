@@ -17,8 +17,8 @@ function QPTable() {
         <AllQPTable columns={columns} data={data.qps} />
       ) : (
         <p className="text-sm text-center text-muted-foreground">
-          No Question paper has been uploaded yet. Let's start contributing{" "}
-          <Link href="/signup">Click here</Link>
+          No Question paper has been uploaded yet. Let&lsquo;s start
+          contributing <Link href="/signup">Click here</Link>
         </p>
       )}
     </div>
