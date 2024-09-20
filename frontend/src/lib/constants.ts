@@ -5,6 +5,9 @@ import {
   SettingsIcon,
   PaperclipIcon,
   BellIcon,
+  UsersIcon,
+  SchoolIcon,
+  CircleCheckBigIcon,
 } from "lucide-react";
 
 // export const BACKEND_URL = "http://127.0.0.1:8787/api/v1";
@@ -35,6 +38,21 @@ export const links: {
     name: "Contribute",
     link: "/dashboard/contribute",
     icon: PaperclipIcon,
+  },
+  {
+    name: "Users",
+    link: "/dashboard/users",
+    icon: UsersIcon,
+  },
+  {
+    name: "Programs",
+    link: "/dashboard/programs",
+    icon: SchoolIcon,
+  },
+  {
+    name: "Approvals",
+    link: "/dashboard/approvals",
+    icon: CircleCheckBigIcon,
   },
   {
     name: "Settings",

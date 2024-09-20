@@ -33,7 +33,7 @@ export default function SideNavLinks() {
   }
 
   return (
-    <div className="flex flex-col justify-between md:min-h-screen flex-1 md:p-4">
+    <div className="flex flex-col justify-between md:max-h-screen flex-1 md:p-4">
       <div>
         <div className="hidden md:block">
           <Logo />
@@ -47,7 +47,9 @@ export default function SideNavLinks() {
                 data?.user?.uploadCount > 0
               ) {
                 return null;
-              }
+              } else if (name === "Users" && !data.user.admin) return null;
+              else if (name === "Programs" && !data.user.admin) return null;
+              else if (name === "Approvals" && !data.user.admin) return null;
               return (
                 <Link
                   href={link}

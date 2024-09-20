@@ -186,6 +186,9 @@ export const columns: ColumnDef<qpType>[] = [
         e.preventDefault();
         try {
           const response = await fetch(downloadUrl);
+          // const res = await response.json();
+          // if (!res.success)
+          //   throw new Error("Unable to download this question paper.");
           const blob = await response.blob();
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
