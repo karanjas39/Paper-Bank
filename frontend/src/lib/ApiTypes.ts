@@ -5,17 +5,18 @@ export interface responseType {
 }
 
 export interface userType {
+  id: string;
   name: string;
   email: string;
   verified: boolean;
   admin: boolean;
-  createdAt: string;
-  updatedAt: string;
-  uploadCount: number;
   program: {
     name: string;
     id: number;
   };
+  createdAt: string;
+  updatedAt: string;
+  uploadCount: number;
 }
 
 export interface DownloadCellProps {
@@ -75,4 +76,8 @@ export interface notificationType extends responseType {
     createdAt: string;
     id: number;
   }[];
+}
+
+export interface allUsersType extends responseType {
+  users: userType[];
 }

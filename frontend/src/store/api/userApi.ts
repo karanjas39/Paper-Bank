@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "@/store/index";
 import { BACKEND_URL } from "@/lib/constants";
 import { tagTypes, USER_TAG } from "@/lib/ApiTags";
-import { responseType, userDetailType } from "@/lib/ApiTypes";
+import { allUsersType, responseType, userDetailType } from "@/lib/ApiTypes";
 import {
   z_updatePassword_type,
   z_updateUser_type,
@@ -25,6 +25,9 @@ export const userApi = createApi({
     getUserDetail: builder.query<userDetailType, void>({
       query: () => "/me",
       providesTags: [USER_TAG],
+    }),
+    getAllUsers: builder.query<allUsersType, void>({
+      query: () => "/all",
     }),
     updateUser: builder.mutation<responseType, z_updateUser_type>({
       query: (body) => ({

@@ -4,6 +4,14 @@ import Loader from "@/components/Loaders/Loader";
 import { userApi } from "@/store/api/userApi";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import AllUsers from "@/components/Users/Users";
 
 function UserPage() {
   const router = useRouter();
@@ -23,7 +31,21 @@ function UserPage() {
     return null;
   }
 
-  return <div>UserPage</div>;
+  return (
+    <div className="w-full">
+      <Card>
+        <CardHeader>
+          <CardTitle>All Users</CardTitle>
+          <CardDescription>
+            Here you can find all users registered with Paper Bank.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AllUsers />
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
 
 export default UserPage;
