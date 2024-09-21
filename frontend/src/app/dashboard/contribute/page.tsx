@@ -2,9 +2,16 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import ContributeForm from "@/components/Contribute/ContributeForm";
+import ContributeForm from "@/components/QPContribution/QPContributionForm";
 import { userApi } from "@/store/api/userApi";
 import Loader from "@/components/Loaders/Loader";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 function ContributeQPPage() {
   const router = useRouter();
@@ -26,7 +33,17 @@ function ContributeQPPage() {
 
   return (
     <div className="w-full">
-      <ContributeForm />
+      <Card>
+        <CardHeader>
+          <CardTitle>Contribute Question Paper</CardTitle>
+          <CardDescription>
+            Here you can upload previous year question papers and earn credits.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ContributeForm />
+        </CardContent>
+      </Card>
     </div>
   );
 }

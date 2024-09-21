@@ -1,4 +1,4 @@
-import QPTable from "@/components/QuestionPapers/QPTable";
+import QPTable from "@/components/AllQuestionPapers/QPTable";
 
 function QPPage() {
   return <QPTable />;

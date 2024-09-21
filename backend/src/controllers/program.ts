@@ -48,6 +48,7 @@ export async function getAllProgram(c: Context) {
       select: {
         name: true,
         id: true,
+        createdAt: true,
       },
     });
 

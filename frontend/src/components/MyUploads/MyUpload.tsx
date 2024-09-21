@@ -9,8 +9,6 @@ function MyUpload() {
 
   if (isLoading) return <Loader />;
 
-  if (isLoading) return <Loader />;
-
   return (
     <div className="w-full">
       {data?.success && data?.qps.length ? (

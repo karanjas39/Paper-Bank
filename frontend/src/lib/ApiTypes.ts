@@ -52,10 +52,13 @@ export interface signinType extends responseType {
 }
 
 export interface allProgramstype extends responseType {
-  programs: {
-    name: string;
-    id: number;
-  }[];
+  programs: ProgramType[];
+}
+
+export interface ProgramType {
+  name: string;
+  id: number;
+  createdAt: string;
 }
 
 export interface userDetailType extends responseType {
