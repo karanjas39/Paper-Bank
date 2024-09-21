@@ -62,7 +62,7 @@ export const columns: ColumnDef<ProgramType>[] = [
   {
     accessorKey: "id",
     header: () => <div className="text-center font-bold">Actions</div>,
-    cell: ({ row }) => (
+    cell: () => (
       <div className="text-center capitalize">
         <Button variant="secondary" size="sm">
           Edit program

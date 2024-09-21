@@ -80,7 +80,7 @@ function CreateProgram() {
                   </FormControl>
                   <FormDescription>
                     This should be a unique, descriptive name that accurately
-                    reflects the program's purpose or content.
+                    reflects the program&lsquo;s purpose or content.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
