@@ -12,7 +12,7 @@ import AllPrograms from "@/components/Programs/Programs";
 import { userApi } from "@/store/api/userApi";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import CreateProgram from "@/components/Programs/CreateProgram";
+import CreateProgram from "@/components/Programs/CreateProgram/CreateProgram";
 
 function ProgramsPage() {
   const router = useRouter();

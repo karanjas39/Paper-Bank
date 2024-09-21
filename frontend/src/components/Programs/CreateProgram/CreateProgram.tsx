@@ -23,9 +23,9 @@ import {
   z_createProgram_type,
 } from "@singhjaskaran/paperbank-common";
 import { useToast } from "@/hooks/use-toast";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import { programApi } from "@/store/api/programApi";
-import ButtonLoader from "../Loaders/ButtonLoader";
+import ButtonLoader from "@/components/Loaders/ButtonLoader";
 
 function CreateProgram() {
   const form = useForm<z_createProgram_type>({
