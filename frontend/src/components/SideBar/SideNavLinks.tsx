@@ -33,7 +33,7 @@ export default function SideNavLinks() {
   }
 
   return (
-    <div className="flex flex-col justify-between md:max-h-screen flex-1 md:p-4">
+    <div className="flex flex-col justify-between md:h-screen flex-1 md:p-4">
       <div>
         <div className="hidden md:block">
           <Logo />

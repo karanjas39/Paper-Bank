@@ -27,7 +27,7 @@ const DashboardProvider: React.FC<AdminDashboardProps> = ({ children }) => {
   }
 
   return (
-    <div className="w-full flex h-screen overflow-auto">
+    <div className="w-full flex min-h-screen overflow-auto">
       <SideBar />
       <div className="flex flex-col w-full">
         <TopBar />
