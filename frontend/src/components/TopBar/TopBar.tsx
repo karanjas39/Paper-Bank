@@ -35,7 +35,7 @@ function NavMenuBar() {
       <SheetTrigger className="md:hidden block">
         <HamburgerMenuIcon className="w-6 h-6" />
       </SheetTrigger>
-      <SheetContent className="flex flex-col min-h-screen">
+      <SheetContent className="flex flex-col">
         <SheetHeader>
           <SheetTitle>Paper Bank</SheetTitle>
           <SheetDescription>
