@@ -12,6 +12,7 @@ import AllPrograms from "@/components/Programs/Programs";
 import { userApi } from "@/store/api/userApi";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import CreateProgram from "@/components/Programs/CreateProgram";
 
 function ProgramsPage() {
   const router = useRouter();
@@ -41,8 +42,11 @@ function ProgramsPage() {
             Bank.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-3">
           <AllPrograms />
+          <div className="self-end">
+            <CreateProgram />
+          </div>
         </CardContent>
       </Card>
     </div>
