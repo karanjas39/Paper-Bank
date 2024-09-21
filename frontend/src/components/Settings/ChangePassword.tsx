@@ -51,7 +51,7 @@ function ChangePassword() {
       } else throw new Error(response.message);
     } catch (error) {
       const err = error as Error;
-      if (err.message.split(" ")[0] === "\nInvalid")
+      if (err?.message?.split(" ")[0] === "\nInvalid")
         err.message = "Unable to update password right now.";
       toast({ description: err.message, variant: "destructive" });
     }
