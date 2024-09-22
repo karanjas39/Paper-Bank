@@ -80,4 +80,10 @@ export interface notificationType extends responseType {
 
 export interface allUsersType extends responseType {
   users: userType[];
+  pagination: {
+    currentPage: number;
+    pageSize: number;
+    totalPages: number;
+    totalUsers: number;
+  };
 }

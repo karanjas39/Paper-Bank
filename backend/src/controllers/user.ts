@@ -13,7 +13,23 @@ export async function allUsers(c: Context) {
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
+    const page = parseInt(c.req.query("page") || "1", 10);
+    const pageSize = parseInt(c.req.query("pageSize") || "10", 10);
+    const searchTerm = c.req.query("search") || "";
+
+    const skip = (page - 1) * pageSize;
+
     const users = await prisma.user.findMany({
+      where: searchTerm
+        ? {
+            OR: [
+              { name: { contains: searchTerm, mode: "insensitive" } },
+              { email: { contains: searchTerm, mode: "insensitive" } },
+            ],
+          }
+        : {},
+      skip,
+      take: pageSize,
       select: {
         name: true,
         email: true,
@@ -31,10 +47,29 @@ export async function allUsers(c: Context) {
       },
     });
 
+    const totalUsers = await prisma.user.count({
+      where: searchTerm
+        ? {
+            OR: [
+              { name: { contains: searchTerm, mode: "insensitive" } },
+              { email: { contains: searchTerm, mode: "insensitive" } },
+            ],
+          }
+        : {},
+    });
+
+    const totalPages = Math.ceil(totalUsers / pageSize);
+
     return c.json({
       success: true,
       status: 200,
       users,
+      pagination: {
+        currentPage: page,
+        pageSize,
+        totalPages,
+        totalUsers,
+      },
     });
   } catch (error) {
     const err = error as Error;

@@ -26,8 +26,14 @@ export const userApi = createApi({
       query: () => "/me",
       providesTags: [USER_TAG],
     }),
-    getAllUsers: builder.query<allUsersType, void>({
-      query: () => "/all",
+    getAllUsers: builder.query<
+      allUsersType,
+      { page: number; pageSize: number; searchTerm: string }
+    >({
+      query: ({ page, pageSize, searchTerm }) =>
+        `/all?page=${page}&pageSize=${pageSize}&search=${encodeURIComponent(
+          searchTerm
+        )}`,
     }),
     updateUser: builder.mutation<responseType, z_updateUser_type>({
       query: (body) => ({

@@ -1,14 +1,8 @@
-"use client";
-
 import * as React from "react";
 import {
   ColumnDef,
   flexRender,
-  SortingState,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -26,51 +20,73 @@ import { userType } from "@/lib/ApiTypes";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  pageCount: number;
+  pageIndex: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+  onSearch: (searchTerm: string) => void;
+  totalUsers: number;
 }
 
 export function UserTable<TData extends userType, TValue>({
   columns,
   data,
+  pageCount,
+  pageIndex,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+  onSearch,
+  totalUsers,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = React.useState<string | undefined>(
-    undefined
-  );
-
-  const filteredData = React.useMemo(() => {
-    if (!globalFilter) {
-      return data;
-    }
-    return data.filter((row) => {
-      return Object.values(row).some((value) =>
-        String(value).toLowerCase().includes(globalFilter.toLowerCase())
-      );
-    });
-  }, [data, globalFilter]);
+  const [searchTerm, setSearchTerm] = React.useState("");
 
   const table = useReactTable({
-    data: filteredData,
+    data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onGlobalFilterChange: setGlobalFilter,
-    getRowId: (row) => row.id.toString(),
+    pageCount,
     state: {
-      sorting,
-      globalFilter,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
     },
+    onPaginationChange: (updater) => {
+      if (typeof updater === "function") {
+        const newPagination = updater({ pageIndex, pageSize });
+        onPageChange(newPagination.pageIndex + 1);
+        onPageSizeChange(newPagination.pageSize);
+      }
+    },
+    getCoreRowModel: getCoreRowModel(),
+    manualPagination: true,
+    getRowId: (row) => row.id.toString(),
   });
+
+  const handleSearch = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newSearchTerm = event.target.value;
+      setSearchTerm(newSearchTerm);
+    },
+    []
+  );
+
+  React.useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      onSearch(searchTerm);
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, onSearch]);
 
   return (
     <div className="flex flex-col gap-4">
       <Input
-        placeholder="Filter by user's name or email"
-        value={globalFilter || ""}
-        onChange={(event) => setGlobalFilter(event.target.value || undefined)}
-        className="md:w-[40%] w-[100%] self-end"
+        placeholder="Search by name or email"
+        value={searchTerm}
+        onChange={handleSearch}
+        className="md:w-[40%] w-full self-end"
       />
       <div className="rounded-md border">
         <Table>
@@ -120,7 +136,12 @@ export function UserTable<TData extends userType, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        table={table}
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+        totalUsers={totalUsers}
+      />
     </div>
   );
 }
