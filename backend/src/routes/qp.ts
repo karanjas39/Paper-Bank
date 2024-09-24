@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import {
   getAllApprovedQP,
-  getAllPendingQP,
+  getAllQPs,
   getAllUserQP,
   getQP,
   reviewQP,
@@ -25,6 +25,6 @@ qp.get("/pdf/:key", getQP);
 qp.post("/review", isauthorized, isVerified, isAdmin, reviewQP);
 qp.get("/approved", getAllApprovedQP);
 qp.get("/user", isauthorized, isVerified, getAllUserQP);
-qp.get("/pending", isauthorized, isVerified, isAdmin, getAllPendingQP);
+qp.get("/all", isauthorized, isVerified, isAdmin, getAllQPs);
 
 export default qp;

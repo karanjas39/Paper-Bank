@@ -11,8 +11,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import AllQpsAdmin from "@/components/AllQuestionPapersAdmin/AllQPsAdmin";
 
-function ApprovalsPage() {
+function AllQPsAdminPage() {
   const router = useRouter();
   const { data: userData, isLoading } = userApi.useGetUserDetailQuery();
 
@@ -34,15 +35,18 @@ function ApprovalsPage() {
     <div className="w-full">
       <Card>
         <CardHeader>
-          <CardTitle>Question Paper Approval</CardTitle>
+          <CardTitle>Question Papers</CardTitle>
           <CardDescription>
-            Here you can do the approval and rejection of question papers.
+            Here you will find all the question papers to edit existing one or
+            approve/reject new applications.
           </CardDescription>
         </CardHeader>
-        <CardContent>Approvals</CardContent>
+        <CardContent>
+          <AllQpsAdmin />
+        </CardContent>
       </Card>
     </div>
   );
 }
 
-export default ApprovalsPage;
+export default AllQPsAdminPage;

@@ -49,7 +49,8 @@ export default function SideNavLinks() {
                 return null;
               } else if (name === "Users" && !data.user.admin) return null;
               else if (name === "Programs" && !data.user.admin) return null;
-              else if (name === "Approvals" && !data.user.admin) return null;
+              else if (name === "Question Papers" && !data.user.admin)
+                return null;
               return (
                 <Link
                   href={link}

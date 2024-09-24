@@ -50,8 +50,8 @@ export const links: {
     icon: SchoolIcon,
   },
   {
-    name: "Approvals",
-    link: "/dashboard/approvals",
+    name: "Question Papers",
+    link: "/dashboard/qp",
     icon: CircleCheckBigIcon,
   },
   {

@@ -70,6 +70,16 @@ export interface QpResponseType extends responseType {
   qps: qpType[];
 }
 
+export interface QpAdminResponseType extends responseType {
+  qps: qpType[];
+  pagination: {
+    currentPage: number;
+    pageSize: number;
+    totalPages: number;
+    totalQps: number;
+  };
+}
+
 export interface notificationType extends responseType {
   notifications: {
     message: string;

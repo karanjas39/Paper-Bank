@@ -309,46 +309,90 @@ export async function getAllUserQP(c: Context) {
   }
 }
 
-export async function getAllPendingQP(c: Context) {
+export async function getAllQPs(c: Context) {
   try {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
-    const qps = await prisma.questionPaper.findMany({
-      where: {
-        status: "pending",
-      },
-      select: {
-        courseCode: true,
-        courseName: true,
-        examType: true,
-        year: true,
-        id: true,
-        fileKey: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
+    const page = parseInt(c.req.query("page") || "1", 10);
+    const pageSize = parseInt(c.req.query("pageSize") || "10", 10);
+    const searchTerm = c.req.query("search") || "";
+
+    const skip = (page - 1) * pageSize;
+
+    const [qps, totalQps] = await Promise.all([
+      prisma.questionPaper.findMany({
+        select: {
+          courseCode: true,
+          courseName: true,
+          examType: true,
+          year: true,
+          id: true,
+          fileKey: true,
+          status: true,
+          user: {
+            select: {
+              name: true,
+              email: true,
+              program: {
+                select: {
+                  name: true,
+                },
+              },
+            },
           },
         },
-      },
-      orderBy: {
-        submittedAt: "desc",
-      },
-    });
+        where: searchTerm
+          ? {
+              OR: [
+                { courseCode: { contains: searchTerm, mode: "insensitive" } },
+                { courseName: { contains: searchTerm, mode: "insensitive" } },
+                { examType: { contains: searchTerm, mode: "insensitive" } },
+                { year: { equals: parseInt(searchTerm, 10) } },
+              ],
+            }
+          : {},
+        orderBy: {
+          submittedAt: "desc",
+        },
+        skip,
+        take: pageSize,
+      }),
+
+      prisma.questionPaper.count({
+        where: searchTerm
+          ? {
+              OR: [
+                { courseCode: { contains: searchTerm, mode: "insensitive" } },
+                { courseName: { contains: searchTerm, mode: "insensitive" } },
+                { examType: { contains: searchTerm, mode: "insensitive" } },
+                { year: { equals: parseInt(searchTerm, 10) } },
+              ],
+            }
+          : {},
+      }),
+    ]);
+
+    const totalPages = Math.ceil(totalQps / pageSize);
 
     return c.json({
       success: true,
       status: 200,
       qps,
+      pagination: {
+        currentPage: page,
+        pageSize,
+        totalPages,
+        totalQps,
+      },
     });
   } catch (error) {
     const err = error as Error;
     return c.json({
       success: false,
       status: 404,
-      message: err.message || "Failed to get all Question Paper.",
+      message: err.message || "Failed to get all Question Papers.",
     });
   }
 }

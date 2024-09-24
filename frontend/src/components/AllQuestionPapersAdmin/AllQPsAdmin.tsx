@@ -1,15 +1,15 @@
 import React, { useState, useCallback } from "react";
 import Loader from "../Loaders/Loader";
 import { columns } from "./columns";
-import { UserTable } from "./data-table";
-import { userApi } from "@/store/api/userApi";
+import { AllQPsAdminTable } from "./data-table";
+import { qpApi } from "@/store/api/qpApi";
 
-function AllUsers() {
+function AllQpsAdmin() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, isLoading } = userApi.useGetAllUsersQuery({
+  const { data, isLoading } = qpApi.useAllQPsAdminQuery({
     page,
     pageSize,
     searchTerm,
@@ -33,25 +33,25 @@ function AllUsers() {
 
   return (
     <div className="w-full">
-      {data?.success && data.users.length ? (
-        <UserTable
+      {data?.success && data.qps.length ? (
+        <AllQPsAdminTable
           columns={columns}
-          data={data.users}
+          data={data.qps}
           pageCount={data.pagination.totalPages}
           pageIndex={data.pagination.currentPage - 1}
           pageSize={data.pagination.pageSize}
+          totalQPs={data.pagination.totalQps}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
           onSearch={handleSearch}
-          totalUsers={data.pagination.totalUsers}
         />
       ) : (
         <p className="text-sm text-center text-muted-foreground">
-          No user has registered yet.
+          No question paper has been uploaded yet.
         </p>
       )}
     </div>
   );
 }
 
-export default AllUsers;
+export default AllQpsAdmin;

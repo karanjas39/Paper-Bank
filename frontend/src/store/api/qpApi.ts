@@ -1,7 +1,11 @@
 import { BACKEND_URL } from "@/lib/constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { QP_TAG, tagTypes } from "@/lib/ApiTags";
-import { QpResponseType, responseType } from "@/lib/ApiTypes";
+import { QP_ADMIN_TAG, QP_TAG, tagTypes } from "@/lib/ApiTags";
+import {
+  QpAdminResponseType,
+  QpResponseType,
+  responseType,
+} from "@/lib/ApiTypes";
 import { RootState } from "../index";
 
 export const qpApi = createApi({
@@ -21,6 +25,16 @@ export const qpApi = createApi({
     myUploads: builder.query<QpResponseType, void>({
       query: () => "/user",
       providesTags: [QP_TAG],
+    }),
+    allQPsAdmin: builder.query<
+      QpAdminResponseType,
+      { page: number; pageSize: number; searchTerm: string }
+    >({
+      query: ({ page, pageSize, searchTerm }) =>
+        `/all?page=${page}&pageSize=${pageSize}&search=${encodeURIComponent(
+          searchTerm
+        )}`,
+      providesTags: [QP_ADMIN_TAG],
     }),
     allQPs: builder.query<QpResponseType, void>({
       query: () => "/approved",
