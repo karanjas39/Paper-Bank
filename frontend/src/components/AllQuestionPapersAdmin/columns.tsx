@@ -13,7 +13,6 @@ import { AtSign, Library } from "lucide-react";
 import { Badge } from "../ui/badge";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
