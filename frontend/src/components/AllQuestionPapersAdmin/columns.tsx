@@ -32,6 +32,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { z_reviewQP_type } from "@singhjaskaran/paperbank-common";
+import { qpApi } from "@/store/api/qpApi";
+import { useToast } from "@/hooks/use-toast";
 
 export const columns: ColumnDef<qpType>[] = [
   {
@@ -158,9 +161,15 @@ export const columns: ColumnDef<qpType>[] = [
               {row.original.status === "pending" ? (
                 <>
                   <DropdownMenuLabel>QP Actions</DropdownMenuLabel>
-                  <div className="flex flex-col gap-1">
-                    <QuestionPaperWarning type="accept" />
-                    <QuestionPaperWarning type="reject" />
+                  <div className="flex flex-col">
+                    <QuestionPaperWarning
+                      type="accept"
+                      data={{ status: "approved", id: row.original.id }}
+                    />
+                    <QuestionPaperWarning
+                      type="reject"
+                      data={{ status: "rejected", id: row.original.id }}
+                    />
                   </div>
                   <DropdownMenuSeparator />
                 </>
@@ -183,13 +192,34 @@ export const columns: ColumnDef<qpType>[] = [
   },
 ];
 
-function QuestionPaperWarning({ type }: { type: "accept" | "reject" }) {
+function QuestionPaperWarning({
+  type,
+  data,
+}: {
+  type: "accept" | "reject";
+  data: z_reviewQP_type;
+}) {
+  const [reviewQP, { isLoading }] = qpApi.useReviewQPMutation();
+  const { toast } = useToast();
+
+  async function handleQPAction() {
+    try {
+      const response = await reviewQP(data).unwrap();
+      if (response.success) {
+        toast({ description: response.message });
+      } else throw new Error(response.message);
+    } catch (error) {
+      const err = error as Error;
+      if (err?.message?.split(" ")[0] === "\nInvalid")
+        err.message = "Unable to review QP right now.";
+      toast({ description: err.message, variant: "destructive" });
+    }
+  }
+
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="ghost" className="text-sm text-start">
-          {type === "accept" ? "Accept QP" : "Reject QP"}
-        </Button>
+      <AlertDialogTrigger className="h-8 rounded-md px-3 text-sm hover:bg-accent hover:text-accent-foreground text-start">
+        {type === "accept" ? "Accept QP" : "Reject QP"}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -201,7 +231,9 @@ function QuestionPaperWarning({ type }: { type: "accept" | "reject" }) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleQPAction}>
+            {isLoading ? "Reviewing..." : " Continue"}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

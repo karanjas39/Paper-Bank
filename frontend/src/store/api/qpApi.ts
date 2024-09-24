@@ -7,6 +7,7 @@ import {
   responseType,
 } from "@/lib/ApiTypes";
 import { RootState } from "../index";
+import { z_reviewQP_type } from "@singhjaskaran/paperbank-common";
 
 export const qpApi = createApi({
   reducerPath: "qpApi",
@@ -38,6 +39,14 @@ export const qpApi = createApi({
     }),
     allQPs: builder.query<QpResponseType, void>({
       query: () => "/approved",
+    }),
+    reviewQP: builder.mutation<responseType, z_reviewQP_type>({
+      query: (body) => ({
+        url: "/review",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [QP_ADMIN_TAG],
     }),
     uploadQP: builder.mutation<responseType, any>({
       query: (body) => ({

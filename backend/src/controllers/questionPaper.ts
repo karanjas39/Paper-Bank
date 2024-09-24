@@ -66,6 +66,7 @@ export async function uploadQP(c: Context) {
         year: parsedData.year,
         userId: isUser.id,
         programId: parsedData.programId,
+        status: isUser.admin ? "approved" : "pending",
       },
     });
 
@@ -178,18 +179,20 @@ export async function reviewQP(c: Context) {
       });
     }
 
-    await prisma.notification.create({
-      data: {
-        userId: isQP.userId,
-        message: `The ${
-          isQP.courseName
-        } question paper you have uploaded is being ${data.status}. ${
-          data.status === "approved"
-            ? "Now you can contribute one more question paper."
-            : ""
-        }`,
-      },
-    });
+    if (isQP.userId !== adminId) {
+      await prisma.notification.create({
+        data: {
+          userId: isQP.userId,
+          message: `The ${
+            isQP.courseName
+          } question paper you have uploaded is being ${data.status}. ${
+            data.status === "approved"
+              ? "Now you can contribute one more question paper."
+              : ""
+          }`,
+        },
+      });
+    }
 
     return c.json({
       success: true,
