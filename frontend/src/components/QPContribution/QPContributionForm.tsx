@@ -35,7 +35,6 @@ import {
 } from "@/components/ui/command";
 
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import {
   z_createQuestionPaper,
   z_createQuestionPaper_type,
@@ -52,6 +51,7 @@ import ButtonLoader from "../Loaders/ButtonLoader";
 import { userApi } from "@/store/api/userApi";
 import { useDispatch } from "react-redux";
 import { USER_TAG } from "@/lib/ApiTags";
+import { useRouter } from "next/navigation";
 
 function ContributeForm() {
   const form = useForm<z_createQuestionPaper_type>({
@@ -66,12 +66,14 @@ function ContributeForm() {
     },
   });
   const { toast } = useToast();
-  const router = useRouter();
   const { data, isFetching: isFetchingPrograms } =
     programApi.useGetProgramsQuery();
   const [uploadQP, { isLoading }] = qpApi.useUploadQPMutation();
   const [, setFile] = useState<File | null>(null);
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { data: userData, isFetching: isFetchingUser } =
+    userApi.useGetUserDetailQuery();
 
   const handleFileUpload = (uploadedFile: File | null) => {
     setFile(uploadedFile);
@@ -98,7 +100,11 @@ function ContributeForm() {
       if (response.success) {
         toast({ description: response.message });
         dispatch(userApi.util.invalidateTags([USER_TAG]));
-        router.replace("/dashboard/my-uploads");
+        form.reset();
+        setFile(null);
+        if (userData && !userData.user.admin) {
+          router.push("/dashboard/my-uploads");
+        }
       } else throw new Error(response.message);
     } catch (error) {
       const err = error as Error;
@@ -108,7 +114,7 @@ function ContributeForm() {
     }
   }
 
-  if (isFetchingPrograms) return <Loader />;
+  if (isFetchingPrograms || isFetchingUser) return <Loader />;
 
   return (
     <Form {...form}>
