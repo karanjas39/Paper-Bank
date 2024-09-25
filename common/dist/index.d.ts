@@ -28,6 +28,13 @@ export declare const z_updateUser: z.ZodObject<{
     email: string;
     programId: number;
 }>;
+export declare const z_resetUploads: z.ZodObject<{
+    userId: z.ZodNumber;
+}, "strip", z.ZodTypeAny, {
+    userId: number;
+}, {
+    userId: number;
+}>;
 export declare const z_updatePassword: z.ZodObject<{
     previousPassword: z.ZodString;
     newPassword: z.ZodString;
@@ -58,6 +65,16 @@ export declare const z_createProgram: z.ZodObject<{
 }, {
     name: string;
 }>;
+export declare const z_editProgram: z.ZodObject<{
+    id: z.ZodNumber;
+    name: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    name: string;
+    id: number;
+}, {
+    name: string;
+    id: number;
+}>;
 export declare const z_createQuestionPaper: z.ZodObject<{
     courseName: z.ZodString;
     courseCode: z.ZodString;
@@ -79,6 +96,25 @@ export declare const z_createQuestionPaper: z.ZodObject<{
     year: number;
     examType: string;
     pdf?: any;
+}>;
+export declare const z_editQuestionPaper: z.ZodObject<{
+    courseName: z.ZodOptional<z.ZodString>;
+    courseCode: z.ZodOptional<z.ZodString>;
+    year: z.ZodOptional<z.ZodNumber>;
+    examType: z.ZodOptional<z.ZodString>;
+    programId: z.ZodOptional<z.ZodNumber>;
+}, "strip", z.ZodTypeAny, {
+    programId?: number | undefined;
+    courseName?: string | undefined;
+    courseCode?: string | undefined;
+    year?: number | undefined;
+    examType?: string | undefined;
+}, {
+    programId?: number | undefined;
+    courseName?: string | undefined;
+    courseCode?: string | undefined;
+    year?: number | undefined;
+    examType?: string | undefined;
 }>;
 export declare const z_reviewQP: z.ZodObject<{
     id: z.ZodNumber;
@@ -109,10 +145,13 @@ export declare const z_createMessage: z.ZodObject<{
 }>;
 export type z_signup_type = z.infer<typeof z_signup>;
 export type z_updateUser_type = z.infer<typeof z_updateUser>;
+export type z_resetUploads_type = z.infer<typeof z_resetUploads>;
 export type z_updatePassword_type = z.infer<typeof z_updatePassword>;
 export type z_signin_type = z.infer<typeof z_signin>;
 export type z_createProgram_type = z.infer<typeof z_createProgram>;
+export type z_editProgram_type = z.infer<typeof z_editProgram>;
 export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;
+export type z_editQuestionPaper_type = z.infer<typeof z_editQuestionPaper>;
 export type z_reviewQP_type = z.infer<typeof z_reviewQP>;
 export type z_createNotification_type = z.infer<typeof z_createNotification>;
 export type z_createMessage_type = z.infer<typeof z_createMessage>;
