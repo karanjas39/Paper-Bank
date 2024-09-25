@@ -2,6 +2,7 @@ import { Context } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import {
+  z_resetUploads,
   z_updatePassword,
   z_updateUser,
 } from "@singhjaskaran/paperbank-common";
@@ -164,13 +165,22 @@ export async function resetUploadCount(c: Context) {
   try {
     const body = await c.req.json();
 
-    const { success, data } = z_updateUser.safeParse(body);
+    const { success, data } = z_resetUploads.safeParse(body);
 
     if (!success) throw new Error("Invalid inputs are passed.");
 
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
+
+    await prisma.user.update({
+      where: {
+        id: data.userId,
+      },
+      data: {
+        uploadCount: 0,
+      },
+    });
 
     return c.json({
       success: true,

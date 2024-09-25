@@ -1,7 +1,10 @@
 import { Context } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { z_createProgram } from "@singhjaskaran/paperbank-common";
+import {
+  z_createProgram,
+  z_editProgram,
+} from "@singhjaskaran/paperbank-common";
 
 export async function createProgram(c: Context) {
   try {
@@ -34,6 +37,42 @@ export async function createProgram(c: Context) {
       success: false,
       status: 400,
       message: err.message || "Failed to create new program.",
+    });
+  }
+}
+
+export async function editProgram(c: Context) {
+  try {
+    const body = await c.req.json();
+
+    const { success, data } = z_editProgram.safeParse(body);
+
+    if (!success) throw new Error("Invalid inputs are passed.");
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    await prisma.program.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        name: data.name,
+      },
+    });
+
+    return c.json({
+      success: true,
+      status: 200,
+      message: "Program is updated successfully.",
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 400,
+      message: err.message || "Failed to update program.",
     });
   }
 }
