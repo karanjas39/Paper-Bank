@@ -1,6 +1,9 @@
 "use client";
 
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
+import { useToast } from "@/hooks/use-toast";
+import { contactApi } from "@/store/api/contactApi";
+import { useState } from "react";
 
 function ContactUsForm() {
   const placeholders = [
@@ -11,13 +14,27 @@ function ContactUsForm() {
     "How do I earn more upload slots?",
   ];
 
+  const [ContactAdmin, { isLoading }] = contactApi.useContactAdminMutation();
+  const [message, setMessage] = useState<string>("");
+  const { toast } = useToast();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setMessage(e.target.value);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submitted");
+    try {
+      const response = await ContactAdmin({ message }).unwrap();
+      if (response.success) {
+        toast({ description: response.message });
+      } else throw new Error(response.message);
+    } catch (error) {
+      const err = error as Error;
+      if (err?.message?.split(" ")[0] === "\nInvalid")
+        err.message = "Unable to contact right now.";
+      toast({ description: err.message, variant: "destructive" });
+    }
   };
 
   return (
@@ -26,6 +43,7 @@ function ContactUsForm() {
         placeholders={placeholders}
         onChange={handleChange}
         onSubmit={onSubmit}
+        disable={isLoading}
       />
     </div>
   );

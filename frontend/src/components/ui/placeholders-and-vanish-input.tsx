@@ -8,10 +8,12 @@ export function PlaceholdersAndVanishInput({
   placeholders,
   onChange,
   onSubmit,
+  disable = false,
 }: {
   placeholders: string[];
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  disable?: boolean;
 }) {
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
 
@@ -197,6 +199,7 @@ export function PlaceholdersAndVanishInput({
             onChange && onChange(e);
           }
         }}
+        disabled={disable}
         onKeyDown={handleKeyDown}
         ref={inputRef}
         value={value}
