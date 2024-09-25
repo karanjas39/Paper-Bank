@@ -1,5 +1,6 @@
 import { Context } from "hono";
 import { z_createMessage } from "@singhjaskaran/paperbank-common";
+import { sendMessage } from "../utils/sendMessage";
 
 export async function contactAdmin(c: Context) {
   try {
@@ -9,18 +10,11 @@ export async function contactAdmin(c: Context) {
 
     if (!success) throw new Error("Invalid inputs are passed.");
 
-    const telegramApiUrl = `https://api.telegram.org/bot${c.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
-
-    const response = await fetch(telegramApiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        chat_id: c.env.TELEGRAM_CHAT_ID,
-        text: data.message,
-      }),
-    });
+    const response = await sendMessage(
+      `CONTACT: ${data.message}`,
+      c.env.TELEGRAM_BOT_TOKEN,
+      c.env.TELEGRAM_CHAT_ID
+    );
 
     if (!response.ok) throw new Error("Failed to send message.");
 
