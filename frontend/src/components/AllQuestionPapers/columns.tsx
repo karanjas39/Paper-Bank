@@ -161,7 +161,7 @@ export const columns: ColumnDef<qpType>[] = [
           <HoverCardTrigger className="text-center capitalize">
             {row.original.user?.name}
           </HoverCardTrigger>
-          <HoverCardContent className="flex flex-col gap-1">
+          <HoverCardContent className="flex flex-col gap-1 w-max">
             <div className="flex items-center gap-1">
               <Library />
               <p>{row.original.user?.program.name}</p>

@@ -4,6 +4,8 @@ import { userType } from "@/lib/ApiTypes";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "../ui/badge";
 import { formatDate } from "@/lib/helpers";
+import { Button } from "../ui/button";
+import ResetUploads from "./ResetUploads";
 
 export const columns: ColumnDef<userType>[] = [
   {
@@ -82,5 +84,21 @@ export const columns: ColumnDef<userType>[] = [
     cell: ({ row }) => (
       <div className="text-center capitalize">{row.original.uploadCount}</div>
     ),
+  },
+  {
+    accessorKey: "uploadCount",
+    header: () => {
+      return <div className="text-center font-bold">Actions</div>;
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="text-center capitalize">
+          <ResetUploads
+            id={Number(row.original.id)}
+            count={row.original.uploadCount}
+          />
+        </div>
+      );
+    },
   },
 ];
