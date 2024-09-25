@@ -2,7 +2,10 @@ import { BACKEND_URL } from "@/lib/constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PROGRAM_TAG, tagTypes } from "@/lib/ApiTags";
 import { allProgramstype, responseType } from "@/lib/ApiTypes";
-import { z_createProgram_type } from "@singhjaskaran/paperbank-common";
+import {
+  z_createProgram_type,
+  z_editProgram_type,
+} from "@singhjaskaran/paperbank-common";
 import { RootState } from "../index";
 
 export const programApi = createApi({
@@ -27,6 +30,14 @@ export const programApi = createApi({
       query: (body) => ({
         url: "/create",
         method: "POST",
+        body,
+      }),
+      invalidatesTags: [PROGRAM_TAG],
+    }),
+    updateProgram: builder.mutation<responseType, z_editProgram_type>({
+      query: (body) => ({
+        url: "/update",
+        method: "PATCH",
         body,
       }),
       invalidatesTags: [PROGRAM_TAG],

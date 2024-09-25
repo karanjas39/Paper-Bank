@@ -5,6 +5,7 @@ import { ProgramType } from "@/lib/ApiTypes";
 import { formatDate } from "@/lib/helpers";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
+import EditProgram from "./EditProgram";
 
 const multiFieldFilter = (row: any, columnId: string, filterValue: string) => {
   if (!filterValue) return true;
@@ -62,11 +63,9 @@ export const columns: ColumnDef<ProgramType>[] = [
   {
     accessorKey: "id",
     header: () => <div className="text-center font-bold">Actions</div>,
-    cell: () => (
+    cell: ({ row }) => (
       <div className="text-center capitalize">
-        <Button variant="secondary" size="sm">
-          Edit program
-        </Button>
+        <EditProgram id={row.original.id} name={row.original.name} />
       </div>
     ),
   },

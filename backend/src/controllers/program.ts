@@ -89,6 +89,9 @@ export async function getAllProgram(c: Context) {
         id: true,
         createdAt: true,
       },
+      orderBy: {
+        createdAt: "asc",
+      },
     });
 
     return c.json({
