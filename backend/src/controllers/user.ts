@@ -160,6 +160,33 @@ export async function updateUserDetails(c: Context) {
   }
 }
 
+export async function resetUploadCount(c: Context) {
+  try {
+    const body = await c.req.json();
+
+    const { success, data } = z_updateUser.safeParse(body);
+
+    if (!success) throw new Error("Invalid inputs are passed.");
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    return c.json({
+      success: true,
+      status: 200,
+      message: "Upload count is reset successfully.",
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 400,
+      message: err.message || "Failed to reset upload count.",
+    });
+  }
+}
+
 export async function updateUserPassword(c: Context) {
   try {
     const userId = c.get("id");

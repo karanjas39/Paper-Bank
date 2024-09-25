@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+
 import { Card } from "@/components/ui/card";
 import {
   Table,
@@ -11,9 +11,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { notificationApi } from "@/store/api/notificationApi";
-import { Trash2 } from "lucide-react";
 import Loader from "../Loaders/Loader";
 import { formatDate } from "@/lib/helpers";
+import DeleteNotification from "./DeleteNotification";
 
 function NotificationTable() {
   const { data, isLoading } = notificationApi.useGetAllNotificationsQuery();
@@ -21,33 +21,28 @@ function NotificationTable() {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-3">
       {data && data.success && data.notifications.length ? (
         <>
-          <div className="flex justify-end">
-            <Button variant="destructive">Clear</Button>
-          </div>
+          <DeleteNotification />
           <Card className="p-2">
             <Table className="w-full">
               <TableCaption>A list of your recent notifications.</TableCaption>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Message</TableHead>
-                  <TableHead className="w-[200px]">Date</TableHead>
+                  <TableHead className="text-left">Message</TableHead>
+                  <TableHead className="text-right">Date</TableHead>
                 </TableRow>
               </TableHeader>
               {data && data.success && (
                 <TableBody>
                   {data.notifications.map((notification) => (
                     <TableRow key={notification.id}>
-                      <TableCell>{notification.message}</TableCell>
-                      <TableCell className="w-[200px]">
-                        {formatDate(notification.createdAt)}
+                      <TableCell className="text-left">
+                        {notification.message}
                       </TableCell>
                       <TableCell className="text-right">
-                        <Button size="icon" variant="destructive">
-                          <Trash2 />
-                        </Button>
+                        {formatDate(notification.createdAt)}
                       </TableCell>
                     </TableRow>
                   ))}

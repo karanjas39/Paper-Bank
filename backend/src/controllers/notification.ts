@@ -21,6 +21,9 @@ export async function allNotifications(c: Context) {
         createdAt: true,
         id: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return c.json({
