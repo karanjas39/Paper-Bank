@@ -83,7 +83,7 @@ export function AllQPsAdminTable<TData extends qpType, TValue>({
   return (
     <div className="flex flex-col gap-4">
       <Input
-        placeholder="Search by name or email"
+        placeholder="Search by course name, course code or exam type"
         value={searchTerm}
         onChange={handleSearch}
         className="md:w-[40%] w-full self-end"

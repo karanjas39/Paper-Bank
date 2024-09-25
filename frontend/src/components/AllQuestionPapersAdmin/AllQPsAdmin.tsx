@@ -33,7 +33,7 @@ function AllQpsAdmin() {
 
   return (
     <div className="w-full">
-      {data?.success && data.qps.length ? (
+      {data?.success ? (
         <AllQPsAdminTable
           columns={columns}
           data={data.qps}

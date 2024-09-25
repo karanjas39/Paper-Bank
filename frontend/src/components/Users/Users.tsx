@@ -33,7 +33,7 @@ function AllUsers() {
 
   return (
     <div className="w-full">
-      {data?.success && data.users.length ? (
+      {data?.success ? (
         <UserTable
           columns={columns}
           data={data.users}

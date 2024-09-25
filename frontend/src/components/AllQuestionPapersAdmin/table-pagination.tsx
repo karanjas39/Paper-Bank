@@ -46,7 +46,7 @@ export function DataTablePagination<TData>({
   return (
     <div className="flex sm:items-center items-start gap-1 sm:flex-row flex-col justify-between px-2 mt-3">
       <div className="flex-1 text-sm text-muted-foreground">
-        {totalQps} total users
+        {totalQps} total question papers
       </div>
       <div className="flex sm:flex-row flex-col sm:items-center items-start sm:space-x-6 lg:space-x-8 sm:mt-0 mt-2 gap-2 w-full sm:w-max">
         <div className="flex items-center space-x-2">

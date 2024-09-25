@@ -11,6 +11,7 @@
     "@singhjaskaran/paperbank-common": "^1.1.2",
     "bcrypt-ts": "^5.0.2",
     "hono": "^4.5.10",
+    "pdf-lib": "^1.17.1",
     "prisma": "^5.19.0"
   },
   "devDependencies": {

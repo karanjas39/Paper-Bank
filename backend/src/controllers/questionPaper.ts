@@ -6,6 +6,7 @@ import {
   z_createQuestionPaper,
   z_reviewQP,
 } from "@singhjaskaran/paperbank-common";
+import { addWatermarkToPDF } from "../utils/addWaterMark";
 
 export async function uploadQP(c: Context) {
   try {
@@ -21,7 +22,7 @@ export async function uploadQP(c: Context) {
       },
     });
 
-    if (!isUser) throw new Error("No such user is regsitered with us.");
+    if (!isUser) throw new Error("No such user is registered with us.");
 
     if (isUser.uploadCount !== 0 && !isUser.admin)
       throw new Error("You have exhausted your upload quota.");
@@ -49,7 +50,18 @@ export async function uploadQP(c: Context) {
 
     if (!pdf || typeof pdf === "string") throw new Error("Invalid file upload");
 
-    const { data, error, key } = await uploadData(pdf, Number(userId));
+    const pdfArrayBuffer = await pdf.arrayBuffer();
+
+    const watermarkedPdfBytes = await addWatermarkToPDF(pdfArrayBuffer);
+
+    const watermarkedPdf = new File([watermarkedPdfBytes], pdf.name, {
+      type: pdf.type,
+    });
+
+    const { data, error, key } = await uploadData(
+      watermarkedPdf,
+      Number(userId)
+    );
 
     if (error) throw new Error(error);
     if (!key) throw new Error("Failed to create kv key.");
@@ -84,7 +96,7 @@ export async function uploadQP(c: Context) {
     return c.json({
       success: true,
       status: 200,
-      message: "Ouestion paper is uploaded successfully.",
+      message: "Question paper is uploaded successfully.",
     });
   } catch (error) {
     const err = error as Error;
@@ -352,7 +364,6 @@ export async function getAllQPs(c: Context) {
                 { courseCode: { contains: searchTerm, mode: "insensitive" } },
                 { courseName: { contains: searchTerm, mode: "insensitive" } },
                 { examType: { contains: searchTerm, mode: "insensitive" } },
-                { year: { equals: parseInt(searchTerm, 10) } },
               ],
             }
           : {},
@@ -370,7 +381,6 @@ export async function getAllQPs(c: Context) {
                 { courseCode: { contains: searchTerm, mode: "insensitive" } },
                 { courseName: { contains: searchTerm, mode: "insensitive" } },
                 { examType: { contains: searchTerm, mode: "insensitive" } },
-                { year: { equals: parseInt(searchTerm, 10) } },
               ],
             }
           : {},
