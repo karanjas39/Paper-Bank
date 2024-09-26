@@ -66,7 +66,7 @@ export async function uploadQP(c: Context) {
     if (error) throw new Error(error);
     if (!key) throw new Error("Failed to create kv key.");
 
-    const kv = c.env["my-app"];
+    const kv = c.env["paperBank"];
     await kv.put(key, data);
 
     const newUpload = await prisma.questionPaper.create({
@@ -113,7 +113,7 @@ export async function getQP(c: Context) {
     const key = c.req.param("key");
     if (!key) throw new Error("No key provided.");
 
-    const kv = c.env["my-app"];
+    const kv = c.env["paperBank"];
     const base64Data = await kv.get(key);
     if (!base64Data) throw new Error("Question Paper not found.");
 
@@ -146,7 +146,7 @@ export async function reviewQP(c: Context) {
 
     if (!success) throw new Error("Invalid inputs are passed.");
 
-    const kv = c.env["my-app"];
+    const kv = c.env["paperBank"];
 
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
