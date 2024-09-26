@@ -10,7 +10,7 @@ import contact from "./routes/contact";
 const app = new Hono<{
   Bindings: {
     DATABASE_URL: string;
-    "my-app": KVNamespace;
+    paperBank: KVNamespace;
   };
 }>();
 

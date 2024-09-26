@@ -15,7 +15,6 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "verified" BOOLEAN NOT NULL DEFAULT false,
-    "otp" TEXT NOT NULL DEFAULT '',
     "admin" BOOLEAN NOT NULL DEFAULT false,
     "programId" INTEGER NOT NULL,
     "uploadCount" INTEGER NOT NULL DEFAULT 0,
@@ -34,14 +33,23 @@ CREATE TABLE "QuestionPaper" (
     "year" INTEGER NOT NULL,
     "examType" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'pending',
-    "submittedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "reviewedAt" TIMESTAMP(3),
-    "reviewMessage" TEXT,
     "userId" INTEGER NOT NULL,
+    "programId" INTEGER NOT NULL,
     "reviewerId" INTEGER,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "submittedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "QuestionPaper_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Notification" (
+    "id" SERIAL NOT NULL,
+    "message" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" INTEGER NOT NULL,
+
+    CONSTRAINT "Notification_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -78,4 +86,10 @@ ALTER TABLE "User" ADD CONSTRAINT "User_programId_fkey" FOREIGN KEY ("programId"
 ALTER TABLE "QuestionPaper" ADD CONSTRAINT "QuestionPaper_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "QuestionPaper" ADD CONSTRAINT "QuestionPaper_programId_fkey" FOREIGN KEY ("programId") REFERENCES "Program"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "QuestionPaper" ADD CONSTRAINT "QuestionPaper_reviewerId_fkey" FOREIGN KEY ("reviewerId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
