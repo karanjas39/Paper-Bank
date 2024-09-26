@@ -60,11 +60,7 @@ const DownloadCell: React.FC<DownloadCellProps> = ({
 
   return (
     <div className="text-center capitalize">
-      <Button
-        variant="secondary"
-        onClick={handleDownload}
-        disabled={isDownloading}
-      >
+      <Button onClick={handleDownload} disabled={isDownloading}>
         {isDownloading ? (
           <>
             <span>Wait</span> <ButtonLoader />
