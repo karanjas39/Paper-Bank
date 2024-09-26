@@ -6,7 +6,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
-import { qpType } from "@/lib/ApiTypes";
+import { DownloadCellProps, qpType } from "@/lib/ApiTypes";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { AtSign, Library } from "lucide-react";
@@ -23,6 +23,46 @@ const multiFieldFilter = (row: any, columnId: string, filterValue: string) => {
     courseName.toLowerCase().includes(lowerFilterValue) ||
     courseCode.toLowerCase().includes(lowerFilterValue) ||
     exampType.toLowerCase().includes(lowerFilterValue)
+  );
+};
+
+const DownloadCell: React.FC<DownloadCellProps> = ({
+  fileKey,
+  courseName,
+  courseCode,
+  examType,
+  year,
+}) => {
+  const [downloadQP, { isLoading }] = qpApi.useDownloadQPMutation();
+  const { toast } = useToast();
+
+  const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      const blob = await downloadQP(fileKey).unwrap();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = `${courseName}(${courseCode})-${examType}-${year}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      toast({
+        description: "Failed to download the question paper.",
+        variant: "destructive",
+      });
+      console.error("Download failed:", error);
+    }
+  };
+
+  return (
+    <div className="text-center capitalize">
+      <Button variant="secondary" onClick={handleDownload} disabled={isLoading}>
+        {isLoading ? "Downloading" : "Download QP"}
+      </Button>
+    </div>
   );
 };
 
@@ -179,43 +219,14 @@ export const columns: ColumnDef<qpType>[] = [
   {
     accessorKey: "fileKey",
     header: () => <div className="font-bold text-center">Download</div>,
-    cell: ({ row }) => {
-      const fileKey = row.original.fileKey;
-      const [downloadQP, { isLoading }] = qpApi.useDownloadQPMutation();
-      const { toast } = useToast();
-
-      const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        try {
-          const blob = await downloadQP(fileKey).unwrap();
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.download = `${row.original.courseName}(${row.original.courseCode})-${row.original.examType}-${row.original.year}.pdf`;
-          document.body.appendChild(a);
-          a.click();
-          window.URL.revokeObjectURL(url);
-        } catch (error) {
-          toast({
-            description: "Failed to download the question paper.",
-            variant: "destructive",
-          });
-          console.error("Download failed:", error);
-        }
-      };
-
-      return (
-        <div className="text-center capitalize">
-          <Button
-            variant="secondary"
-            onClick={handleDownload}
-            disabled={isLoading}
-          >
-            {isLoading ? "Downloading" : "Download QP"}
-          </Button>
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <DownloadCell
+        fileKey={row.original.fileKey}
+        courseName={row.original.courseName}
+        courseCode={row.original.courseCode}
+        examType={row.original.examType}
+        year={row.original.year.toString()}
+      />
+    ),
   },
 ];

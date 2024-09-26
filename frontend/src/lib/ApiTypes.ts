@@ -21,7 +21,7 @@ export interface userType {
 
 export interface DownloadCellProps {
   fileKey: string;
-  status: string;
+  status?: string;
   courseName: string;
   courseCode: string;
   examType: string;
