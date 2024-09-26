@@ -12,7 +12,7 @@ function QPTable() {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="w-[95%] mx-auto mt-4">
+    <div className="w-[95%] mx-auto my-4">
       {data?.success && data?.qps.length ? (
         <AllQPTable columns={columns} data={data.qps} />
       ) : (

@@ -27,6 +27,13 @@ export const qpApi = createApi({
       query: () => "/user",
       providesTags: [QP_TAG],
     }),
+    downloadQP: builder.mutation<Blob, string>({
+      query: (fileKey) => ({
+        url: `/qp/pdf/${fileKey}`,
+        method: "GET",
+        responseHandler: (response) => response.blob(),
+      }),
+    }),
     allQPsAdmin: builder.query<
       QpAdminResponseType,
       { page: number; pageSize: number; searchTerm: string }

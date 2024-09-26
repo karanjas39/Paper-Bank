@@ -11,6 +11,9 @@ import { BACKEND_URL } from "@/lib/constants";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { AtSign, Library } from "lucide-react";
+import { qpApi } from "@/store/api/qpApi";
+import { useToast } from "@/hooks/use-toast";
+import ButtonLoader from "../Loaders/ButtonLoader";
 
 const multiFieldFilter = (row: any, columnId: string, filterValue: string) => {
   if (!filterValue) return true;
@@ -180,16 +183,13 @@ export const columns: ColumnDef<qpType>[] = [
     header: () => <div className="font-bold text-center">Download</div>,
     cell: ({ row }) => {
       const fileKey = row.original.fileKey;
-      const downloadUrl = `${BACKEND_URL}/qp/pdf/${fileKey}`;
+      const [downloadQP, { isLoading }] = qpApi.useDownloadQPMutation();
+      const { toast } = useToast();
 
       const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         try {
-          const response = await fetch(downloadUrl);
-          // const res = await response.json();
-          // if (!res.success)
-          //   throw new Error("Unable to download this question paper.");
-          const blob = await response.blob();
+          const blob = await downloadQP(fileKey).unwrap();
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.style.display = "none";
@@ -199,14 +199,22 @@ export const columns: ColumnDef<qpType>[] = [
           a.click();
           window.URL.revokeObjectURL(url);
         } catch (error) {
+          toast({
+            description: "Failed to download the question paper.",
+            variant: "destructive",
+          });
           console.error("Download failed:", error);
         }
       };
 
       return (
         <div className="text-center capitalize">
-          <Button variant="outline" onClick={handleDownload}>
-            Download
+          <Button
+            variant="secondary"
+            onClick={handleDownload}
+            disabled={isLoading}
+          >
+            {isLoading ? "Downloading" : "Download QP"}
           </Button>
         </div>
       );
