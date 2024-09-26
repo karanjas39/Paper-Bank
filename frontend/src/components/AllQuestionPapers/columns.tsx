@@ -10,8 +10,8 @@ import { DownloadCellProps, qpType } from "@/lib/ApiTypes";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { AtSign, Library } from "lucide-react";
-import { qpApi } from "@/store/api/qpApi";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { BACKEND_URL } from "@/lib/constants";
 
 const multiFieldFilter = (row: any, columnId: string, filterValue: string) => {
   if (!filterValue) return true;
@@ -33,13 +33,15 @@ const DownloadCell: React.FC<DownloadCellProps> = ({
   examType,
   year,
 }) => {
-  const [downloadQP, { isLoading }] = qpApi.useDownloadQPMutation();
-  const { toast } = useToast();
+  const [isDownloading, setIsDownloading] = useState(false);
+  const downloadUrl = `${BACKEND_URL}/qp/pdf/${fileKey}`;
 
   const handleDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setIsDownloading(true);
     try {
-      const blob = await downloadQP(fileKey).unwrap();
+      const response = await fetch(downloadUrl);
+      const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.style.display = "none";
@@ -49,18 +51,20 @@ const DownloadCell: React.FC<DownloadCellProps> = ({
       a.click();
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      toast({
-        description: "Failed to download the question paper.",
-        variant: "destructive",
-      });
       console.error("Download failed:", error);
+    } finally {
+      setIsDownloading(false);
     }
   };
 
   return (
     <div className="text-center capitalize">
-      <Button variant="secondary" onClick={handleDownload} disabled={isLoading}>
-        {isLoading ? "Downloading" : "Download QP"}
+      <Button
+        variant="secondary"
+        onClick={handleDownload}
+        disabled={isDownloading}
+      >
+        {isDownloading ? "Downloading..." : "Download"}
       </Button>
     </div>
   );
