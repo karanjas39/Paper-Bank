@@ -12,6 +12,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { AtSign, Library } from "lucide-react";
 import { useState } from "react";
 import { BACKEND_URL } from "@/lib/constants";
+import ButtonLoader from "../Loaders/ButtonLoader";
 
 const multiFieldFilter = (row: any, columnId: string, filterValue: string) => {
   if (!filterValue) return true;
@@ -64,7 +65,13 @@ const DownloadCell: React.FC<DownloadCellProps> = ({
         onClick={handleDownload}
         disabled={isDownloading}
       >
-        {isDownloading ? "Downloading..." : "Download"}
+        {isDownloading ? (
+          <>
+            <span>Wait</span> <ButtonLoader />
+          </>
+        ) : (
+          "Download"
+        )}
       </Button>
     </div>
   );
