@@ -14,12 +14,7 @@ const app = new Hono<{
   };
 }>();
 
-app.use(
-  "*",
-  cors({
-    origin: "https://paperbank.vercel.app",
-  })
-);
+app.use("*", cors());
 
 app.route("/api/v1/auth", auth);
 app.route("/api/v1/qp", qp);
