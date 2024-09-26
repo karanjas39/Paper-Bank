@@ -12,8 +12,7 @@ import {
 } from "lucide-react";
 
 // export const BACKEND_URL = "http://127.0.0.1:8787/api/v1";
-export const BACKEND_URL =
-  "https://paper_bank_backend.paperbank000.workers.dev/api/v1";
+export const BACKEND_URL = "https://paperbank.paperbank000.workers.dev/api/v1";
 
 export const links: {
   name: string;
