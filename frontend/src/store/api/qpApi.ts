@@ -9,7 +9,6 @@ import {
 import { RootState } from "../index";
 import {
   z_reviewQP_type,
-  z_deleteQP,
   z_deleteQP_type,
   z_editQuestionPaper_type,
 } from "@singhjaskaran/paperbank-common";

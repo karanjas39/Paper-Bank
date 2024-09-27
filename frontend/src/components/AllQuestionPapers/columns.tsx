@@ -7,12 +7,10 @@ import {
 } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import { qpType } from "@/lib/ApiTypes";
-import { ArrowDownIcon, ArrowUpIcon, Link1Icon } from "@radix-ui/react-icons";
+import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { AtSign, Library } from "lucide-react";
-import { useState } from "react";
 import { BACKEND_URL } from "@/lib/constants";
-import ButtonLoader from "../Loaders/ButtonLoader";
 import Link from "next/link";
 
 const multiFieldFilter = (row: any, columnId: string, filterValue: string) => {
