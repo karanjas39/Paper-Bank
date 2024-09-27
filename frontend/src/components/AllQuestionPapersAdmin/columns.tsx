@@ -31,9 +31,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { z_reviewQP_type } from "@singhjaskaran/paperbank-common";
+import {
+  z_deleteQP_type,
+  z_reviewQP_type,
+} from "@singhjaskaran/paperbank-common";
 import { qpApi } from "@/store/api/qpApi";
 import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
+import EditQPForm from "./EditQP/EditQPForm";
 
 export const columns: ColumnDef<qpType>[] = [
   {
@@ -79,6 +84,15 @@ export const columns: ColumnDef<qpType>[] = [
     },
     cell: ({ row }) => (
       <div className="text-center capitalize">{row.original.examType}</div>
+    ),
+  },
+  {
+    accessorKey: "program",
+    header: () => {
+      return <div className="text-center font-bold">Program</div>;
+    },
+    cell: ({ row }) => (
+      <div className="text-center capitalize">{row.original.program.name}</div>
     ),
   },
   {
@@ -180,6 +194,23 @@ export const columns: ColumnDef<qpType>[] = [
               >
                 Copy File Key
               </DropdownMenuItem>
+              <QuestionPaperDelete data={{ id: row.original.id }} />
+              <EditQPForm
+                qpInfo={{
+                  id: row.original.id,
+                  courseCode: row.original.courseCode,
+                  courseName: row.original.courseName,
+                  examType: row.original.examType,
+                  programId: row.original.program.id,
+                  year: row.original.year,
+                }}
+              />
+              <Link
+                href={`${BACKEND_URL}/qp/pdf/${row.original.fileKey}`}
+                target="_blank"
+              >
+                <DropdownMenuItem>Open Question Paper</DropdownMenuItem>
+              </Link>
               <DropdownMenuItem onClick={handleDownload}>
                 Download QP
               </DropdownMenuItem>
@@ -217,7 +248,7 @@ function QuestionPaperWarning({
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="h-8 rounded-md px-3 text-sm hover:bg-accent hover:text-accent-foreground text-start">
+      <AlertDialogTrigger className="h-8 rounded-md px-3 text-sm hover:bg-accent hover:text-accent-foreground text-start w-full">
         {type === "accept" ? "Accept QP" : "Reject QP"}
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -232,6 +263,48 @@ function QuestionPaperWarning({
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={handleQPAction}>
             {isLoading ? "Reviewing..." : " Continue"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function QuestionPaperDelete({ data }: { data: z_deleteQP_type }) {
+  const [deleteQP, { isLoading }] = qpApi.useDeleteQPMutation();
+  const { toast } = useToast();
+
+  async function handleQPAction() {
+    try {
+      const response = await deleteQP(data).unwrap();
+      if (response.success) {
+        toast({ description: response.message });
+      } else throw new Error(response.message);
+    } catch (error) {
+      const err = error as Error;
+      if (err?.message?.split(" ")[0] === "\nInvalid")
+        err.message = "Unable to delete QP now.";
+      toast({ description: err.message, variant: "destructive" });
+    }
+  }
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger className="h-8 rounded-md px-3 pl-2 text-sm hover:bg-accent hover:text-accent-foreground text-start w-full">
+        Delete
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete this
+            question paper.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleQPAction}>
+            {isLoading ? "Deleting..." : "Continue"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^1.1.0",
-    "@singhjaskaran/paperbank-common": "^1.1.4",
+    "@singhjaskaran/paperbank-common": "^1.1.5",
     "bcrypt-ts": "^5.0.2",
     "hono": "^4.5.10",
     "pdf-lib": "^1.17.1",

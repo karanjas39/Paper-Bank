@@ -163,5 +163,6 @@ export type z_editProgram_type = z.infer<typeof z_editProgram>;
 export type z_createQuestionPaper_type = z.infer<typeof z_createQuestionPaper>;
 export type z_editQuestionPaper_type = z.infer<typeof z_editQuestionPaper>;
 export type z_reviewQP_type = z.infer<typeof z_reviewQP>;
+export type z_deleteQP_type = z.infer<typeof z_deleteQP>;
 export type z_createNotification_type = z.infer<typeof z_createNotification>;
 export type z_createMessage_type = z.infer<typeof z_createMessage>;

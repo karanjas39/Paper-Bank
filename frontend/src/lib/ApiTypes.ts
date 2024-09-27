@@ -35,6 +35,7 @@ export interface qpType {
   year: number;
   examType: string;
   program: {
+    id: number;
     name: string;
   };
   user?: {

@@ -443,6 +443,12 @@ export async function getAllQPs(c: Context) {
           id: true,
           fileKey: true,
           status: true,
+          program: {
+            select: {
+              name: true,
+              id: true,
+            },
+          },
           user: {
             select: {
               name: true,

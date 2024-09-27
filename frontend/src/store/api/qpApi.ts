@@ -7,7 +7,12 @@ import {
   responseType,
 } from "@/lib/ApiTypes";
 import { RootState } from "../index";
-import { z_reviewQP_type } from "@singhjaskaran/paperbank-common";
+import {
+  z_reviewQP_type,
+  z_deleteQP,
+  z_deleteQP_type,
+  z_editQuestionPaper_type,
+} from "@singhjaskaran/paperbank-common";
 
 export const qpApi = createApi({
   reducerPath: "qpApi",
@@ -26,6 +31,22 @@ export const qpApi = createApi({
     myUploads: builder.query<QpResponseType, void>({
       query: () => "/user",
       providesTags: [QP_TAG],
+    }),
+    deleteQP: builder.mutation<QpResponseType, z_deleteQP_type>({
+      query: (body) => ({
+        url: "/delete",
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: [QP_ADMIN_TAG],
+    }),
+    editQP: builder.mutation<QpResponseType, z_editQuestionPaper_type>({
+      query: (body) => ({
+        url: "/update",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [QP_ADMIN_TAG],
     }),
     downloadQP: builder.mutation<Blob, string>({
       query: (fileKey) => ({
