@@ -6,7 +6,9 @@ import HeroSection from "@/components/Landing Page/HeroSection";
 export default async function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      <HeroSection />
+      <div className="flex-1">
+        <HeroSection />
+      </div>
       <FeatureSection />
       <ContactSection />
       <Footer />
