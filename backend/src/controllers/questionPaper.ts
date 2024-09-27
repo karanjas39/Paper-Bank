@@ -4,9 +4,12 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import uploadData from "../utils/uploadData";
 import {
   z_createQuestionPaper,
+  z_deleteQP,
+  z_editQuestionPaper,
   z_reviewQP,
 } from "@singhjaskaran/paperbank-common";
 import { addWatermarkToPDF } from "../utils/addWaterMark";
+import { sendMessage } from "../utils/sendMessage";
 
 export async function uploadQP(c: Context) {
   try {
@@ -84,6 +87,14 @@ export async function uploadQP(c: Context) {
 
     if (!newUpload) throw new Error("Failed to create question paper.");
 
+    if (!isUser.admin) {
+      await sendMessage(
+        `UPLOAD: New Question Paper of ${courseName}(${courseCode}) is Uploaded.`,
+        c.env.TELEGRAM_BOT_TOKEN,
+        c.env.TELEGRAM_CHAT_IDS
+      );
+    }
+
     await prisma.user.update({
       where: {
         id: isUser.id,
@@ -133,6 +144,92 @@ export async function getQP(c: Context) {
       success: false,
       status: 404,
       message: err.message || "Failed to retrieve the Question Paper.",
+    });
+  }
+}
+
+export async function deleteQP(c: Context) {
+  try {
+    const body = await c.req.json();
+    const { success, data } = z_deleteQP.safeParse(body);
+
+    if (!success) throw new Error("Invalid inputs are passed.");
+
+    const kv = c.env["paperBank"];
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const isQP = await prisma.questionPaper.findUnique({
+      where: {
+        id: data.id,
+      },
+    });
+
+    if (!isQP) throw new Error("No such question paper exist.");
+
+    await kv.delete(isQP.fileKey);
+    await prisma.questionPaper.delete({
+      where: {
+        id: data.id,
+      },
+    });
+
+    return c.json({
+      success: true,
+      status: 200,
+      message: "The qp is deleted successfully.",
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 404,
+      message: err.message || "Failed to delete the Question Paper.",
+    });
+  }
+}
+
+export async function updateQP(c: Context) {
+  try {
+    const body = await c.req.json();
+    const { success, data } = z_editQuestionPaper.safeParse(body);
+
+    if (!success) throw new Error("Invalid inputs are passed.");
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const isQP = await prisma.questionPaper.findUnique({
+      where: {
+        id: data.id,
+      },
+    });
+
+    if (!isQP) throw new Error("No such question paper exist.");
+
+    const { id, ...dataToUpdate } = data;
+
+    await prisma.questionPaper.update({
+      where: {
+        id: data.id,
+      },
+      data: dataToUpdate,
+    });
+
+    return c.json({
+      success: true,
+      status: 200,
+      message: "The qp is updated successfully.",
+    });
+  } catch (error) {
+    const err = error as Error;
+    return c.json({
+      success: false,
+      status: 404,
+      message: err.message || "Failed to update the Question Paper.",
     });
   }
 }

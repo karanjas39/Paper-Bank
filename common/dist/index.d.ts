@@ -97,19 +97,29 @@ export declare const z_createQuestionPaper: z.ZodObject<{
     examType: string;
     pdf?: any;
 }>;
+export declare const z_deleteQP: z.ZodObject<{
+    id: z.ZodNumber;
+}, "strip", z.ZodTypeAny, {
+    id: number;
+}, {
+    id: number;
+}>;
 export declare const z_editQuestionPaper: z.ZodObject<{
+    id: z.ZodNumber;
     courseName: z.ZodOptional<z.ZodString>;
     courseCode: z.ZodOptional<z.ZodString>;
     year: z.ZodOptional<z.ZodNumber>;
     examType: z.ZodOptional<z.ZodString>;
     programId: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
+    id: number;
     programId?: number | undefined;
     courseName?: string | undefined;
     courseCode?: string | undefined;
     year?: number | undefined;
     examType?: string | undefined;
 }, {
+    id: number;
     programId?: number | undefined;
     courseName?: string | undefined;
     courseCode?: string | undefined;

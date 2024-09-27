@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.z_createMessage = exports.z_createNotification = exports.z_reviewQP = exports.z_editQuestionPaper = exports.z_createQuestionPaper = exports.z_editProgram = exports.z_createProgram = exports.z_signin = exports.z_updatePassword = exports.z_resetUploads = exports.z_updateUser = exports.z_signup = void 0;
+exports.z_createMessage = exports.z_createNotification = exports.z_reviewQP = exports.z_editQuestionPaper = exports.z_deleteQP = exports.z_createQuestionPaper = exports.z_editProgram = exports.z_createProgram = exports.z_signin = exports.z_updatePassword = exports.z_resetUploads = exports.z_updateUser = exports.z_signup = void 0;
 const zod_1 = require("zod");
 // SCHEMAS
 exports.z_signup = zod_1.z.object({
@@ -45,7 +45,11 @@ exports.z_createQuestionPaper = zod_1.z.object({
         message: "Invalid file type. Expected a PDF.",
     }),
 });
+exports.z_deleteQP = zod_1.z.object({
+    id: zod_1.z.number(),
+});
 exports.z_editQuestionPaper = zod_1.z.object({
+    id: zod_1.z.number(),
     courseName: zod_1.z.string().min(1).optional(),
     courseCode: zod_1.z.string().min(1).optional(),
     year: zod_1.z.coerce.number().optional(),

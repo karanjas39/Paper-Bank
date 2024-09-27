@@ -8,27 +8,33 @@ export async function contactAdmin(c: Context) {
 
     const { success, data } = z_createMessage.safeParse(body);
 
-    if (!success) throw new Error("Invalid inputs are passed.");
+    if (!success) {
+      throw new Error("Invalid inputs are passed.");
+    }
 
-    const response = await sendMessage(
+    const responses = await sendMessage(
       `CONTACT: ${data.message}`,
       c.env.TELEGRAM_BOT_TOKEN,
-      c.env.TELEGRAM_CHAT_ID
+      c.env.TELEGRAM_CHAT_IDS
     );
 
-    if (!response.ok) throw new Error("Failed to send message.");
+    const allSuccessful = responses.every((response) => response.ok);
+
+    if (!allSuccessful) {
+      throw new Error("Failed to send message to one or more recipients.");
+    }
 
     return c.json({
       success: true,
       status: 200,
-      message: "Message is sent to admin successfully.",
+      message: "Message is sent to admin(s) successfully.",
     });
   } catch (error) {
     const err = error as Error;
     return c.json({
       success: false,
       status: 400,
-      message: err.message || "Failed to send messsage.",
+      message: err.message || "Failed to send message.",
     });
   }
 }

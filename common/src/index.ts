@@ -51,7 +51,12 @@ export const z_createQuestionPaper = z.object({
     }),
 });
 
+export const z_deleteQP = z.object({
+  id: z.number(),
+});
+
 export const z_editQuestionPaper = z.object({
+  id: z.number(),
   courseName: z.string().min(1).optional(),
   courseCode: z.string().min(1).optional(),
   year: z.coerce.number().optional(),
