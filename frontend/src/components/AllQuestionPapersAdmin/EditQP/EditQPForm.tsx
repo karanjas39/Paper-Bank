@@ -1,6 +1,5 @@
 "use client";
 
-import Loader from "@/components/Loaders/Loader";
 import {
   Dialog,
   DialogContent,
@@ -86,7 +85,7 @@ function EditQPForm({ qpInfo }: { qpInfo: z_editQuestionPaper_type }) {
     }
   }
 
-  if (isFetchingPrograms) return <Loader />;
+  if (isFetchingPrograms) return <ButtonLoader />;
 
   return (
     <Dialog>
