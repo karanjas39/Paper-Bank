@@ -3,16 +3,19 @@ export declare const z_signup: z.ZodObject<{
     name: z.ZodString;
     email: z.ZodString;
     password: z.ZodString;
+    confirmPassword: z.ZodString;
     programId: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
     name: string;
     email: string;
     password: string;
+    confirmPassword: string;
     programId: number;
 }, {
     name: string;
     email: string;
     password: string;
+    confirmPassword: string;
     programId: number;
 }>;
 export declare const z_updateUser: z.ZodObject<{

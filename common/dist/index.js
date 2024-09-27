@@ -7,6 +7,7 @@ exports.z_signup = zod_1.z.object({
     name: zod_1.z.string().min(1),
     email: zod_1.z.string().email(),
     password: zod_1.z.string().min(6),
+    confirmPassword: zod_1.z.string().min(6),
     programId: zod_1.z.number(),
 });
 exports.z_updateUser = zod_1.z.object({

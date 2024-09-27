@@ -17,6 +17,17 @@ export async function signup(c: Context) {
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
+    const isUserExist = await prisma.user.findUnique({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (isUserExist) throw new Error("User already exist with same email.");
+
+    if (data.confirmPassword !== data.password)
+      throw new Error("Password does not match.");
+
     const hashedPassword = hashSync(data.password, 10);
 
     const newUser = await prisma.user.create({
