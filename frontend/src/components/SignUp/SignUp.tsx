@@ -36,7 +36,13 @@ import { useRouter } from "next/navigation";
 import { programApi } from "@/store/api/programApi";
 import Loader from "../Loaders/Loader";
 import { cn } from "@/lib/utils";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import {
+  CaretSortIcon,
+  CheckIcon,
+  EyeClosedIcon,
+  EyeOpenIcon,
+} from "@radix-ui/react-icons";
+import { useState } from "react";
 
 function SignUp() {
   const { data, isFetching } = programApi.useGetProgramsQuery();
@@ -47,14 +53,22 @@ function SignUp() {
       programId: 0,
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
   const [SignUp, { isLoading }] = authApi.useSignUpMutation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setConfirmShowPassword] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
 
   async function onSubmit(values: z_signup_type) {
     try {
+      setConfirmShowPassword(false);
+      setShowPassword(false);
+      if (values.confirmPassword !== values.password)
+        throw new Error("Password does not match.");
+
       const response = await SignUp(values).unwrap();
       if (response.success) {
         toast({ description: response.message });
@@ -122,9 +136,53 @@ function SignUp() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="password" type="password" {...field} />
+                  <div className="relative">
+                    <Input
+                      placeholder="password"
+                      type={showPassword ? "text" : "password"}
+                      {...field}
+                    />
+                    <span
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-[10px] top-[50%] translate-y-[-50%] cursor-pointer"
+                    >
+                      {!showPassword ? <EyeClosedIcon /> : <EyeOpenIcon />}
+                    </span>
+                  </div>
                 </FormControl>
                 <FormDescription>Enter your password here</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      placeholder="confirm password"
+                      type={showConfirmPassword ? "text" : "password"}
+                      {...field}
+                    />
+                    <span
+                      onClick={() => setConfirmShowPassword((prev) => !prev)}
+                      className="absolute right-[10px] top-[50%] translate-y-[-50%] cursor-pointer"
+                    >
+                      {!showConfirmPassword ? (
+                        <EyeClosedIcon />
+                      ) : (
+                        <EyeOpenIcon />
+                      )}
+                    </span>
+                  </div>
+                </FormControl>
+                <FormDescription>
+                  Enter your password again for confirmation
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

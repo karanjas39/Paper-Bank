@@ -73,7 +73,7 @@ function HeroSection() {
             materials, and help others excel.
           </p>
           <Link href="/question-papers">
-            <Button variant="primary" className="max-w-min" size="lg">
+            <Button variant="primary" className="max-w-min">
               Explore Papers now
             </Button>
           </Link>

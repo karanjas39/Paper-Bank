@@ -33,15 +33,21 @@ function Navbar() {
       <div className="flex items-center gap-3">
         {token ? (
           <Link href="/dashboard">
-            <Button variant="primary">Dashboard</Button>
+            <Button variant="primary" size="sm">
+              Dashboard
+            </Button>
           </Link>
         ) : path === "/signin" ? (
           <Link href="/signup">
-            <Button variant="primary">Sign Up</Button>
+            <Button variant="primary" size="sm">
+              Sign Up
+            </Button>
           </Link>
         ) : (
           <Link href="signin">
-            <Button variant="primary">Sign In</Button>
+            <Button variant="primary" size="sm">
+              Sign In
+            </Button>
           </Link>
         )}
         <ThemeToggler />
