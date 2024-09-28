@@ -41,6 +41,7 @@ export default function SignIn() {
 
   async function onSubmit(values: z_signin_type) {
     try {
+      setShowPassword(false);
       const response = await SignIn(values).unwrap();
       if (response.success) {
         toast({ description: response.message });
