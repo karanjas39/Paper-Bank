@@ -17,16 +17,16 @@ const authSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
       if (action.payload) {
-        sessionStorage.setItem("token", action.payload);
+        localStorage.setItem("token", action.payload);
       }
     },
     clearToken: (state) => {
       state.token = null;
-      sessionStorage.removeItem("token");
+      localStorage.removeItem("token");
     },
     initializeAuth: (state) => {
       state.token =
-        typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
       state.isInitialized = true;
     },
   },

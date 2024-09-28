@@ -26,7 +26,7 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: any, action: any) => {
   if (action.type === logoutAction.type) {
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
     return appReducer(undefined, { type: "@@INIT" });
   }
   return appReducer(state, action);
