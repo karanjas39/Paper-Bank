@@ -22,6 +22,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setToken } from "@/store/slices/authSlice";
 import Link from "next/link";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 
 export default function SignIn() {
   const form = useForm<z_signin_type>({
@@ -35,6 +37,7 @@ export default function SignIn() {
   const { toast } = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
   async function onSubmit(values: z_signin_type) {
     try {
@@ -93,7 +96,19 @@ export default function SignIn() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="password" type="password" {...field} />
+                  <div className="relative">
+                    <Input
+                      placeholder="password"
+                      type={showPassword ? "text" : "password"}
+                      {...field}
+                    />
+                    <span
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-[10px] top-[50%] translate-y-[-50%] cursor-pointer"
+                    >
+                      {!showPassword ? <EyeClosedIcon /> : <EyeOpenIcon />}
+                    </span>
+                  </div>
                 </FormControl>
                 <FormDescription>Enter your password here</FormDescription>
                 <FormMessage />
