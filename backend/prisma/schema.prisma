@@ -28,7 +28,8 @@ model User {
   admin           Boolean       @default(false)
   program         Program  @relation("ProgramUsers", fields: [programId], references: [id])
   programId       Int
-  uploadCount     Int      @default(0)    
+  uploadCount     Int      @default(0)
+  otp             String?   @default("")    
   questionPapers  QuestionPaper[] @relation("UserQuestionPapers")
   reviewedPapers  QuestionPaper[] @relation("ReviewedQuestionPapers")
   notifications   Notification[]  @relation("UserNotifications")

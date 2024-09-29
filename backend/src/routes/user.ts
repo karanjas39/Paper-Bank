@@ -7,6 +7,7 @@ import {
   updateUserPassword,
   userDetails,
 } from "../controllers/user";
+import { verifyOTP } from "../controllers/auth";
 
 const user = new Hono<{
   Bindings: {
@@ -20,6 +21,7 @@ const user = new Hono<{
 }>();
 
 user.get("/me", isauthorized, userDetails);
+user.post("/verify-otp", isauthorized, verifyOTP);
 user.put("/detail", isauthorized, updateUserDetails);
 user.patch("/reset/uploads", isauthorized, isAdmin, resetUploadCount);
 user.patch("/password", isauthorized, isVerified, updateUserPassword);

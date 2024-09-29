@@ -19,6 +19,10 @@ export const z_resetUploads = z.object({
   userId: z.number(),
 });
 
+export const z_verifyOTP = z.object({
+  otp: z.string().length(6),
+});
+
 export const z_updatePassword = z.object({
   previousPassword: z.string().min(6),
   newPassword: z.string().min(6),
@@ -81,6 +85,7 @@ export const z_createMessage = z.object({
 
 // TYPES
 export type z_signup_type = z.infer<typeof z_signup>;
+export type z_verifyOTP_type = z.infer<typeof z_verifyOTP>;
 export type z_updateUser_type = z.infer<typeof z_updateUser>;
 export type z_resetUploads_type = z.infer<typeof z_resetUploads>;
 export type z_updatePassword_type = z.infer<typeof z_updatePassword>;
