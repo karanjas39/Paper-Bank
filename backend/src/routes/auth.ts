@@ -10,6 +10,10 @@ const auth = new Hono<{
     APP_PASSWORD: string;
     APP_EMAIL: string;
   };
+  Variables: {
+    id: string;
+    verified: boolean;
+  };
 }>();
 
 auth.post("/signup", signup);

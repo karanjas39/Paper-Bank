@@ -11,6 +11,7 @@ import { userApi } from "./api/userApi";
 import { notificationApi } from "./api/notificationApi";
 import { qpApi } from "./api/qpApi";
 import { contactApi } from "./api/contactApi";
+import { emailApi } from "./api/emailApi";
 
 export const logoutAction = createAction("auth/logout");
 
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   [notificationApi.reducerPath]: notificationApi.reducer,
   [qpApi.reducerPath]: qpApi.reducer,
   [contactApi.reducerPath]: contactApi.reducer,
+  [emailApi.reducerPath]: emailApi.reducer,
   auth: authReducer,
 });
 
@@ -41,7 +43,8 @@ export const store = configureStore({
       userApi.middleware,
       notificationApi.middleware,
       qpApi.middleware,
-      contactApi.middleware
+      contactApi.middleware,
+      emailApi.middleware
     ),
 });
 
