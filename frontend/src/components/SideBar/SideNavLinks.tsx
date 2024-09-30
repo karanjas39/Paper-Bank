@@ -43,13 +43,13 @@ export default function SideNavLinks() {
             {links.map(({ link, name, icon: Icon }, i) => {
               if (
                 name === "Contribute" &&
-                !data.user.admin &&
+                !data?.user?.admin &&
                 data?.user?.uploadCount > 0
               ) {
                 return null;
-              } else if (name === "Users" && !data.user.admin) return null;
-              else if (name === "Programs" && !data.user.admin) return null;
-              else if (name === "Question Papers" && !data.user.admin)
+              } else if (name === "Users" && !data?.user?.admin) return null;
+              else if (name === "Programs" && !data?.user?.admin) return null;
+              else if (name === "Question Papers" && !data?.user?.admin)
                 return null;
               return (
                 <Link
