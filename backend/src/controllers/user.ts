@@ -46,6 +46,9 @@ export async function allUsers(c: Context) {
         verified: true,
         id: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     const totalUsers = await prisma.user.count({
