@@ -1,8 +1,7 @@
 import { BACKEND_URL } from "@/lib/constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { tagTypes, USER_TAG } from "@/lib/ApiTags";
+import { tagTypes } from "@/lib/ApiTags";
 import { responseType } from "@/lib/ApiTypes";
-import { z_verifyOTP_type } from "@singhjaskaran/paperbank-common";
 import { RootState } from "../index";
 
 export const emailApi = createApi({
@@ -21,14 +20,6 @@ export const emailApi = createApi({
   endpoints: (builder) => ({
     sendEmail: builder.mutation<responseType, void>({
       query: () => "/auth/send-otp",
-    }),
-    verifyEmail: builder.mutation<responseType, z_verifyOTP_type>({
-      query: (body) => ({
-        url: "/user/verify-otp",
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: [USER_TAG],
     }),
   }),
 });

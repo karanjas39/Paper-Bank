@@ -31,6 +31,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { emailApi } from "@/store/api/emailApi";
 import ButtonLoader from "@/components/Loaders/ButtonLoader";
+import { userApi } from "@/store/api/userApi";
 
 export default function VerifyEmail() {
   const form = useForm<z_verifyOTP_type>({
@@ -44,7 +45,7 @@ export default function VerifyEmail() {
   const [sendEmail, { isLoading: isSendingOTP }] =
     emailApi.useSendEmailMutation();
   const [verifyEmail, { isLoading: isVerifyingOTP }] =
-    emailApi.useVerifyEmailMutation();
+    userApi.useVerifyEmailMutation();
 
   async function onSubmit(values: z_verifyOTP_type) {
     try {

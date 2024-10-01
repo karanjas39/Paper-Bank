@@ -7,6 +7,7 @@ import {
   z_resetUploads_type,
   z_updatePassword_type,
   z_updateUser_type,
+  z_verifyOTP_type,
 } from "@singhjaskaran/paperbank-common";
 
 export const userApi = createApi({
@@ -41,6 +42,14 @@ export const userApi = createApi({
       query: (body) => ({
         url: "/detail",
         method: "PUT",
+        body,
+      }),
+      invalidatesTags: [USER_TAG],
+    }),
+    verifyEmail: builder.mutation<responseType, z_verifyOTP_type>({
+      query: (body) => ({
+        url: "/user/verify-otp",
+        method: "POST",
         body,
       }),
       invalidatesTags: [USER_TAG],
