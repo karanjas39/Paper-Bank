@@ -8,15 +8,6 @@ import ResetUploads from "./ResetUploads";
 
 export const columns: ColumnDef<userType>[] = [
   {
-    id: "serialNumber",
-    header: () => <div className="font-bold">Sr no.</div>,
-    cell: ({ row }) => {
-      const index = row.index + 1;
-      if (index <= 9) return `0${index}`;
-      else return index;
-    },
-  },
-  {
     accessorKey: "name",
     header: () => {
       return <div className="text-center font-bold">Name</div>;
@@ -50,6 +41,27 @@ export const columns: ColumnDef<userType>[] = [
     },
     cell: ({ row }) => {
       const isAdmin = row.original.admin;
+      if (isAdmin)
+        return (
+          <div className="text-center capitalize">
+            <Badge variant="primary">Yes</Badge>
+          </div>
+        );
+
+      return (
+        <div className="text-center capitalize">
+          <Badge variant="destructive">No</Badge>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "verified",
+    header: () => {
+      return <div className="text-center font-bold">Verified</div>;
+    },
+    cell: ({ row }) => {
+      const isAdmin = row.original.verified;
       if (isAdmin)
         return (
           <div className="text-center capitalize">

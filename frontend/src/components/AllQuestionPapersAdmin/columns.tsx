@@ -42,15 +42,6 @@ import EditQPForm from "./EditQP/EditQPForm";
 
 export const columns: ColumnDef<qpType>[] = [
   {
-    id: "serialNumber",
-    header: () => <div className="font-bold">Sr no.</div>,
-    cell: ({ row }) => {
-      const index = row.index + 1;
-      if (index <= 9) return `0${index}`;
-      else return index;
-    },
-  },
-  {
     accessorKey: "courseName",
     header: () => {
       return <div className="text-center font-bold">Course name</div>;
