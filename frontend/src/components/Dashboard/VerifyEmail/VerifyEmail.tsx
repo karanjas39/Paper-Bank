@@ -32,6 +32,9 @@ import { useToast } from "@/hooks/use-toast";
 import { emailApi } from "@/store/api/emailApi";
 import ButtonLoader from "@/components/Loaders/ButtonLoader";
 import { userApi } from "@/store/api/userApi";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "@/store";
+import { useRouter } from "next/navigation";
 
 export default function VerifyEmail() {
   const form = useForm<z_verifyOTP_type>({
@@ -46,13 +49,20 @@ export default function VerifyEmail() {
     emailApi.useSendEmailMutation();
   const [verifyEmail, { isLoading: isVerifyingOTP }] =
     userApi.useVerifyEmailMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   async function onSubmit(values: z_verifyOTP_type) {
     try {
       const response = await verifyEmail(values).unwrap();
       if (response.success) {
-        toast({ description: response.message });
         setDialogOpen(false);
+        dispatch(logoutAction());
+        router.push("/signin");
+        toast({
+          description:
+            "Your email is verified successfully. Please login again.",
+        });
       } else throw new Error(response.message);
     } catch (error) {
       const err = error as Error;

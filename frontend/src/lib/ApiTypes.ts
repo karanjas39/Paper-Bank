@@ -3,7 +3,6 @@ export interface responseType {
   status: number;
   message?: string;
 }
-
 export interface userType {
   id: string;
   name: string;

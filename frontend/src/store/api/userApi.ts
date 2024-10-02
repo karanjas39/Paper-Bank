@@ -48,7 +48,7 @@ export const userApi = createApi({
     }),
     verifyEmail: builder.mutation<responseType, z_verifyOTP_type>({
       query: (body) => ({
-        url: "/user/verify-otp",
+        url: "/verify-otp",
         method: "POST",
         body,
       }),
