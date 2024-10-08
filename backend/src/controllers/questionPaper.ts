@@ -358,6 +358,9 @@ export async function getAllApprovedQP(c: Context) {
           },
         },
       },
+      orderBy: {
+        submittedAt: "desc",
+      },
     });
 
     return c.json({
