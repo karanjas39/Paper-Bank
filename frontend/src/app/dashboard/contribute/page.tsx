@@ -12,13 +12,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { maxUploads } from "@/lib/constants";
 
 function ContributeQPPage() {
   const router = useRouter();
   const { data: userData, isLoading } = userApi.useGetUserDetailQuery();
 
   useEffect(() => {
-    if (userData && !userData.user.admin && userData.user.uploadCount !== 0) {
+    if (
+      userData &&
+      !userData.user.admin &&
+      userData.user.uploadCount >= maxUploads
+    ) {
       router.push("/dashboard");
     }
   }, [userData, router]);
@@ -27,7 +32,11 @@ function ContributeQPPage() {
     return <Loader />;
   }
 
-  if (userData && !userData.user.admin && userData.user.uploadCount !== 0) {
+  if (
+    userData &&
+    !userData.user.admin &&
+    userData.user.uploadCount >= maxUploads
+  ) {
     return null;
   }
 

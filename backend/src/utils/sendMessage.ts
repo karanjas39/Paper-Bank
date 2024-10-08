@@ -15,6 +15,7 @@ export async function sendMessage(
         body: JSON.stringify({
           chat_id: userId,
           text: message,
+          parse_mode: "HTML",
         }),
       });
 

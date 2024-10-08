@@ -1,7 +1,8 @@
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
 export async function addWatermarkToPDF(
-  pdfBuffer: ArrayBuffer
+  pdfBuffer: ArrayBuffer,
+  contributedBy: string
 ): Promise<Uint8Array> {
   const pdfDoc = await PDFDocument.load(pdfBuffer);
   const pages = pdfDoc.getPages();
@@ -9,8 +10,8 @@ export async function addWatermarkToPDF(
 
   for (const page of pages) {
     const { width, height } = page.getSize();
-    const fontSize = 100;
-    const text = "Paper Bank";
+    const fontSize = 30;
+    const text = `By ${contributedBy} at Paper Bank`;
 
     page.drawText(text, {
       x: width / 2 - font.widthOfTextAtSize(text, fontSize) / 2,
@@ -18,7 +19,7 @@ export async function addWatermarkToPDF(
       size: fontSize,
       font: font,
       color: rgb(0.5, 0.5, 0.5),
-      opacity: 0.4,
+      opacity: 0.6,
     });
   }
 

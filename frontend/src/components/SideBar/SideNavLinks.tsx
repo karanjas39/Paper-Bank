@@ -2,7 +2,7 @@
 import React from "react";
 import Logo from "../Navbar/Logo";
 import Link from "next/link";
-import { links } from "@/lib/constants";
+import { links, maxUploads } from "@/lib/constants";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -44,7 +44,7 @@ export default function SideNavLinks() {
               if (
                 name === "Contribute" &&
                 !data?.user?.admin &&
-                data?.user?.uploadCount > 0
+                data?.user?.uploadCount >= maxUploads
               ) {
                 return null;
               } else if (name === "Users" && !data?.user?.admin) return null;

@@ -11,6 +11,7 @@ import { userApi } from "@/store/api/userApi";
 import Loader from "@/components/Loaders/Loader";
 import { formatDate } from "@/lib/helpers";
 import VerifyEmail from "./VerifyEmail/VerifyEmail";
+import { maxUploads } from "@/lib/constants";
 
 function UserDetail() {
   const { data, isLoading } = userApi.useGetUserDetailQuery();
@@ -33,6 +34,14 @@ function UserDetail() {
             title="Joined Us On"
             data={formatDate(data?.user?.createdAt)}
           />
+          <CardContentDiv
+            title="Uploads left"
+            data={
+              !data.user.admin
+                ? maxUploads - data?.user?.uploadCount
+                : "Unlimited"
+            }
+          />
           {!data?.user?.verified ? (
             <div className="self-end mt-2">
               <VerifyEmail />
@@ -53,16 +62,16 @@ function CardContentDiv({
   data,
 }: {
   title: string;
-  data: string | boolean;
+  data: string | boolean | number;
 }) {
   return (
     <div className="flex items-center md:justify-between gap-2 text-sm">
       <p className="font-bold text-muted-foreground">{title}</p>
-      {title !== "Verified" ? (
+      {title !== "Verified" && title !== "Uploads left" ? (
         <p>{data}</p>
       ) : (
         <Badge variant={data ? "secondary" : "destructive"}>
-          {data ? "Yes" : "No"}
+          {title === "Uploads left" ? data : data ? "Yes" : "No"}
         </Badge>
       )}
     </div>

@@ -1,12 +1,17 @@
-export default async function uploadData(file: File, userId: number) {
+export function createPdfKey(kvNamespace: string) {
+  const uniqueId = crypto.randomUUID();
+  const key = `${kvNamespace}-${uniqueId}`;
+  return key;
+}
+
+export default async function uploadData(file: File, kvName: string) {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const data = new Uint8Array(arrayBuffer).toString();
-    const key = `pdf-${userId}-${Date.now()}-${Math.floor(
-      1 + Math.random() * 20
-    )}`;
+    const uint8Array = new Uint8Array(arrayBuffer);
 
-    return { key, data, error: null };
+    const key = createPdfKey(kvName);
+
+    return { key, data: uint8Array, error: null };
   } catch (error) {
     return { key: null, data: null, error: "Failed to prepare upload data." };
   }

@@ -13,7 +13,7 @@ export async function contactAdmin(c: Context) {
     }
 
     const responses = await sendMessage(
-      `CONTACT: ${data.message}`,
+      `<strong>New Contact</strong>\n${data.message}`,
       c.env.TELEGRAM_BOT_TOKEN,
       c.env.TELEGRAM_CHAT_IDS
     );

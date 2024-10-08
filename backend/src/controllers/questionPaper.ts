@@ -11,6 +11,8 @@ import {
 import { addWatermarkToPDF } from "../utils/addWaterMark";
 import { sendMessage } from "../utils/sendMessage";
 
+export const maxUpload = 5;
+
 export async function uploadQP(c: Context) {
   try {
     const userId = c.get("id");
@@ -27,7 +29,7 @@ export async function uploadQP(c: Context) {
 
     if (!isUser) throw new Error("No such user is registered with us.");
 
-    if (isUser.uploadCount !== 0 && !isUser.admin)
+    if (isUser.uploadCount > maxUpload && !isUser.admin)
       throw new Error("You have exhausted your upload quota.");
 
     const formData = await c.req.formData();
@@ -55,16 +57,16 @@ export async function uploadQP(c: Context) {
 
     const pdfArrayBuffer = await pdf.arrayBuffer();
 
-    const watermarkedPdfBytes = await addWatermarkToPDF(pdfArrayBuffer);
+    const watermarkedPdfBytes = await addWatermarkToPDF(
+      pdfArrayBuffer,
+      isUser.name.split(" ")[0]
+    );
 
     const watermarkedPdf = new File([watermarkedPdfBytes], pdf.name, {
       type: pdf.type,
     });
 
-    const { data, error, key } = await uploadData(
-      watermarkedPdf,
-      Number(userId)
-    );
+    const { data, error, key } = await uploadData(watermarkedPdf, "paperBank");
 
     if (error) throw new Error(error);
     if (!key) throw new Error("Failed to create kv key.");
@@ -89,7 +91,7 @@ export async function uploadQP(c: Context) {
 
     if (!isUser.admin) {
       await sendMessage(
-        `UPLOAD: New Question Paper of ${courseName}(${courseCode}) is Uploaded.`,
+        `<strong>New Upload </strong>\nNew Question Paper of ${courseName}(${courseCode}) is uploaded by ${isUser.name}.\nFor more info, visit web app: <a href="https://paperbank.vercel.app/">Paper Bank</a>`,
         c.env.TELEGRAM_BOT_TOKEN,
         c.env.TELEGRAM_CHAT_IDS
       );
@@ -100,7 +102,9 @@ export async function uploadQP(c: Context) {
         id: isUser.id,
       },
       data: {
-        uploadCount: isUser.uploadCount + 1,
+        uploadCount: {
+          increment: 1,
+        },
       },
     });
 
@@ -125,13 +129,10 @@ export async function getQP(c: Context) {
     if (!key) throw new Error("No key provided.");
 
     const kv = c.env["paperBank"];
-    const base64Data = await kv.get(key);
-    if (!base64Data) throw new Error("Question Paper not found.");
+    const pdfBytes = await kv.get(key, "arrayBuffer");
+    if (!pdfBytes) throw new Error("Question Paper not found.");
 
-    const bytes = new Uint8Array(base64Data.split(",").map(Number));
-    const arrayBuffer = bytes.buffer;
-
-    return new Response(arrayBuffer, {
+    return new Response(pdfBytes, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
@@ -139,11 +140,14 @@ export async function getQP(c: Context) {
       },
     });
   } catch (error) {
-    const err = error as Error;
+    console.error("Retrieval error:", error);
     return c.json({
       success: false,
       status: 404,
-      message: err.message || "Failed to retrieve the Question Paper.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Failed to retrieve the Question Paper.",
     });
   }
 }
@@ -276,7 +280,9 @@ export async function reviewQP(c: Context) {
           id: isQP.userId,
         },
         data: {
-          uploadCount: 0,
+          uploadCount: {
+            decrement: 1,
+          },
         },
       });
     } else if (data.status === "rejected") {
