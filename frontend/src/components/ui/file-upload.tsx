@@ -3,8 +3,11 @@ import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { IconUpload } from "@tabler/icons-react";
 import { FileRejection, useDropzone } from "react-dropzone";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "./toast";
+import Link from "next/link";
 
-const MAX_FILE_SIZE = 1048576; // 1 MB in bytes
+const MAX_FILE_SIZE = 1048576;
 
 const mainVariant = {
   initial: {
@@ -37,12 +40,26 @@ export const FileUpload = ({
   const [file, setFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   const handleFileChange = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const newFile = acceptedFiles[0];
       if (newFile.size > MAX_FILE_SIZE) {
-        setErrorMessage("File size exceeds 1 MB limit.");
+        setErrorMessage(`File size exceeds 1 MB limit.`);
+        toast({
+          description: `Compress the file to reduce size.`,
+          action: (
+            <ToastAction altText="Compress here">
+              <Link
+                href="https://www.ilovepdf.com/compress_pdf"
+                target="_blank"
+              >
+                Compress here
+              </Link>
+            </ToastAction>
+          ),
+        });
         setFile(null);
         onChange && onChange(null);
       } else {
