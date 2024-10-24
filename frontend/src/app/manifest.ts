@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Paper Bank",
-    short_name: "QP",
+    short_name: "Paper Bank",
     description:
       "Discover and share university question papers with ease. Our platform allows students to upload, review, and access question papers for various courses, with admin-approved content ensuring quality. Built for DAV University students, this resource helps you prepare for exams by offering MSE and ESE papers categorized by programs.",
     start_url: "/",
